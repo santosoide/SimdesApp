@@ -1,4 +1,4 @@
-<?php namespace App\Commands;
+<?php namespace SimdesApp\Commands;
 
 abstract class Command {
 
