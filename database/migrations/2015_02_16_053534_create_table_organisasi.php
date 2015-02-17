@@ -63,7 +63,7 @@ class CreateTableOrganisasi extends Migration
             $table->softDeletes();
 
             # full text [desa,email]
-            # realtion with [kecamatan]
+            # relation with [kecamatan]
         });
     }
 

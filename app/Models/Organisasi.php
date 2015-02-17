@@ -23,7 +23,7 @@ class Organisasi extends UuidModel
     /**
      * @var array
      */
-    protected $with = ['kecamatan'];
+//    protected $with = ['kecamatan'];
 
     /**
      * The attributes that aren't mass assignable.

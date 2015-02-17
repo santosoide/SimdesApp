@@ -10,7 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
+App::bind('SimdesApp\Services\LaraCacheInterface', 'SimdesApp\Services\LaraCache');
 Route::get('/', 'WelcomeController@index');
 
 Route::get('home', 'HomeController@index');
@@ -29,4 +29,8 @@ Route::group(['namespace' => 'Api\V1\Organisasi', 'prefix' => 'api/v1/backoffice
 
     // Organisasi resource
     Route::resource('organisasi', 'OrganisasiController');
+});
+
+Route::get('get-token', function(){
+   echo csrf_token();
 });
