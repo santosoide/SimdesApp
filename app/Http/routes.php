@@ -31,6 +31,11 @@ Route::group(['namespace' => 'Api\V1\Organisasi', 'prefix' => 'api/v1/backoffice
     Route::resource('organisasi', 'OrganisasiController');
 });
 
+Route::group(['namespace' => 'Api\V1\User', 'prefix' => 'api/v1/backoffice'], function () {
+    // User resource
+    Route::resource('user', 'UserController');
+});
+
 Route::get('get-token', function(){
-   echo csrf_token();
+   return csrf_token();
 });

@@ -33,24 +33,24 @@ class OrganisasiRepository extends AbstractRepository
      */
     public function find($page = 1, $limit = 10, $term = null)
     {
-        /*Create Key for cache */
+        // Create Key for cache
         $key = 'find-organisasi-' . $page . $limit . $term;
 
-        /*Create Section*/
+        // Create Section
         $section = 'organisasi';
 
-        /*If cache is exist get data from cache*/
+        // If cache is exist get data from cache
         if ($this->cache->has($section, $key)) {
             return $this->cache->get($section, $key);
         }
 
-        /*Search data*/
+        // Search data
         $organisasi = $this->model
             ->where('nama', 'like', '%' . $term . '%')
             ->paginate($limit)
             ->toArray();
 
-        /*Create cache*/
+        // Create cache
         $this->cache->put($section, $key, $organisasi, $limit);
 
         return $organisasi;
@@ -87,7 +87,7 @@ class OrganisasiRepository extends AbstractRepository
 
             $organisasi->save();
 
-            /*Return result success*/
+            // Return result success
             return $this->successInsertResponse();
 
         } catch (\Exception $ex) {
@@ -139,7 +139,7 @@ class OrganisasiRepository extends AbstractRepository
 
             $organisasi->save();
 
-            /*Return result success*/
+            // Return result success
             return $this->successUpdateResponse();
 
         } catch (\Exception $ex) {
@@ -161,7 +161,7 @@ class OrganisasiRepository extends AbstractRepository
 
             $organisasi->delete();
 
-            /*Return result success*/
+            // Return result success
             return $this->successDeleteResponse();
 
         } catch (\Exception $ex) {
