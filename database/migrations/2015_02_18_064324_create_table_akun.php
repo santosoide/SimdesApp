@@ -16,7 +16,11 @@ class CreateTableAkun extends Migration
             $table->engine = 'MyISAM';
 
             $table->increments('_id');
+
+            // [required,unique]
             $table->string('kode_rekening')->unique();
+
+            // [required]
             $table->string('akun');
             $table->string('user_creator')->nullable()->default(null);
             $table->string('user_updater')->nullable()->default(null);
