@@ -23,7 +23,7 @@ class Organisasi extends UuidModel
     /**
      * @var array
      */
-    protected $with = ['kecamatan'];
+//    protected $with = ['kecamatan'];
 
     /**
      * The attributes that aren't mass assignable.
@@ -79,19 +79,6 @@ class Organisasi extends UuidModel
             // flush the cache section
             \Cache::section('organisasi')->flush();
         });
-    }
-
-    /**
-     * Pencarian Dengan FullTextSearch
-     *
-     * @param $query
-     * @param $q
-     *
-     * @return mixed
-     */
-    public function scopeFullTextSearch($query, $q)
-    {
-        return empty($q) ? $query : $query->whereRaw("MATCH(desa,email,desa)AGAINST(? IN BOOLEAN MODE)", [$q]);
     }
 
     /**
