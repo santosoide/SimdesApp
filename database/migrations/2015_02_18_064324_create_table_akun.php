@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+
+class CreateTableAkun extends Migration
+{
+
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('akun', function ($table) {
+            $table->engine = 'MyISAM';
+
+            $table->increments('_id');
+            $table->string('kode_rekening')->unique();
+            $table->string('akun');
+            $table->string('user_creator')->nullable()->default(null);
+            $table->string('user_updater')->nullable()->default(null);
+            $table->index(['_id', 'akun']);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::drop('akun');
+    }
+}
