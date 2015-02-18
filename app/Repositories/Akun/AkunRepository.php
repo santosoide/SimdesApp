@@ -1,31 +1,28 @@
 <?php
-namespace SimdesApp\Repositories\User;
+namespace SimdesApp\Repositories\Akun;
 
-
-use SimdesApp\Models\User;
+use SimdesApp\Models\Akun;
 use SimdesApp\Repositories\AbstractRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
-class UserRepository extends AbstractRepository
-{
+class AkunRepository extends AbstractRepository {
 
     /**
      * @var LaraCacheInterface
      */
     protected $cache;
 
-    /**
-     * @param User $user
+	/**
      * @param LaraCacheInterface $cache
      */
-    public function __construct(User $user, LaraCacheInterface $cache)
+    public function __construct(Akun $akun, LaraCacheInterface $cache)
     {
-        $this->model = $user;
+        $this->model = $akun;
         $this->cache = $cache;
     }
 
     /**
-     * Instant find data User
+     * Instant find or search with paging, limit, and query
      *
      * @param int $page
      * @param int $limit
@@ -35,10 +32,10 @@ class UserRepository extends AbstractRepository
     public function find($page = 1, $limit = 10, $term = null)
     {
         // Create Key for cache
-        $key = 'find-user-' . $page . $limit . $term;
+        $key = 'find-akun-' . $page . $limit . $term;
 
         // Create Section
-        $section = 'user';
+        $section = 'akun';
 
         // If cache is exist get data from cache
         if ($this->cache->has($section, $key)) {
@@ -46,19 +43,19 @@ class UserRepository extends AbstractRepository
         }
 
         // Search data
-        $user = $this->model
-            ->where('nama', 'like', '%' . $term . '%')
+        $organisasi = $this->model
+            ->where('akun', 'like', '%' . $term . '%')
             ->paginate($limit)
             ->toArray();
 
         // Create cache
-        $this->cache->put($section, $key, $user, $limit);
+        $this->cache->put($section, $key, $organisasi, $limit);
 
-        return $user;
+        return $organisasi;
     }
 
     /**
-     * Create data User
+     * Create data
      *
      * @param array $data
      * @return mixed
@@ -66,27 +63,24 @@ class UserRepository extends AbstractRepository
     public function create(array $data)
     {
         try {
-            $user = $this->getNew();
+            $akun = $this->getNew();
 
-            $user->email = e($data['email']);
-            $user->nama = e($data['nama']);
-            $user->password = bcrypt($data['password']);
-            $user->is_active = $data['is_active'];
-            $user->level = $data['level'];
+            $akun->kode_rekening = e($data['kode_rekening']);
+            $akun->akun = e($data['akun']);
 
-            $user->save();
+            $akun->save();
 
-            // Return result success
+            //Return result success
             return $this->successInsertResponse();
 
         } catch (\Exception $ex) {
-            \Log::error('UserRepository create action something wrong -' . $ex);
+            \Log::error('AkunRepository create action something wrong -' . $ex);
             return $this->errorInsertResponse();
         }
     }
 
     /**
-     * Find User by Id
+     * Show the Record
      *
      * @param $id
      * @return \Illuminate\Support\Collection|null|static
@@ -97,7 +91,7 @@ class UserRepository extends AbstractRepository
     }
 
     /**
-     * Update data User
+     * Update the record
      *
      * @param $id
      * @param array $data
@@ -106,26 +100,23 @@ class UserRepository extends AbstractRepository
     public function update($id, array $data)
     {
         try {
-            $user = $this->findById($id);
+            $akun = $this->findById($id);
+            $akun->kode_rekening = e($data['kode_rekening']);
+            $akun->akun = e($data['akun']);
 
-            $user->email = e($data['email']);
-            $user->nama = e($data['nama']);
-            $user->is_active = $data['is_active'];
-            $user->level = $data['level'];
+            $akun->save();
 
-            $user->save();
-
-            // Return result success
+            /*Return result success*/
             return $this->successUpdateResponse();
 
         } catch (\Exception $ex) {
-            \Log::error('UserRepository update action something wrong -' . $ex);
+            \Log::error('AkunRepository update action something wrong -' . $ex);
             return $this->errorUpdateResponse();
         }
     }
 
     /**
-     * Delete data User
+     * Destroy the record
      *
      * @param $id
      * @return mixed
@@ -133,16 +124,18 @@ class UserRepository extends AbstractRepository
     public function destroy($id)
     {
         try {
-            $user = $this->findById($id);
+            $akun = $this->findById($id);
 
-            $user->delete();
+            $akun->delete();
 
-            // Return result success
+
+            /*Return result success*/
             return $this->successDeleteResponse();
 
         } catch (\Exception $ex) {
-            \Log::error('UserRepository create action something wrong -' . $ex);
+            \Log::error('AkunRepository destroy action something wrong -' . $ex);
             return $this->errorDeleteResponse();
         }
     }
-} 
+
+}

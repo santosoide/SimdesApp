@@ -36,6 +36,12 @@ Route::group(['namespace' => 'Api\V1\User', 'prefix' => 'api/v1/backoffice'], fu
     Route::resource('user', 'UserController');
 });
 
+Route::group(['namespace' => 'Api\V1\Akun', 'prefix' => 'api/v1/backoffice'], function () {
+    // User resource
+    Route::resource('akun', 'AkunController');
+});
+
+
 Route::get('get-token', function(){
    return csrf_token();
 });

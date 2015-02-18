@@ -67,22 +67,22 @@ class OrganisasiRepository extends AbstractRepository
         try {
             $organisasi = $this->getNew();
 
-            $organisasi->nama = $data['nama'];
-            $organisasi->alamat = $data['alamat'];
-            $organisasi->no_telp = $data['no_telp'];
-            $organisasi->no_fax = $data['no_fax'];
-            $organisasi->email = $data['email'];
-            $organisasi->website = $data['website'];
-            $organisasi->desa = $data['desa'];
+            $organisasi->nama = e($data['nama']);
+            $organisasi->alamat = e($data['alamat']);
+            $organisasi->no_telp = e($data['no_telp']);
+            $organisasi->no_fax = e($data['no_fax']);
+            $organisasi->email = e($data['email']);
+            $organisasi->website = e($data['website']);
+            $organisasi->desa = e($data['desa']);
             $organisasi->kode_desa = $data['kode_desa'];
             $organisasi->kec_id = $data['kec_id'];
-            $organisasi->kec = $data['kec'];
+            $organisasi->kec = e($data['kec']);
             $organisasi->kode_kec = $data['kode_kec'];
-            $organisasi->kab = $data['kab'];
+            $organisasi->kab = e($data['kab']);
             $organisasi->kode_kab = $data['kode_kab'];
-            $organisasi->prov = $data['prov'];
+            $organisasi->prov = e($data['prov']);
             $organisasi->kode_prov = $data['kode_prov'];
-            $organisasi->user_id = $data['user_id'];
+            $organisasi->user_id = e($data['user_id']);
             $organisasi->is_active = $data['is_active'];
 
             $organisasi->save();
@@ -119,22 +119,22 @@ class OrganisasiRepository extends AbstractRepository
         try {
             $organisasi = $this->findById($id);
 
-            $organisasi->nama = $data['nama'];
-            $organisasi->alamat = $data['alamat'];
-            $organisasi->no_telp = $data['no_telp'];
-            $organisasi->no_fax = $data['no_fax'];
-            $organisasi->email = $data['email'];
-            $organisasi->website = $data['website'];
-            $organisasi->desa = $data['desa'];
+            $organisasi->nama = e($data['nama']);
+            $organisasi->alamat = e($data['alamat']);
+            $organisasi->no_telp = e($data['no_telp']);
+            $organisasi->no_fax = e($data['no_fax']);
+            $organisasi->email = e($data['email']);
+            $organisasi->website = e($data['website']);
+            $organisasi->desa = e($data['desa']);
             $organisasi->kode_desa = $data['kode_desa'];
             $organisasi->kec_id = $data['kec_id'];
-            $organisasi->kec = $data['kec'];
+            $organisasi->kec = e($data['kec']);
             $organisasi->kode_kec = $data['kode_kec'];
-            $organisasi->kab = $data['kab'];
+            $organisasi->kab = e($data['kab']);
             $organisasi->kode_kab = $data['kode_kab'];
-            $organisasi->prov = $data['prov'];
+            $organisasi->prov = e($data['prov']);
             $organisasi->kode_prov = $data['kode_prov'];
-            $organisasi->user_id = $data['user_id'];
+            $organisasi->user_id = e($data['user_id']);
             $organisasi->is_active = $data['is_active'];
 
             $organisasi->save();

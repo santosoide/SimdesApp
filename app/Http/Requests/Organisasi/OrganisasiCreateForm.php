@@ -34,7 +34,7 @@ class OrganisasiCreateForm extends Request
             'nama'     => 'required|max:255',
             'alamat'   => 'required|max:255',
             'no_telp'  => 'required|max:15',
-            'email'    => 'required|email|unique',
+            'email'    => 'required|email|unique:organisasi,email',
             'desa'     => 'required|max:255',
             'kec_id'   => 'required|integer',
             'kab'      => 'required|max:255',
