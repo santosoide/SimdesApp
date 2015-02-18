@@ -46,7 +46,7 @@ class OrganisasiRepository extends AbstractRepository
 
         /*Search data*/
         $organisasi = $this->model
-            ->FullTextSearch($term)
+            ->where('nama', 'like', '%' . $term . '%')
             ->paginate($limit)
             ->toArray();
 

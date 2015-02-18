@@ -82,19 +82,6 @@ class Organisasi extends UuidModel
     }
 
     /**
-     * Pencarian Dengan FullTextSearch
-     *
-     * @param $query
-     * @param $q
-     *
-     * @return mixed
-     */
-    public function scopeFullTextSearch($query, $q)
-    {
-        return empty($q) ? $query : $query->whereRaw("MATCH(desa,email,desa)AGAINST(? IN BOOLEAN MODE)", [$q]);
-    }
-
-    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function kecamatan()

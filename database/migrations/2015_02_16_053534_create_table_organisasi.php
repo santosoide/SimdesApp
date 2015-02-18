@@ -9,7 +9,7 @@ class CreateTableOrganisasi extends Migration
     {
         // create table organisasi
         Schema::create('organisasi', function ($table) {
-            $table->engine = 'MyISAM';
+            $table->engine = 'InnoDB';
 
             # auto generate from model event
             $table->string('_id', 50);
