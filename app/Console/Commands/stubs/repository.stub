@@ -1,7 +1,7 @@
 <?php namespace {{namespace}};
 
-use {{rootNamespace}}\Repositories\AbstractRepository;
-use {{rootNamespace}}\Services\LaraCacheInterface;
+use {{rootNamespace}}Repositories\AbstractRepository;
+use {{rootNamespace}}Services\LaraCacheInterface;
 
 class {{class}} extends AbstractRepository {
 
