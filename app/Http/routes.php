@@ -41,6 +41,25 @@ Route::group(['namespace' => 'Api\V1\Akun', 'prefix' => 'api/v1/backoffice'], fu
     Route::resource('akun', 'AkunController');
 });
 
+Route::group(['namespace' => 'Api\V1\Jenis', 'prefix' => 'api/v1/backoffice'], function () {
+    // Akun resource
+    Route::resource('jenis', 'JenisController');
+});
+
+Route::group(['namespace' => 'Api\V1\Kelompok', 'prefix' => 'api/v1/backoffice'], function () {
+    // Akun resource
+    Route::resource('kelompok', 'KelompokController');
+});
+
+Route::group(['namespace' => 'Api\V1\Obyek', 'prefix' => 'api/v1/backoffice'], function () {
+    // Akun resource
+    Route::resource('obyek', 'ObyekController');
+});
+
+Route::group(['namespace' => 'Api\V1\Bidang', 'prefix' => 'api/v1/backoffice'], function () {
+    // Akun resource
+    Route::resource('bidang', 'BidangController');
+});
 
 Route::get('get-token', function(){
    return csrf_token();
