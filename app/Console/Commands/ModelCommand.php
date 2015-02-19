@@ -61,7 +61,7 @@ class ModelCommand extends GeneratorCommand
     protected function getOptions()
     {
         return [
-            ['plain', null, InputOption::VALUE_NONE, 'Generate an empty controller class.'],
+            ['plain', null, InputOption::VALUE_NONE, 'Generate an empty model class.'],
         ];
     }
 
