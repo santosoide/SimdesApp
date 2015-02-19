@@ -22,11 +22,6 @@ Route::controllers([
 
 #Diakses oleh Backoffice
 Route::group(['namespace' => 'Api\V1\Organisasi', 'prefix' => 'api/v1/backoffice'], function () {
-    // http://localhost:8000/api/v1/backoffice/organisasi GET, POST
-    // http://localhost:8000/api/v1/backoffice/organisasi/1 GET
-    // http://localhost:8000/api/v1/backoffice/organisasi/1 PUT
-    // http://localhost:8000/api/v1/backoffice/organisasi/1 DELETE
-
     // Organisasi resource
     Route::resource('organisasi', 'OrganisasiController');
 });

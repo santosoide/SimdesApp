@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         'SimdesApp\Console\Commands\Inspire',
         'SimdesApp\Console\Commands\RepositoryCommand',
+        'SimdesApp\Console\Commands\ModelCommand',
     ];
 
     /**
