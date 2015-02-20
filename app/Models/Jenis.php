@@ -2,11 +2,25 @@
 
 class Jenis extends UuidModel {
 
-    //Use SoftDeletes;
-
     protected $table = 'jenis';
 
+    protected $with = 'kelompok';
+
+    protected $fillable = [
+        'kode_rekening',
+        'kelompok_id',
+        'jenis',
+        'status'
+    ];
+
     protected $primaryKey = '_id';
+
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'user_creator',
+        'user_updater'
+    ];
 
     /**
      * Boot the Model
@@ -35,4 +49,8 @@ class Jenis extends UuidModel {
         });
     }
 
+    public function kelompok()
+    {
+        return $this->belongsTo('SimdesApp\Models\Kelompok', 'kelompok_id');
+    }
 }
