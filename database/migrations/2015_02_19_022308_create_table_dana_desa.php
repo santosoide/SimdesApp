@@ -23,11 +23,13 @@ class CreateTableDanaDesa extends Migration {
             $table->double('jumlah')->default(0);
             $table->double('anggaran_terpakai')->default(0);
             $table->double('sisa_anggaran')->default(0);
+            $table->string('user_creator')->nullable()->default(null);
+            $table->string('user_updater')->nullable()->default(null);
             $table->timestamps();
             $table->index(['_id']);
-            $table->foreign('sumber_dana_id')->references('_id')->on('sumber_dana');
-            $table->foreign('user_id')->references('_id')->on('users');
-            $table->foreign('organisasi_id')->references('_id')->on('organisasi');
+//            $table->foreign('sumber_dana_id')->references('_id')->on('sumber_dana');
+//            $table->foreign('user_id')->references('_id')->on('users');
+//            $table->foreign('organisasi_id')->references('_id')->on('organisasi');
             $table->primary('_id');
             $table->softDeletes();
             # not fulltext search

@@ -17,6 +17,8 @@ class CreateTableKabupaten extends Migration {
             $table->integer('prov_id');
             $table->string('kode_kab');
             $table->string('kab');
+            $table->string('user_creator')->nullable()->default(null);
+            $table->string('user_updater')->nullable()->default(null);
             $table->timestamps();
             $table->index(['_id']);
             $table->foreign('prov_id')->references('_id')->on('provinsi');

@@ -18,6 +18,8 @@ class CreateTableRpjmdes extends Migration {
             $table->string('visi');
             $table->string('user_id');
             $table->string('organisasi_id');
+            $table->string('user_creator')->nullable()->default(null);
+            $table->string('user_updater')->nullable()->default(null);
             $table->timestamps();
             $table->primary('_id');
             $table->index(['_id']);

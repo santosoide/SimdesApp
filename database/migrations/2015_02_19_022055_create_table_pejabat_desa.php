@@ -21,6 +21,8 @@ class CreateTablePejabatDesa extends Migration {
             $table->string('user_id');
             $table->string('fungsi');
             $table->integer('level'); // untuk mendapatkan level dari pejabat desa
+            $table->string('user_creator')->nullable()->default(null);
+            $table->string('user_updater')->nullable()->default(null);
             $table->timestamps();
             $table->index(['_id']);
             $table->foreign('user_id')->references('_id')->on('users');

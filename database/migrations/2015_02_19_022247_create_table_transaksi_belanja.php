@@ -57,6 +57,8 @@ class CreateTableTransaksiBelanja extends Migration {
 
             // todo ganti sumber_dana ke dana_desa_id
             $table->string('dana_desa_id');
+            $table->string('user_creator')->nullable()->default(null);
+            $table->string('user_updater')->nullable()->default(null);
 
             $table->timestamps();
             $table->index(['_id']);

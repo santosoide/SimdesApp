@@ -13,7 +13,7 @@ class BidangCreateForm extends Request
      */
     protected $customAttributes = [
         'kode_rekening' => 'Kode Rekening',
-        'fungsi_id'     => 'Fungsi Id',
+        'kewenangan_id' => 'Kewenangan Id',
         'bidang'        => 'Bidang'
     ];
 
@@ -24,7 +24,7 @@ class BidangCreateForm extends Request
     {
         return [
             'kode_rekening' => 'required|max:255',
-            'fungsi_id'     => 'required|integer',
+            'kewenangan_id' => 'required|integer',
             'bidang'        => 'required|max:255'
         ];
     }
@@ -50,7 +50,7 @@ class BidangCreateForm extends Request
             'success'    => false,
             'validation' => [
                 'kode_rekening' => $message->first('kode_rekening'),
-                'fungsi_id'     => $message->first('fungsi_id'),
+                'kewenangan_id' => $message->first('kewenangan_id'),
                 'bidang'        => $message->first('bidang')
             ]
         ];

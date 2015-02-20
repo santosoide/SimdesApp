@@ -16,6 +16,8 @@ class CreateTableProvinsi extends Migration {
             $table->increments('_id');
             $table->string('kode_prov');
             $table->string('prov');
+            $table->string('user_creator')->nullable()->default(null);
+            $table->string('user_updater')->nullable()->default(null);
             $table->timestamps();
             $table->index(['_id']);
             # fulltext search kode_prov, prov

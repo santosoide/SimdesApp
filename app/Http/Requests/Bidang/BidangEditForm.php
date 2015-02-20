@@ -3,7 +3,8 @@
 use SimdesApp\Http\Requests\Request;
 use Illuminate\Validation\Validator;
 
-class BidangEditForm extends Request {
+class BidangEditForm extends Request
+{
 
     /**
      * Custom attribute
@@ -12,7 +13,7 @@ class BidangEditForm extends Request {
      */
     protected $customAttributes = [
         'kode_rekening' => 'Kode Rekening',
-        'fungsi_id'     => 'Fungsi Id',
+        'kewenangan_id' => 'Kewenangan Id',
         'bidang'        => 'Bidang'
     ];
 
@@ -23,7 +24,7 @@ class BidangEditForm extends Request {
     {
         return [
             'kode_rekening' => 'max:255',
-            'fungsi_id'     => 'integer',
+            'kewenangan_id' => 'integer',
             'bidang'        => 'max:255'
         ];
     }
@@ -49,7 +50,7 @@ class BidangEditForm extends Request {
             'success'    => false,
             'validation' => [
                 'kode_rekening' => $message->first('kode_rekening'),
-                'fungsi_id'     => $message->first('fungsi_id'),
+                'kewenangan_id' => $message->first('kewenangan_id'),
                 'bidang'        => $message->first('bidang')
             ]
         ];

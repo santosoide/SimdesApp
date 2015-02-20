@@ -22,7 +22,6 @@ class CreateTablePembiayaan extends Migration {
             $table->integer('kelompok_id');
             $table->integer('jenis_id');
             $table->integer('obyek_id');
-            $table->integer('rincian_id');
             $table->string('volume1');
             $table->string('volume2');
             $table->string('volume3');
@@ -53,10 +52,12 @@ class CreateTablePembiayaan extends Migration {
             $table->double('november')->default(0);
             $table->double('desember')->default(0);
             $table->double('realisasi')->default(0);
+            $table->string('user_creator')->nullable()->default(null);
+            $table->string('user_updater')->nullable()->default(null);
             $table->timestamps();
             $table->index(['_id']);
-            $table->foreign('user_id')->references('_id')->on('users');
-            $table->foreign('organisasi_id')->references('_id')->on('organisasi');
+//            $table->foreign('user_id')->references('_id')->on('users');
+//            $table->foreign('organisasi_id')->references('_id')->on('organisasi');
             $table->primary('_id');
             $table->softDeletes();
             # full text pembiayaan, jumlah

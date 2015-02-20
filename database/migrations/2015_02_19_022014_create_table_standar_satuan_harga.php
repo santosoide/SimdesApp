@@ -20,6 +20,8 @@ class CreateTableStandarSatuanHarga extends Migration {
             $table->string('spesifikasi');
             $table->string('satuan');
             $table->double('harga');
+            $table->string('user_creator')->nullable()->default(null);
+            $table->string('user_updater')->nullable()->default(null);
             $table->timestamps();
             $table->index(['_id', 'barang']);
             $table->softDeletes();

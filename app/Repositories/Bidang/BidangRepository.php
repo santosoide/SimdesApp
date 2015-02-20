@@ -4,7 +4,8 @@ use SimdesApp\Models\Bidang;
 use SimdesApp\Repositories\AbstractRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
-class BidangRepository extends AbstractRepository {
+class BidangRepository extends AbstractRepository
+{
 
     protected $cache;
 
@@ -51,7 +52,7 @@ class BidangRepository extends AbstractRepository {
             $bidang = $this->getNew();
 
             $bidang->kode_rekening = e($data['kode_rekening']);
-            $bidang->fungsi_id = $data['fungsi_id'];
+            $bidang->kewenangan_id = $data['kewenangan_id'];
             $bidang->bidang = e($data['bidang']);
 
             $bidang->save();
@@ -89,7 +90,7 @@ class BidangRepository extends AbstractRepository {
             $bidang = $this->findById($id);
 
             $bidang->kode_rekening = e($data['kode_rekening']);
-            $bidang->fungsi_id = $data['fungsi_id'];
+            $bidang->kewenangan_id = $data['kewenangan_id'];
             $bidang->bidang = e($data['bidang']);
 
             $bidang->save();

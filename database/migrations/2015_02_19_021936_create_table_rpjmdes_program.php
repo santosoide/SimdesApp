@@ -17,47 +17,54 @@ class CreateTableRpjmdesProgram extends Migration {
             $table->string('_id');
             $table->string('user_id');
             $table->string('organisasi_id');
-            $table->string('masalah_id');
-            $table->integer('program_id');
-            // @todo tambah manual pada database online
-            // @todo frontend issue
-            // program (string) ditambahkan pada waktu input atau update fungsinya untuk
-            // mengurangi pencarian relasi dari table kewenangan program, (string) bisa
-            // didapatkan dari frontend yang mengirim string lewat input hidden
-            $table->string('program');
-            $table->string('pejabat_desa_id');
-            // implementasi terbaru sumber_dana_id diganti dengan dana_desa_id
-            $table->string('dana_desa_id');
-            $table->string('lokasi');
-            $table->integer('sifat');
-            $table->integer('waktu');
-            $table->string('satuan_waktu');
-            $table->string('volume1');
-            $table->string('satuan1');
-            $table->string('volume2');
-            $table->string('satuan2');
-            $table->string('volume3');
-            $table->string('satuan3');
-            $table->double('harga_satuan');
-            $table->double('pagu_anggaran');
-            // @todo : ganti di database production
-            // 0 = nothing - 1 = request - 2 = finish
+
+            // dropdown ['required']
+            $table->integer('kegiatan_id')->nullable()->default(1);
+
+            // dropdown ['required']
+            // 1 swakelola
+            // 2 kerja sama antar desa
+            // 3 kerjasama pihak 3
+            $table->integer('pelaksanaan')->nullable()->default(1);
+
+            // dropdown ['required']
+            $table->integer('sumber_dana_id');
+
+            ### input proses ['not required']
+            // hasil dari akumulasi disetiap lokasi tidak ditampilkan
+            $table->double('pagu_anggaran')->nullable()->default(0);
+            // tahun anggaran dibuat modal seperti pelaksanaan penganggaran
+            // sesudah dapat pagu anggaran dibagi otomatis atau manual
+            $table->double('tahun_1')->nullable()->default(0);
+            $table->double('tahun_2')->nullable()->default(0);
+            $table->double('tahun_3')->nullable()->default(0);
+            $table->double('tahun_4')->nullable()->default(0);
+            $table->double('tahun_5')->nullable()->default(0);
+            $table->double('tahun_6')->nullable()->default(0);
+
+            // Tweak for Backoffice functionality
+            // 0 = nothing | 1 = proses | 2 = revisi | 3 = finish | 4 = batal verifikasi/hapus
+            // keterangan:
+            // 0 = tombol tambah, pelaksanaan, detil, proses, edit dan hapus tampil
+            // 1 = tombol tambah, pelaksanaan, detil tampil
+            // 2 = tombol pelaksanaan, detil, edit tampil
+            // 3 = tombol pelaksanaan, detil tampil tapi readonly
+            // 4 = tombol hapus tampil
             $table->smallInteger('is_finish')->default(0);
-            $table->date('finished_at');
-            // 0 = nothing - 1 = reject
-            $table->smallInteger('is_rejected')->default(0);
-            $table->date('rejected_at');
-            // kasih keterangan reject
-            $table->text('keterangan_reject')->nullable();
+
+            // keterangan revisi, diinput ketika is_finish = 2
+            $table->string('keterangan_revisi')->nullable();
+            $table->string('keterangan_reject')->nullable();
+            $table->date('finished_at')->nullable();
+
+            $table->string('user_creator')->nullable()->default(null);
+            $table->string('user_updater')->nullable()->default(null);
             $table->timestamps();
             $table->index(['_id']);
-            $table->foreign('masalah_id')->references('_id')->on('rpjmdes_masalah');
-            $table->foreign('program_id')->references('_id')->on('program');
-            $table->foreign('pejabat_desa_id')->references('_id')->on('pejabat_desa');
-            $table->foreign('dana_desa_id')->references('_id')->on('dana_desa');
-            $table->foreign('dana_desa_id')->references('_id')->on('dana_desa');
-            $table->foreign('user_id')->references('_id')->on('users');
-            $table->foreign('organisasi_id')->references('_id')->on('organisasi');
+//            $table->foreign('kegiatan_id')->references('_id')->on('kegiatan');
+//            $table->foreign('sumber_dana_id')->references('_id')->on('sumber_dana');
+//            $table->foreign('user_id')->references('_id')->on('users');
+//            $table->foreign('organisasi_id')->references('_id')->on('organisasi');
             $table->primary('_id');
             $table->softDeletes();
         });

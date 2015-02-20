@@ -84,6 +84,8 @@ class OrganisasiRepository extends AbstractRepository
             $organisasi->kode_prov = $data['kode_prov'];
             $organisasi->user_id = e($data['user_id']);
             $organisasi->is_active = $data['is_active'];
+            $organisasi->jumlah_pddk_miskin = $data['jumlah_pddk_miskin'];
+            $organisasi->luas_wilayah = $data['luas_wilayah'];
 
             $organisasi->save();
 
@@ -136,6 +138,8 @@ class OrganisasiRepository extends AbstractRepository
             $organisasi->kode_prov = $data['kode_prov'];
             $organisasi->user_id = e($data['user_id']);
             $organisasi->is_active = $data['is_active'];
+            $organisasi->jumlah_pddk_miskin = $data['jumlah_pddk_miskin'];
+            $organisasi->luas_wilayah = $data['luas_wilayah'];
 
             $organisasi->save();
 

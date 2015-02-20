@@ -21,7 +21,6 @@ class CreateTableBelanja extends Migration {
             $table->integer('kelompok_id');
             $table->integer('obyek_id');
             $table->integer('jenis_id');
-            $table->integer('rincian_id');
             //            $table->integer('standar_satuan_harga_id');
             $table->string('belanja');
             $table->string('tahun');
@@ -56,15 +55,16 @@ class CreateTableBelanja extends Migration {
             $table->double('november')->default(0);
             $table->double('desember')->default(0);
             $table->double('realisasi')->default(0);
+            $table->string('user_creator')->nullable()->default(null);
+            $table->string('user_updater')->nullable()->default(null);
             $table->timestamps();
             $table->index(['_id']);
             //            $table->foreign('standar_satuan_harga_id')->references('_id')->on('standar_satuan_harga');
-            $table->foreign('organisasi_id')->references('_id')->on('organisasi');
-            $table->foreign('user_id')->references('_id')->on('users');
-            $table->foreign('kelompok_id')->references('_id')->on('kelompok');
-            $table->foreign('obyek_id')->references('_id')->on('obyek');
-            $table->foreign('jenis_id')->references('_id')->on('jenis');
-            $table->foreign('rincian_id')->references('_id')->on('rincian');
+//            $table->foreign('organisasi_id')->references('_id')->on('organisasi');
+//            $table->foreign('user_id')->references('_id')->on('users');
+//            $table->foreign('kelompok_id')->references('_id')->on('kelompok');
+//            $table->foreign('obyek_id')->references('_id')->on('obyek');
+//            $table->foreign('jenis_id')->references('_id')->on('jenis');
             $table->primary('_id');
             $table->softDeletes();
             # full text belanja, jumlah

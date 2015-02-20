@@ -44,6 +44,8 @@ class CreateTableTransaksiPendapatan extends Migration {
             // namun tidak dikeluarkan diinput create form atau edit form, proses inputnya hanya diRepository saja
             $table->string('penerima');
             $table->string('organisasi_id');
+            $table->string('user_creator')->nullable()->default(null);
+            $table->string('user_updater')->nullable()->default(null);
             $table->timestamps();
             $table->index(['_id']);
             //            $table->foreign('pendapatan_id')->references('_id')->on('pendapatan');
