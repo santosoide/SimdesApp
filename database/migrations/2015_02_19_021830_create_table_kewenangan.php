@@ -31,5 +31,4 @@ class CreateTableKewenangan extends Migration {
     {
         Schema::drop('kewenangan');
     }
-
 }

@@ -56,6 +56,16 @@ Route::group(['namespace' => 'Api\V1\Bidang', 'prefix' => 'api/v1/backoffice'], 
     Route::resource('bidang', 'BidangController');
 });
 
+Route::group(['namespace' => 'Api\V1\Kegiatan', 'prefix' => 'api/v1/backoffice'], function () {
+    // Akun resource
+    Route::resource('kegiatan', 'KegiatanController');
+});
+
+Route::group(['namespace' => 'Api\V1\Kewenangan', 'prefix' => 'api/v1/backoffice'], function () {
+    // Akun resource
+    Route::resource('kewenangan', 'KewenanganController');
+});
+
 Route::get('get-token', function(){
    return csrf_token();
 });
