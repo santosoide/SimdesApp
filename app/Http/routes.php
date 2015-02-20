@@ -66,6 +66,11 @@ Route::group(['namespace' => 'Api\V1\Kewenangan', 'prefix' => 'api/v1/backoffice
     Route::resource('kewenangan', 'KewenanganController');
 });
 
+Route::group(['namespace' => 'Api\V1\Program', 'prefix' => 'api/v1/backoffice'], function () {
+    // Akun resource
+    Route::resource('program', 'ProgramController');
+});
+
 Route::get('get-token', function(){
    return csrf_token();
 });
