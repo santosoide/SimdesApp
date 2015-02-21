@@ -86,6 +86,11 @@ Route::group(['namespace' => 'Api\V1\StandarSatuanHarga', 'prefix' => 'api/v1/ba
     Route::resource('standar-satuan-harga', 'StandarSatuanHargaController');
 });
 
+Route::group(['namespace' => 'Api\V1\Pendapatan', 'prefix' => 'api/v1'], function () {
+    // Pendapatan resource
+    Route::resource('pendapatan', 'PendapatanController');
+});
+
 Route::get('get-token', function(){
    return csrf_token();
 });
