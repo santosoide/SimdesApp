@@ -1,7 +1,7 @@
 <?php namespace SimdesApp\Models;
 
 
-class Program extends UuidModel
+class Program extends Model
 {
 
     protected $table = 'program';

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class SumberDana extends UuidModel {
+class SumberDana extends Model {
 
     Use SoftDeletes;
 

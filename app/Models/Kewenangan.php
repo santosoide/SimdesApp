@@ -1,7 +1,7 @@
 <?php namespace SimdesApp\Models;
 
 
-class Kewenangan extends UuidModel {
+class Kewenangan extends Model {
 
 	/**
      * The database table used by the model.

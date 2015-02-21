@@ -1,6 +1,6 @@
 <?php namespace SimdesApp\Models;
 
-class Jenis extends UuidModel {
+class Jenis extends Model {
 
     protected $table = 'jenis';
 

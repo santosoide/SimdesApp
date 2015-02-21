@@ -1,6 +1,8 @@
 <?php namespace SimdesApp\Models;
 
-class Akun extends UuidModel {
+use Illuminate\Database\Eloquent\Model;
+
+class Akun extends Model {
 
     protected $table = 'akun';
 

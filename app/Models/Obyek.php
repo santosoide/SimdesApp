@@ -1,7 +1,7 @@
 <?php namespace SimdesApp\Models;
 
 
-class Obyek extends UuidModel {
+class Obyek extends Model {
 
     protected $table = 'obyek';
 
