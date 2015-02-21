@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class RpjmdesMisi extends UuidModel {
+class SumberDana extends UuidModel {
 
     Use SoftDeletes;
 
@@ -11,7 +11,7 @@ class RpjmdesMisi extends UuidModel {
      *
      * @var string
      */
-    protected $table = 'rpjmdes_misi';
+    protected $table = 'sumber_dana';
 
     /**
      * The attributes that should be mutated to dates.
@@ -20,9 +20,10 @@ class RpjmdesMisi extends UuidModel {
      */
     protected $dates = ['deleted_at'];
 
-    protected $with = [
-        'rpjmdes'
-    ];
+    /**
+     * @var array
+     */
+    // protected $with = [''];
 
     /**
      * The attributes that aren't mass assignable.
@@ -41,10 +42,7 @@ class RpjmdesMisi extends UuidModel {
      * @var array
      */
     protected $fillable = [
-        'rpjmdes_id',
-        'misi',
-        'user_id',
-        'organisasi_id'
+        'sumber_dana'
     ];
 
     /**
@@ -67,22 +65,18 @@ class RpjmdesMisi extends UuidModel {
          */
         static::creating(function ($model) {
             // flush the cache section
-            \Cache::section('rpjmdes_misi')->flush();
+            \Cache::section('sumber_dana')->flush();
         });
 
         static::updating(function ($model) {
             // flush the cache section
-            \Cache::section('rpjmdes_misi')->flush();
+            \Cache::section('sumber_dana')->flush();
         });
 
         static::deleting(function ($model) {
             // flush the cache section
-            \Cache::section('rpjmdes_misi')->flush();
+            \Cache::section('sumber_dana')->flush();
         });
     }
 
-    public function rpjmdes()
-    {
-        return $this->belongsTo('SimdesApp\Models\Rpjmdes', 'rpjmdes_id');
-    }
 }

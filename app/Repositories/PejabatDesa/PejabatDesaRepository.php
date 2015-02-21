@@ -1,19 +1,19 @@
-<?php namespace SimdesApp\Repositories\Program;
+<?php namespace SimdesApp\Repositories\PejabatDesa;
 
-use SimdesApp\Models\Program;
+use SimdesApp\Models\PejabatDesa;
 use SimdesApp\Repositories\AbstractRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
-class ProgramRepository extends AbstractRepository {
+class PejabatDesaRepository extends AbstractRepository {
 
     /**
      * @var LaraCacheInterface
      */
     protected $cache;
 
-    public function __construct(Program $program, LaraCacheInterface $cache)
+    public function __construct(PejabatDesa $pejabatDesa, LaraCacheInterface $cache)
     {
-        $this->model = $program;
+        $this->model = $pejabatDesa;
         $this->cache = $cache;
     }
 
@@ -28,10 +28,10 @@ class ProgramRepository extends AbstractRepository {
     public function find($page = 1, $limit = 10, $term = null)
     {
         // Create Key for cache
-        $key = 'find-kewenangan-' . $page . $limit . $term;
+        $key = 'find-pejabat_desa-' . $page . $limit . $term;
 
         // Create Section
-        $section = 'kewenangan';
+        $section = 'pejabat_desa';
 
         // If cache is exist get data from cache
         if ($this->cache->has($section, $key)) {
@@ -39,15 +39,15 @@ class ProgramRepository extends AbstractRepository {
         }
 
         // Search data
-        $program = $this->model
-            ->where('kode_rekening', 'like', '%' . $term . '%')
+        $pejabatDesa = $this->model
+            ->where('nama', 'like', '%' . $term . '%')
             ->paginate($limit)
             ->toArray();
 
         // Create cache
-        $this->cache->put($section, $key, $program, $limit);
+        $this->cache->put($section, $key, $pejabatDesa, $limit);
 
-        return $program;
+        return $pejabatDesa;
     }
 
     /**
@@ -59,20 +59,22 @@ class ProgramRepository extends AbstractRepository {
     public function create(array $data)
     {
         try {
-            $program = $this->getNew();
+            $pejabatDesa = $this->getNew();
 
-            $program->kode_rekening = e($data['kode_rekening']);
-            $program->bidang_id = $data['bidang_id'];
-            $program->program = e($data['program']);
-            $program->organisasi_id = e($data['organisasi_id']);
+            $pejabatDesa->nama = e($data['nama']);
+            $pejabatDesa->jabatan = e($data['jabatan']);
+            $pejabatDesa->organisasi_id = e($data['organisasi_id']);
+            $pejabatDesa->user_id = e($data['user_id']);
+            $pejabatDesa->fungsi = e($data['fungsi']);
+            $pejabatDesa->level = $data['level'];
 
-            $program->save();
+            $pejabatDesa->save();
 
             // Return result success
             return $this->successInsertResponse();
 
         } catch (\Exception $ex) {
-            \Log::error('ProgramRepository create action something wrong -' . $ex);
+            \Log::error('PejabatDesaRepository create action something wrong -' . $ex);
             return $this->errorInsertResponse();
         }
     }
@@ -98,20 +100,22 @@ class ProgramRepository extends AbstractRepository {
     public function update($id, array $data)
     {
         try {
-            $program = $this->findById($id);
+            $pejabatDesa = $this->findById($id);
 
-            $program->kode_rekening = e($data['kode_rekening']);
-            $program->bidang_id = $data['bidang_id'];
-            $program->program = e($data['program']);
-            $program->organisasi_id = e($data['organisasi_id']);
+            $pejabatDesa->nama = e($data['nama']);
+            $pejabatDesa->jabatan = e($data['jabatan']);
+            $pejabatDesa->organisasi_id = e($data['organisasi_id']);
+            $pejabatDesa->user_id = e($data['user_id']);
+            $pejabatDesa->fungsi = e($data['fungsi']);
+            $pejabatDesa->level = $data['level'];
 
-            $program->save();
+            $pejabatDesa->save();
 
             // Return result success
             return $this->successUpdateResponse();
 
         } catch (\Exception $ex) {
-            \Log::error('ProgramRepository update action something wrong -' . $ex);
+            \Log::error('PejabatDesaRepository update action something wrong -' . $ex);
             return $this->errorUpdateResponse();
         }
     }
@@ -125,15 +129,15 @@ class ProgramRepository extends AbstractRepository {
     public function destroy($id)
     {
         try {
-            $program = $this->findById($id);
+            $pejabatDesa = $this->findById($id);
 
-            $program->delete();
+            $pejabatDesa->delete();
 
             // Return result success
             return $this->successDeleteResponse();
 
         } catch (\Exception $ex) {
-            \Log::error('ProgramRepository destroy action something wrong -' . $ex);
+            \Log::error('PejabatDesaRepository destroy action something wrong -' . $ex);
             return $this->errorDeleteResponse();
         }
     }

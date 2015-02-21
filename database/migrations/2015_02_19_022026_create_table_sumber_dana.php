@@ -16,6 +16,8 @@ class CreateTableSumberDana extends Migration {
 
             $table->increments('_id');
             $table->string('sumber_dana');
+
+            // Code behind
             $table->string('user_creator')->nullable()->default(null);
             $table->string('user_updater')->nullable()->default(null);
             $table->timestamps();

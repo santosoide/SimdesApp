@@ -15,12 +15,15 @@ class CreateTablePejabatDesa extends Migration {
             $table->engine = 'InnoDB';
 
             $table->string('_id');
+
             $table->string('nama');
             $table->string('jabatan');
             $table->string('organisasi_id');
             $table->string('user_id');
             $table->string('fungsi');
             $table->integer('level'); // untuk mendapatkan level dari pejabat desa
+
+            // Code behind
             $table->string('user_creator')->nullable()->default(null);
             $table->string('user_updater')->nullable()->default(null);
             $table->timestamps();

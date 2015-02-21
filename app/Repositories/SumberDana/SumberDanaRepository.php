@@ -1,19 +1,19 @@
-<?php namespace SimdesApp\Repositories\Program;
+<?php namespace SimdesApp\Repositories\SumberDana;
 
-use SimdesApp\Models\Program;
+use SimdesApp\Models\SumberDana;
 use SimdesApp\Repositories\AbstractRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
-class ProgramRepository extends AbstractRepository {
+class SumberDanaRepository extends AbstractRepository {
 
     /**
      * @var LaraCacheInterface
      */
     protected $cache;
 
-    public function __construct(Program $program, LaraCacheInterface $cache)
+    public function __construct(SumberDana $sumberDana, LaraCacheInterface $cache)
     {
-        $this->model = $program;
+        $this->model = $sumberDana;
         $this->cache = $cache;
     }
 
@@ -28,10 +28,10 @@ class ProgramRepository extends AbstractRepository {
     public function find($page = 1, $limit = 10, $term = null)
     {
         // Create Key for cache
-        $key = 'find-kewenangan-' . $page . $limit . $term;
+        $key = 'find-sumber_dana-' . $page . $limit . $term;
 
         // Create Section
-        $section = 'kewenangan';
+        $section = 'sumber_dana';
 
         // If cache is exist get data from cache
         if ($this->cache->has($section, $key)) {
@@ -39,15 +39,15 @@ class ProgramRepository extends AbstractRepository {
         }
 
         // Search data
-        $program = $this->model
-            ->where('kode_rekening', 'like', '%' . $term . '%')
+        $sumberDana = $this->model
+            ->where('sumber_dana', 'like', '%' . $term . '%')
             ->paginate($limit)
             ->toArray();
 
         // Create cache
-        $this->cache->put($section, $key, $program, $limit);
+        $this->cache->put($section, $key, $sumberDana, $limit);
 
-        return $program;
+        return $sumberDana;
     }
 
     /**
@@ -59,20 +59,17 @@ class ProgramRepository extends AbstractRepository {
     public function create(array $data)
     {
         try {
-            $program = $this->getNew();
+            $sumberDana = $this->getNew();
 
-            $program->kode_rekening = e($data['kode_rekening']);
-            $program->bidang_id = $data['bidang_id'];
-            $program->program = e($data['program']);
-            $program->organisasi_id = e($data['organisasi_id']);
+            $sumberDana->sumber_dana = e($data['sumber_dana']);
 
-            $program->save();
+            $sumberDana->save();
 
-            // Return result success
+            /*Return result success*/
             return $this->successInsertResponse();
 
         } catch (\Exception $ex) {
-            \Log::error('ProgramRepository create action something wrong -' . $ex);
+            \Log::error('SumberDanaRepository create action something wrong -' . $ex);
             return $this->errorInsertResponse();
         }
     }
@@ -98,20 +95,17 @@ class ProgramRepository extends AbstractRepository {
     public function update($id, array $data)
     {
         try {
-            $program = $this->findById($id);
+            $sumberDana = $this->findById($id);
 
-            $program->kode_rekening = e($data['kode_rekening']);
-            $program->bidang_id = $data['bidang_id'];
-            $program->program = e($data['program']);
-            $program->organisasi_id = e($data['organisasi_id']);
+            $sumberDana->sumber_dana = e($data['sumber_dana']);
 
-            $program->save();
+            $sumberDana->save();
 
             // Return result success
             return $this->successUpdateResponse();
 
         } catch (\Exception $ex) {
-            \Log::error('ProgramRepository update action something wrong -' . $ex);
+            \Log::error('SumberDanaRepository update action something wrong -' . $ex);
             return $this->errorUpdateResponse();
         }
     }
@@ -125,15 +119,15 @@ class ProgramRepository extends AbstractRepository {
     public function destroy($id)
     {
         try {
-            $program = $this->findById($id);
+            $sumberDana = $this->findById($id);
 
-            $program->delete();
+            $sumberDana->delete();
 
             // Return result success
             return $this->successDeleteResponse();
 
         } catch (\Exception $ex) {
-            \Log::error('ProgramRepository destroy action something wrong -' . $ex);
+            \Log::error('SumberDanaRepository destroy action something wrong -' . $ex);
             return $this->errorDeleteResponse();
         }
     }

@@ -2,16 +2,17 @@
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class RpjmdesMisi extends UuidModel {
+class Rkpdes extends UuidModel
+{
 
     Use SoftDeletes;
 
-	/**
+    /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'rpjmdes_misi';
+    protected $table = 'rkpdes';
 
     /**
      * The attributes that should be mutated to dates.
@@ -20,8 +21,14 @@ class RpjmdesMisi extends UuidModel {
      */
     protected $dates = ['deleted_at'];
 
+    /**
+     * @var array
+     */
     protected $with = [
-        'rpjmdes'
+        'users',
+        'organisasi',
+        'rpjmdes_program',
+        'dana_desa'
     ];
 
     /**
@@ -41,10 +48,16 @@ class RpjmdesMisi extends UuidModel {
      * @var array
      */
     protected $fillable = [
-        'rpjmdes_id',
-        'misi',
         'user_id',
-        'organisasi_id'
+        'organisasi_id',
+        'rpjmdes_program_id',
+        'dana_desa_id',
+        'tahun',
+        'lokasi',
+        'anggaran',
+        'kegiatan',
+        'pejabat_desa_id',
+        'is_finish'
     ];
 
     /**
@@ -67,22 +80,37 @@ class RpjmdesMisi extends UuidModel {
          */
         static::creating(function ($model) {
             // flush the cache section
-            \Cache::section('rpjmdes_misi')->flush();
+            \Cache::section('rkpdes')->flush();
         });
 
         static::updating(function ($model) {
             // flush the cache section
-            \Cache::section('rpjmdes_misi')->flush();
+            \Cache::section('rkpdes')->flush();
         });
 
         static::deleting(function ($model) {
             // flush the cache section
-            \Cache::section('rpjmdes_misi')->flush();
+            \Cache::section('rkpdes')->flush();
         });
     }
 
-    public function rpjmdes()
+    public function users()
     {
-        return $this->belongsTo('SimdesApp\Models\Rpjmdes', 'rpjmdes_id');
+        return $this->belongsTo('SimdesApp\Models\User', 'user_id');
+    }
+
+    public function organisasi()
+    {
+        return $this->belongsTo('SimdesApp\Models\Organisasi', 'organisasi_id');
+    }
+
+    public function rpjmdes_program()
+    {
+        return $this->belongsTo('SimdesApp\Models\RpjmdesProgram', 'rpjmdes_program_id');
+    }
+
+    public function dana_desa()
+    {
+        return $this->belongsTo('SimdesApp\Models\DanaDesa', 'dana_desa_id');
     }
 }

@@ -15,6 +15,7 @@ class CreateTableRkpdes extends Migration {
             $table->engine = 'InnoDB';
 
             $table->string('_id');
+
             $table->string('user_id');
             $table->string('organisasi_id');
             $table->string('rpjmdes_program_id');
@@ -25,6 +26,8 @@ class CreateTableRkpdes extends Migration {
             $table->string('kegiatan');
             $table->string('pejabat_desa_id');
             $table->boolean('is_finish')->default(0);
+
+            // Code behind
             $table->string('user_creator')->nullable()->default(null);
             $table->string('user_updater')->nullable()->default(null);
             $table->timestamps();

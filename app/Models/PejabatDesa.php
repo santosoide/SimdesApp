@@ -2,16 +2,17 @@
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class RpjmdesMisi extends UuidModel {
+class PejabatDesa extends UuidModel
+{
 
     Use SoftDeletes;
 
-	/**
+    /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'rpjmdes_misi';
+    protected $table = 'pejabat_desa';
 
     /**
      * The attributes that should be mutated to dates.
@@ -20,8 +21,12 @@ class RpjmdesMisi extends UuidModel {
      */
     protected $dates = ['deleted_at'];
 
+    /**
+     * @var array
+     */
     protected $with = [
-        'rpjmdes'
+        'organisasi',
+        'users'
     ];
 
     /**
@@ -41,10 +46,12 @@ class RpjmdesMisi extends UuidModel {
      * @var array
      */
     protected $fillable = [
-        'rpjmdes_id',
-        'misi',
+        'nama',
+        'jabatan',
+        'organisasi_id',
         'user_id',
-        'organisasi_id'
+        'fungsi',
+        'level'
     ];
 
     /**
@@ -67,22 +74,27 @@ class RpjmdesMisi extends UuidModel {
          */
         static::creating(function ($model) {
             // flush the cache section
-            \Cache::section('rpjmdes_misi')->flush();
+            \Cache::section('pejabat_desa')->flush();
         });
 
         static::updating(function ($model) {
             // flush the cache section
-            \Cache::section('rpjmdes_misi')->flush();
+            \Cache::section('pejabat_desa')->flush();
         });
 
         static::deleting(function ($model) {
             // flush the cache section
-            \Cache::section('rpjmdes_misi')->flush();
+            \Cache::section('pejabat_desa')->flush();
         });
     }
 
-    public function rpjmdes()
+    public function organisasi()
     {
-        return $this->belongsTo('SimdesApp\Models\Rpjmdes', 'rpjmdes_id');
+        return $this->belongsTo('SimdesApp\Models\Organisasi', 'organisasi_id');
+    }
+
+    public function users()
+    {
+        return $this->belongsTo('SimdesApp\Models\User', 'user_id');
     }
 }
