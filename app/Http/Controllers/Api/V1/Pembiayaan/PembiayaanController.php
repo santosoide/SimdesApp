@@ -16,7 +16,7 @@ class PembiayaanController extends Controller
      */
     public function index(PembiayaanRepository $pembiayaan)
     {
-        return $pembiayaan->find($this->input('page'), $limit = 10, $this->input('term'));
+        return $pembiayaan->find($this->input('page'), $limit = 10, $this->input('term'), $this->input('organisasi_id'));
     }
 
     /**

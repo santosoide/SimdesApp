@@ -17,7 +17,7 @@ class PendapatanController extends Controller
      */
     public function index(PendapatanRepository $pendapatan)
     {
-        return $pendapatan->find($this->input('page'), $limit = 10, $this->input('term'));
+        return $pendapatan->find($this->input('page'), $limit = 10, $this->input('term'), $this->input('organisasi_id'));
     }
 
     /**
