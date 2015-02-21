@@ -4,7 +4,8 @@ use SimdesApp\Models\Obyek;
 use SimdesApp\Repositories\AbstractRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
-class ObyekRepository extends AbstractRepository {
+class ObyekRepository extends AbstractRepository
+{
 
     /**
      * @var LaraCacheInterface
@@ -140,5 +141,29 @@ class ObyekRepository extends AbstractRepository {
             \Log::error('ObyekRepository destroy action something wrong -' . $ex);
             return $this->errorDeleteResponse();
         }
+    }
+
+    /**
+     * Get obyek filter by id
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function getNamaObyek($id)
+    {
+        $data = $this->findById($id);
+        return $data->obyek;
+    }
+
+    /**
+     * Get kode rekening
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function getKodeRekening($id)
+    {
+        $data = $this->findById($id);
+        return $data->kode_rekening;
     }
 }

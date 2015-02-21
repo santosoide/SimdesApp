@@ -198,4 +198,41 @@ class PendapatanRepository extends AbstractRepository
         }
     }
 
+//    /**
+//     * Get name pendapatan from kelompok, jenis, obyek
+//     *
+//     * @param $kelompok_id
+//     * @param $jenis_id
+//     * @param $obyek_id
+//     * @return mixed
+//     */
+//    public function getNamaPendapatan($kelompok_id, $jenis_id, $obyek_id)
+//    {
+//        if (!empty($obyek_id)) {
+//            return $this->obyek->getNamaObyek($obyek_id);
+//        } elseif (!empty($jenis_id)) {
+//            return $this->jenis->getKodeRekening($jenis_id);
+//        } elseif (!empty($kelompok_id)) {
+//            return $this->kelompok->getNamaKelompok($kelompok_id);
+//        }
+//    }
+//
+//    /**
+//     * Get kode rekening from kelompok, jenis, obyek
+//     *
+//     * @param $kelompok_id
+//     * @param $jenis_id
+//     * @param $obyek_id
+//     * @return mixed
+//     */
+//    public function getKodeRekening($kelompok_id, $jenis_id, $obyek_id)
+//    {
+//        if (!empty($obyek_id)) {
+//            return $this->obyek->getKodeRekening($obyek_id);
+//        } elseif (!empty($jenis_id)) {
+//            return $this->jenis->getKodeRekening($jenis_id);
+//        } elseif (!empty($kelompok_id)) {
+//            return $this->kelompok->getKodeRekening($kelompok_id);
+//        }
+//    }
 }

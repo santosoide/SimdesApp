@@ -143,4 +143,28 @@ class JenisRepository extends AbstractRepository
         }
     }
 
+    /**
+     * Get jenis filter by id
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function getNamaJenis($id)
+    {
+        $data = $this->findById($id);
+        return $data->jenis;
+    }
+
+    /**
+     * Get kode rekening
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function getKodeRekening($id)
+    {
+        $data = $this->findById($id);
+        return $data->kode_rekening;
+    }
+
 }

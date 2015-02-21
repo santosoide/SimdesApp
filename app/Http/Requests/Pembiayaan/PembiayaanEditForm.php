@@ -1,9 +1,9 @@
-<?php namespace SimdesApp\Http\Requests\Pendapatan;
+<?php namespace SimdesApp\Http\Requests\Pembiayaan;
 
 use Illuminate\Validation\Validator;
 use SimdesApp\Http\Requests\Request;
 
-class PendapatanCreateForm extends Request
+class PembiayaanEditForm extends Request
 {
 
     /**
@@ -14,13 +14,14 @@ class PendapatanCreateForm extends Request
         'kelompok_id'  => 'Kelompok',
         'jenis_id'     => 'Jenis',
         'obyek_id'     => 'Obyek',
+        'rincian_id'   => 'Rincian',
         'volume1'      => 'Volume 1',
         'volume2'      => 'Volume 2',
         'volume3'      => 'Volume 3',
         'satuan1'      => 'Satuan 1',
         'satuan2'      => 'Satuan 2',
         'satuan3'      => 'Satuan 3',
-        'satuan_harga' => 'Harga Satuan'
+        'satuan_harga' => 'Harga Satuan',
     ];
 
     /**
@@ -41,16 +42,17 @@ class PendapatanCreateForm extends Request
     {
         return [
             'tahun'        => 'required|integer',
-            'kelompok_id'  => 'required|integer|min:1',
+            'kelompok_id'  => 'required|integer',
             'jenis_id'     => 'integer',
             'obyek_id'     => 'integer',
+            'rincian_id'   => 'integer',
             'volume1'      => 'required|integer',
             'volume2'      => 'integer',
             'volume3'      => 'integer',
-            'satuan1'      => 'required|max:255',
+            'satuan1'      => 'required',
             'satuan2'      => 'max:255',
             'satuan3'      => 'max:255',
-            'satuan_harga' => 'required|integer|max:10000000000'
+            'satuan_harga' => 'required|integer|max:10000000000',
         ];
     }
 

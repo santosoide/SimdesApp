@@ -54,7 +54,7 @@ class PendapatanController extends Controller
      */
     public function update($id, PendapatanEditForm $request, PendapatanRepository $pendapatan)
     {
-        return $pendapatan->update($id, $request->sall());
+        return $pendapatan->update($id, $request->all());
     }
 
     /**
