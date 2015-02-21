@@ -9,26 +9,61 @@ use SimdesApp\Http\Requests\RPJMDES_Misi\RpjmdesMisiEditForm;
 
 class RpjmdesMisiController extends Controller {
 
+    /**
+     * Show data RPJMDES Misi
+     *
+     * @param RpjmdesMisiRepository $program
+     * @return mixed
+     */
     public function index(RpjmdesMisiRepository $program)
     {
         return $program->find($this->input('page'), $limit = 10, $this->input('term'));
     }
 
+    /**
+     * Create data RPJMDES Misi
+     *
+     * @param RpjmdesMisiCreateForm $request
+     * @param RpjmdesMisiRepository $program
+     * @return mixed
+     */
     public function store(RpjmdesMisiCreateForm $request, RpjmdesMisiRepository $program)
     {
         return $program->create($request->all());
     }
 
+    /**
+     * Show detail RPJMDES Misi
+     *
+     * @param RpjmdesMisiRepository $program
+     * @param $id
+     * @return \Illuminate\Support\Collection|null|static
+     */
     public function show(RpjmdesMisiRepository $program, $id)
     {
         return $program->findById($id);
     }
 
+    /**
+     * Update data RPJMDES Misi
+     *
+     * @param $id
+     * @param RpjmdesMisiEditForm $request
+     * @param RpjmdesMisiRepository $program
+     * @return mixed
+     */
     public function update($id, RpjmdesMisiEditForm $request, RpjmdesMisiRepository $program)
     {
         return $program->update($id, $request->all());
     }
 
+    /**
+     * Delete data RPJMDES Misi
+     *
+     * @param $id
+     * @param RpjmdesMisiRepository $program
+     * @return mixed
+     */
     public function destroy($id, RpjmdesMisiRepository $program)
     {
         return $program->destroy($id);

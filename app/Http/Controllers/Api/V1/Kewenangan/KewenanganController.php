@@ -9,28 +9,63 @@ use SimdesApp\Http\Requests\Kewenangan\KewenanganEditForm;
 
 class KewenanganController extends Controller {
 
-    public function index(KewenanganRepository $obyek)
+    /**
+     * Show data
+     *
+     * @param KewenanganRepository $kewenangan
+     * @return mixed
+     */
+    public function index(KewenanganRepository $kewenangan)
     {
-        return $obyek->find($this->input('page'), $limit = 10, $this->input('term'));
+        return $kewenangan->find($this->input('page'), $limit = 10, $this->input('term'));
     }
 
-    public function store(KewenanganCreateForm $request, KewenanganRepository $obyek)
+    /**
+     * Create data Kewenangan
+     *
+     * @param KewenanganCreateForm $request
+     * @param KewenanganRepository $kewenangan
+     * @return mixed
+     */
+    public function store(KewenanganCreateForm $request, KewenanganRepository $kewenangan)
     {
-        return $obyek->create($request->all());
+        return $kewenangan->create($request->all());
     }
 
-    public function show(KewenanganRepository $obyek, $id)
+    /**
+     * Show detail Kewenangan
+     *
+     * @param KewenanganRepository $kewenangan
+     * @param $id
+     * @return \Illuminate\Support\Collection|null|static
+     */
+    public function show(KewenanganRepository $kewenangan, $id)
     {
-        return $obyek->findById($id);
+        return $kewenangan->findById($id);
     }
 
-    public function update($id, KewenanganEditForm $request, KewenanganRepository $obyek)
+    /**
+     * Update data Kewenangan
+     *
+     * @param $id
+     * @param KewenanganEditForm $request
+     * @param KewenanganRepository $kewenangan
+     * @return mixed
+     */
+    public function update($id, KewenanganEditForm $request, KewenanganRepository $kewenangan)
     {
-        return $obyek->update($id, $request->all());
+        return $kewenangan->update($id, $request->all());
     }
 
-    public function destroy($id, KewenanganRepository $obyek)
+    /**
+     * Delete data Kewenangan
+     *
+     * @param $id
+     * @param KewenanganRepository $kewenangan
+     * @return mixed
+     */
+    public function destroy($id, KewenanganRepository $kewenangan)
     {
-        return $obyek->destroy($id);
+        return $kewenangan->destroy($id);
     }
 }

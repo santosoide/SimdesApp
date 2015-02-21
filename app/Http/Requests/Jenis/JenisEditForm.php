@@ -55,5 +55,4 @@ class JenisEditForm extends Request {
             ]
         ];
     }
-
 }

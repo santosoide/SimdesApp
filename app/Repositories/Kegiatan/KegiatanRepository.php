@@ -68,7 +68,7 @@ class KegiatanRepository extends AbstractRepository {
 
             $kegiatan->save();
 
-            /*Return result success*/
+            // Return result success
             return $this->successInsertResponse();
 
         } catch (\Exception $ex) {
@@ -107,7 +107,7 @@ class KegiatanRepository extends AbstractRepository {
 
             $kegiatan->save();
 
-            /*Return result success*/
+            // Return result success
             return $this->successUpdateResponse();
 
         } catch (\Exception $ex) {
@@ -129,7 +129,7 @@ class KegiatanRepository extends AbstractRepository {
 
             $kegiatan->delete();
 
-            /*Return result success*/
+            // Return result success
             return $this->successDeleteResponse();
 
         } catch (\Exception $ex) {

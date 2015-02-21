@@ -6,14 +6,29 @@ use SimdesApp\Services\LaraCacheInterface;
 
 class KelompokRepository extends AbstractRepository {
 
+    /**
+     * @var LaraCacheInterface
+     */
     protected $cache;
 
+    /**
+     * @param Kelompok $kelompok
+     * @param LaraCacheInterface $cache
+     */
     public function __construct(Kelompok $kelompok, LaraCacheInterface $cache)
     {
         $this->model = $kelompok;
         $this->cache = $cache;
     }
 
+    /**
+     * Instant find or search with paging, limit, and query
+     *
+     * @param int $page
+     * @param int $limit
+     * @param null $term
+     * @return mixed
+     */
     public function find($page = 1, $limit = 10, $term = null)
     {
         // Create Key for cache
@@ -39,6 +54,12 @@ class KelompokRepository extends AbstractRepository {
         return $organisasi;
     }
 
+    /**
+     * Create data
+     *
+     * @param array $data
+     * @return mixed
+     */
     public function create(array $data)
     {
         try {
@@ -50,7 +71,7 @@ class KelompokRepository extends AbstractRepository {
 
             $kelompok->save();
 
-            /*Return result success*/
+            // Return result success
             return $this->successInsertResponse();
 
         } catch (\Exception $ex) {
@@ -59,11 +80,24 @@ class KelompokRepository extends AbstractRepository {
         }
     }
 
+    /**
+     * Show the Record
+     *
+     * @param $id
+     * @return \Illuminate\Support\Collection|null|static
+     */
     public function findById($id)
     {
         return $this->model->find($id);
     }
 
+    /**
+     * Update the record
+     *
+     * @param $id
+     * @param array $data
+     * @return mixed
+     */
     public function update($id, array $data)
     {
         try {
@@ -84,6 +118,12 @@ class KelompokRepository extends AbstractRepository {
         }
     }
 
+    /**
+     * Destroy the record
+     *
+     * @param $id
+     * @return mixed
+     */
     public function destroy($id)
     {
         try {

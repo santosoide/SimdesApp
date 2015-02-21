@@ -6,14 +6,29 @@ use SimdesApp\Services\LaraCacheInterface;
 
 class ObyekRepository extends AbstractRepository {
 
+    /**
+     * @var LaraCacheInterface
+     */
     protected $cache;
 
+    /**
+     * @param Obyek $obyek
+     * @param LaraCacheInterface $cache
+     */
     public function __construct(Obyek $obyek, LaraCacheInterface $cache)
     {
         $this->model = $obyek;
         $this->cache = $cache;
     }
 
+    /**
+     * Instant find or search with paging, limit, and query
+     *
+     * @param int $page
+     * @param int $limit
+     * @param null $term
+     * @return mixed
+     */
     public function find($page = 1, $limit = 10, $term = null)
     {
         // Create Key for cache
@@ -39,6 +54,12 @@ class ObyekRepository extends AbstractRepository {
         return $obyek;
     }
 
+    /**
+     * Create data
+     *
+     * @param array $data
+     * @return mixed
+     */
     public function create(array $data)
     {
         try {
@@ -60,11 +81,24 @@ class ObyekRepository extends AbstractRepository {
         }
     }
 
+    /**
+     * Show the Record
+     *
+     * @param $id
+     * @return \Illuminate\Support\Collection|null|static
+     */
     public function findById($id)
     {
         return $this->model->find($id);
     }
 
+    /**
+     * Update the Record
+     *
+     * @param $id
+     * @param array $data
+     * @return mixed
+     */
     public function update($id, array $data)
     {
         try {
@@ -86,6 +120,12 @@ class ObyekRepository extends AbstractRepository {
         }
     }
 
+    /**
+     * Destroy the Record
+     *
+     * @param $id
+     * @return mixed
+     */
     public function destroy($id)
     {
         try {

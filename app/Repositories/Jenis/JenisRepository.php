@@ -13,6 +13,10 @@ class JenisRepository extends AbstractRepository
      */
     protected $cache;
 
+    /**
+     * @param Jenis $jenis
+     * @param LaraCacheInterface $cache
+     */
     public function __construct(Jenis $jenis, LaraCacheInterface $cache)
     {
         $this->model = $jenis;

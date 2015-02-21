@@ -7,14 +7,29 @@ use SimdesApp\Services\LaraCacheInterface;
 class BidangRepository extends AbstractRepository
 {
 
+    /**
+     * @var LaraCacheInterface
+     */
     protected $cache;
 
+    /**
+     * @param Bidang $bidang
+     * @param LaraCacheInterface $cache
+     */
     public function __construct(Bidang $bidang, LaraCacheInterface $cache)
     {
         $this->model = $bidang;
         $this->cache = $cache;
     }
 
+    /**
+     * Instant find or search with paging, limit, and query
+     *
+     * @param int $page
+     * @param int $limit
+     * @param null $term
+     * @return mixed
+     */
     public function find($page = 1, $limit = 10, $term = null)
     {
         // Create Key for cache
@@ -57,7 +72,7 @@ class BidangRepository extends AbstractRepository
 
             $bidang->save();
 
-            /*Return result success*/
+            // Return result success
             return $this->successInsertResponse();
 
         } catch (\Exception $ex) {
@@ -95,7 +110,7 @@ class BidangRepository extends AbstractRepository
 
             $bidang->save();
 
-            /*Return result success*/
+            // Return result success
             return $this->successUpdateResponse();
 
         } catch (\Exception $ex) {
@@ -117,7 +132,7 @@ class BidangRepository extends AbstractRepository
 
             $bidang->delete();
 
-            /*Return result success*/
+            // Return result success
             return $this->successDeleteResponse();
 
         } catch (\Exception $ex) {
