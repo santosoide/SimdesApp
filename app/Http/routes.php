@@ -81,6 +81,11 @@ Route::group(['namespace' => 'Api\V1\RPJMDES_Misi', 'prefix' => 'api/v1/backoffi
     Route::resource('rpjmdes-misi', 'RpjmdesMisiController');
 });
 
+Route::group(['namespace' => 'Api\V1\StandarSatuanHarga', 'prefix' => 'api/v1/backoffice'], function () {
+    // Akun resource
+    Route::resource('standar-satuan-harga', 'StandarSatuanHargaController');
+});
+
 Route::get('get-token', function(){
    return csrf_token();
 });
