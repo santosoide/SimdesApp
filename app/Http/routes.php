@@ -96,6 +96,11 @@ Route::group(['namespace' => 'Api\V1\Pembiayaan', 'prefix' => 'api/v1'], functio
     Route::resource('pembiayaan', 'PembiayaanController');
 });
 
+Route::group(['namespace' => 'Api\V1\Belanja', 'prefix' => 'api/v1'], function () {
+    // Pendapatan resource
+    Route::resource('belanja', 'BelanjaController');
+});
+
 Route::get('get-token', function(){
    return csrf_token();
 });
