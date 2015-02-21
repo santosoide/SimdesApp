@@ -2,16 +2,16 @@
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Organisasi extends UuidModel
-{
+class RpjmdesMisi extends UuidModel {
+
     Use SoftDeletes;
 
-    /**
+	/**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'organisasi';
+    protected $table = 'rpjmdes_misi';
 
     /**
      * The attributes that should be mutated to dates.
@@ -19,11 +19,6 @@ class Organisasi extends UuidModel
      * @var array
      */
     protected $dates = ['deleted_at'];
-
-    /**
-     * @var array
-     */
-//    protected $with = ['kecamatan'];
 
     /**
      * The attributes that aren't mass assignable.
@@ -42,15 +37,10 @@ class Organisasi extends UuidModel
      * @var array
      */
     protected $fillable = [
-        'nama',
-        'alamat',
-        'no_telp',
-        'email',
-        'desa',
-        'kec_id',
-        'kab',
-        'kode_kab',
-        'prov'
+        'rpjmdes_id',
+        'misi',
+        'user_id',
+        'organisasi_id'
     ];
 
     /**
@@ -73,25 +63,17 @@ class Organisasi extends UuidModel
          */
         static::creating(function ($model) {
             // flush the cache section
-            \Cache::section('organisasi')->flush();
+            \Cache::section('rpjmdes_misi')->flush();
         });
 
         static::updating(function ($model) {
             // flush the cache section
-            \Cache::section('organisasi')->flush();
+            \Cache::section('rpjmdes_misi')->flush();
         });
 
         static::deleting(function ($model) {
             // flush the cache section
-            \Cache::section('organisasi')->flush();
+            \Cache::section('rpjmdes_misi')->flush();
         });
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function kecamatan()
-    {
-        return $this->belongsTo('AppDesa\Models\Kecamatan', 'kec_id');
     }
 }

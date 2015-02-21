@@ -15,9 +15,12 @@ class CreateTableRpjmdes extends Migration {
             $table->engine = 'InnoDB';
 
             $table->string('_id');
+
             $table->string('visi');
             $table->string('user_id');
             $table->string('organisasi_id');
+
+            // Code behind
             $table->string('user_creator')->nullable()->default(null);
             $table->string('user_updater')->nullable()->default(null);
             $table->timestamps();

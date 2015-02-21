@@ -1,36 +1,23 @@
 <?php namespace SimdesApp\Models;
 
 
-class Program extends UuidModel {
+class Program extends UuidModel
+{
 
-	/**
-     * The database table used by the model.
-     *
-     * @var string
-     */
     protected $table = 'program';
 
+    protected $with = [
+        'bidang',
+        'organisasi'
+    ];
 
-    /**
-     * @var array
-     */
-    // protected $with = [''];
+    protected $fillable = [
+        'kode_rekening',
+        'bidang_id',
+        'program',
+        'organisasi_id'
+    ];
 
-
-    /**
-     * @var array
-     */
-//    protected $fillable = [
-//        '',
-//        '',
-//        '',
-//    ];
-
-    /**
-     * Primary Key by the table
-     *
-     * @var string
-     */
     protected $primaryKey = '_id';
 
     /**
@@ -58,5 +45,15 @@ class Program extends UuidModel {
             // flush the cache section
             \Cache::section('program')->flush();
         });
+    }
+
+    public function bidang()
+    {
+        return $this->belongsTo('SimdesApp\Models\Bidang', 'bidang_id');
+    }
+
+    public function organisasi()
+    {
+        return $this->belongsTo('SimdesApp\Models\Organisasi', 'organisasi_id');
     }
 }

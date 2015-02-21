@@ -5,7 +5,22 @@ class Kelompok extends UuidModel {
 
     protected $table = 'kelompok';
 
+    protected $with = 'akun';
+
+    protected $fillable = [
+        'kode_rekening',
+        'akun_id',
+        'kelompok'
+    ];
+
     protected $primaryKey = '_id';
+
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'user_creator',
+        'user_updater'
+    ];
 
     /**
      * Boot the Model
@@ -32,5 +47,10 @@ class Kelompok extends UuidModel {
             // flush the cache section
             \Cache::section('kelompok')->flush();
         });
+    }
+
+    public function akun()
+    {
+        return $this->belongsTo('SimdesApp\Models\Akun', 'akun_id');
     }
 }

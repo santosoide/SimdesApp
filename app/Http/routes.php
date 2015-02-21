@@ -71,6 +71,16 @@ Route::group(['namespace' => 'Api\V1\Program', 'prefix' => 'api/v1/backoffice'],
     Route::resource('program', 'ProgramController');
 });
 
+Route::group(['namespace' => 'Api\V1\RPJMDES', 'prefix' => 'api/v1/backoffice'], function () {
+    // Akun resource
+    Route::resource('rpjmdes', 'RpjmdesController');
+});
+
+Route::group(['namespace' => 'Api\V1\RPJMDES_Misi', 'prefix' => 'api/v1/backoffice'], function () {
+    // Akun resource
+    Route::resource('rpjmdes-misi', 'RpjmdesMisiController');
+});
+
 Route::get('get-token', function(){
    return csrf_token();
 });

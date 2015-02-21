@@ -1,27 +1,37 @@
-<?php namespace SimdesApp\Repositories\Bidang;
+<?php namespace SimdesApp\Repositories\RPJMDES;
 
-use SimdesApp\Models\Bidang;
+use SimdesApp\Models\Rpjmdes;
 use SimdesApp\Repositories\AbstractRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
-class BidangRepository extends AbstractRepository
-{
+class RpjmdesRepository extends AbstractRepository {
 
+    /**
+     * @var LaraCacheInterface
+     */
     protected $cache;
 
-    public function __construct(Bidang $bidang, LaraCacheInterface $cache)
+    public function __construct(Rpjmdes $rpjmdes, LaraCacheInterface $cache)
     {
-        $this->model = $bidang;
+        $this->model = $rpjmdes;
         $this->cache = $cache;
     }
 
+    /**
+     * Instant find or search with paging, limit, and query
+     *
+     * @param int $page
+     * @param int $limit
+     * @param null $term
+     * @return mixed
+     */
     public function find($page = 1, $limit = 10, $term = null)
     {
         // Create Key for cache
-        $key = 'find-bidang-' . $page . $limit . $term;
+        $key = 'find-rpjmdes-' . $page . $limit . $term;
 
         // Create Section
-        $section = 'bidang';
+        $section = 'rpjmdes';
 
         // If cache is exist get data from cache
         if ($this->cache->has($section, $key)) {
@@ -29,15 +39,15 @@ class BidangRepository extends AbstractRepository
         }
 
         // Search data
-        $bidang = $this->model
-            ->where('kode_rekening', 'like', '%' . $term . '%')
+        $rpjmdes = $this->model
+            ->where('visi', 'like', '%' . $term . '%')
             ->paginate($limit)
             ->toArray();
 
         // Create cache
-        $this->cache->put($section, $key, $bidang, $limit);
+        $this->cache->put($section, $key, $rpjmdes, $limit);
 
-        return $bidang;
+        return $rpjmdes;
     }
 
     /**
@@ -49,19 +59,19 @@ class BidangRepository extends AbstractRepository
     public function create(array $data)
     {
         try {
-            $bidang = $this->getNew();
+            $rpjmdes = $this->getNew();
 
-            $bidang->kode_rekening = e($data['kode_rekening']);
-            $bidang->kewenangan_id = $data['kewenangan_id'];
-            $bidang->bidang = e($data['bidang']);
+            $rpjmdes->visi = e($data['visi']);
+            $rpjmdes->user_id = e($data['user_id']);
+            $rpjmdes->organisasi_id = e($data['organisasi_id']);
 
-            $bidang->save();
+            $rpjmdes->save();
 
-            /*Return result success*/
+            // Return result success
             return $this->successInsertResponse();
 
         } catch (\Exception $ex) {
-            \Log::error('BidangRepository create action something wrong -' . $ex);
+            \Log::error('RpjmdesRepository create action something wrong -' . $ex);
             return $this->errorInsertResponse();
         }
     }
@@ -87,19 +97,19 @@ class BidangRepository extends AbstractRepository
     public function update($id, array $data)
     {
         try {
-            $bidang = $this->findById($id);
+            $rpjmdes = $this->findById($id);
 
-            $bidang->kode_rekening = e($data['kode_rekening']);
-            $bidang->kewenangan_id = $data['kewenangan_id'];
-            $bidang->bidang = e($data['bidang']);
+            $rpjmdes->visi = e($data['visi']);
+            $rpjmdes->user_id = e($data['user_id']);
+            $rpjmdes->organisasi_id = e($data['organisasi_id']);
 
-            $bidang->save();
+            $rpjmdes->save();
 
             /*Return result success*/
             return $this->successUpdateResponse();
 
         } catch (\Exception $ex) {
-            \Log::error('BidangRepository update action something wrong -' . $ex);
+            \Log::error('RpjmdesRepository update action something wrong -' . $ex);
             return $this->errorUpdateResponse();
         }
     }
@@ -113,15 +123,15 @@ class BidangRepository extends AbstractRepository
     public function destroy($id)
     {
         try {
-            $bidang = $this->findById($id);
+            $rpjmdes = $this->findById($id);
 
-            $bidang->delete();
+            $rpjmdes->delete();
 
-            /*Return result success*/
+            // Return result success
             return $this->successDeleteResponse();
 
         } catch (\Exception $ex) {
-            \Log::error('BidangRepository destroy action something wrong -' . $ex);
+            \Log::error('RpjmdesRepository destroy action something wrong -' . $ex);
             return $this->errorDeleteResponse();
         }
     }

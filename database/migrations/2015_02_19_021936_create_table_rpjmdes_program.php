@@ -61,10 +61,12 @@ class CreateTableRpjmdesProgram extends Migration {
             $table->string('user_updater')->nullable()->default(null);
             $table->timestamps();
             $table->index(['_id']);
+
 //            $table->foreign('kegiatan_id')->references('_id')->on('kegiatan');
 //            $table->foreign('sumber_dana_id')->references('_id')->on('sumber_dana');
 //            $table->foreign('user_id')->references('_id')->on('users');
 //            $table->foreign('organisasi_id')->references('_id')->on('organisasi');
+
             $table->primary('_id');
             $table->softDeletes();
         });

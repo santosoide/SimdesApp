@@ -15,17 +15,22 @@ class CreateTableRpjmdesMisi extends Migration {
             $table->engine = 'InnoDB';
 
             $table->string('_id');
+
             $table->string('rpjmdes_id');
             $table->string('misi');
             $table->string('user_id');
             $table->string('organisasi_id');
+
+            // Code behind
             $table->string('user_creator')->nullable()->default(null);
             $table->string('user_updater')->nullable()->default(null);
             $table->timestamps();
             $table->index(['_id']);
+
 //            $table->foreign('rpjmdes_id')->references('_id')->on('rpjmdes');
 //            $table->foreign('user_id')->references('_id')->on('users');
 //            $table->foreign('organisasi_id')->references('_id')->on('organisasi');
+
             $table->primary('_id');
             $table->softDeletes();
         });

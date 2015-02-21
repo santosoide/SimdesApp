@@ -1,26 +1,58 @@
 <?php namespace SimdesApp\Models;
 
-class Kegiatan extends UuidModel
-{
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-    protected $table = 'kegiatan';
+class Rpjmdes extends UuidModel {
 
+    Use SoftDeletes;
+
+	/**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'rpjmdes';
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
+
+    /**
+     * @var array
+     */
     protected $with = [
-        'program',
+        'users',
         'organisasi'
     ];
 
+    /**
+     * @var array
+     */
     protected $fillable = [
-        'kode_rekening',
-        'program_id',
-        'kegiatan',
-        'organisasi_id'
+        'visi',
+        'user_id',
+        'organisasi_id',
     ];
+
+    /**
+     * Primary Key by the table
+     *
+     * @var string
+     */
     protected $primaryKey = '_id';
 
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
     protected $hidden = [
         'created_at',
         'updated_at',
+        'deleted_at',
         'user_creator',
         'user_updater',
     ];
@@ -38,23 +70,23 @@ class Kegiatan extends UuidModel
          */
         static::creating(function ($model) {
             // flush the cache section
-            \Cache::section('kegiatan')->flush();
+            \Cache::section('rpjmdes')->flush();
         });
 
         static::updating(function ($model) {
             // flush the cache section
-            \Cache::section('kegiatan')->flush();
+            \Cache::section('rpjmdes')->flush();
         });
 
         static::deleting(function ($model) {
             // flush the cache section
-            \Cache::section('kegiatan')->flush();
+            \Cache::section('rpjmdes')->flush();
         });
     }
 
-    public function program()
+    public function users()
     {
-        return $this->belongsTo('SimdesApp\Models\Program', 'program_id');
+        return $this->belongsTo('SimdesApp\Models\User', 'user_id');
     }
 
     public function organisasi()
