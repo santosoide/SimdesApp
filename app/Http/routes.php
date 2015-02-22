@@ -86,7 +86,6 @@ Route::group(['namespace' => 'Api\V1\StandarSatuanHarga', 'prefix' => 'api/v1/ba
     Route::resource('standar-satuan-harga', 'StandarSatuanHargaController');
 });
 
-<<<<<<< HEAD
 Route::group(['namespace' => 'Api\V1\SumberDana', 'prefix' => 'api/v1/backoffice'], function () {
     // Sumber Dana resource
     Route::resource('sumber-dana', 'SumberDanaController');
@@ -100,7 +99,8 @@ Route::group(['namespace' => 'Api\V1\RKPDES', 'prefix' => 'api/v1/backoffice'], 
 Route::group(['namespace' => 'Api\V1\PejabatDesa', 'prefix' => 'api/v1/backoffice'], function () {
     // Rkpdes resource
     Route::resource('pejabat-desa', 'PejabatDesaController');
-=======
+});
+
 Route::group(['namespace' => 'Api\V1\Pendapatan', 'prefix' => 'api/v1'], function () {
     // Pendapatan resource
     Route::resource('pendapatan', 'PendapatanController');
@@ -119,7 +119,6 @@ Route::group(['namespace' => 'Api\V1\Belanja', 'prefix' => 'api/v1'], function (
 Route::group(['namespace' => 'Api\V1\Transaksi_Pendapatan', 'prefix' => 'api/v1'], function () {
     // Transaksi Pendapatan resource
     Route::resource('transaksi-pendapatan', 'TransaksiPendapatanController');
->>>>>>> f37ebc2785b2d27b8d7ebe1c24b6e33928e89471
 });
 
 Route::get('get-token', function(){
