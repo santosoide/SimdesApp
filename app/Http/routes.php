@@ -106,6 +106,11 @@ Route::group(['namespace' => 'Api\V1\Transaksi_Pendapatan', 'prefix' => 'api/v1'
     Route::resource('transaksi-pendapatan', 'TransaksiPendapatanController');
 });
 
-Route::get('get-token', function(){
-   return csrf_token();
+Route::group(['namespace' => 'Api\V1\Transaksi_Belanja', 'prefix' => 'api/v1'], function () {
+    // Transaksi Belanja resource
+    Route::resource('transaksi-belanja', 'TransaksiBelanjaController');
+});
+
+Route::get('get-token', function () {
+    return csrf_token();
 });
