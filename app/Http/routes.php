@@ -131,6 +131,10 @@ Route::group(['namespace' => 'Api\V1\DanaDesa', 'prefix' => 'api/v1'], function 
     Route::resource('dana-desa', 'DanaDesaController');
 });
 
+Route::group(['namespace' => 'Api\V1\Kecamatan', 'prefix' => 'api/v1'], function () {
+    // Dana Desa resource
+    Route::resource('kecamatan', 'KecamatanController');
+});
 Route::get('get-token', function () {
     return csrf_token();
 });
