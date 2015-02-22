@@ -135,6 +135,12 @@ Route::group(['namespace' => 'Api\V1\Kecamatan', 'prefix' => 'api/v1'], function
     // Dana Desa resource
     Route::resource('kecamatan', 'KecamatanController');
 });
+
+Route::group(['namespace' => 'Api\V1\LokasiProgram', 'prefix' => 'api/v1'], function () {
+    // Dana Desa resource
+    Route::resource('lokasi-program', 'LokasiProgramController');
+});
+
 Route::get('get-token', function () {
     return csrf_token();
 });
