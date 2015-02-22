@@ -28,7 +28,7 @@ class Rkpdes extends UuidModel
         'users',
         'organisasi',
         'rpjmdes_program',
-        'dana_desa'
+        //'dana_desa'
     ];
 
     /**
@@ -109,8 +109,8 @@ class Rkpdes extends UuidModel
         return $this->belongsTo('SimdesApp\Models\RpjmdesProgram', 'rpjmdes_program_id');
     }
 
-    public function dana_desa()
-    {
-        return $this->belongsTo('SimdesApp\Models\DanaDesa', 'dana_desa_id');
-    }
+//    public function dana_desa()
+//    {
+//        return $this->belongsTo('SimdesApp\Models\DanaDesa', 'dana_desa_id');
+//    }
 }
