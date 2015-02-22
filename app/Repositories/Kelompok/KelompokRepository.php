@@ -140,4 +140,28 @@ class KelompokRepository extends AbstractRepository {
         }
     }
 
+    /**
+     * Get kelompok filter by id
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function getNamaKelompok($id)
+    {
+        $data = $this->findById($id);
+        return $data->kelompok;
+    }
+
+    /**
+     * Get kode rekening
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function getKodeRekening($id)
+    {
+        $data = $this->findById($id);
+        return $data->kode_rekening;
+    }
+
 }
