@@ -32,58 +32,73 @@ Route::group(['namespace' => 'Api\V1\User', 'prefix' => 'api/v1/backoffice'], fu
 });
 
 Route::group(['namespace' => 'Api\V1\Akun', 'prefix' => 'api/v1/backoffice'], function () {
-    // User resource
+    // Akun resource
     Route::resource('akun', 'AkunController');
 });
 
 Route::group(['namespace' => 'Api\V1\Jenis', 'prefix' => 'api/v1/backoffice'], function () {
-    // Akun resource
+    // Jenis resource
     Route::resource('jenis', 'JenisController');
 });
 
 Route::group(['namespace' => 'Api\V1\Kelompok', 'prefix' => 'api/v1/backoffice'], function () {
-    // Akun resource
+    // Kelompok resource
     Route::resource('kelompok', 'KelompokController');
 });
 
 Route::group(['namespace' => 'Api\V1\Obyek', 'prefix' => 'api/v1/backoffice'], function () {
-    // Akun resource
+    // Obyek resource
     Route::resource('obyek', 'ObyekController');
 });
 
 Route::group(['namespace' => 'Api\V1\Bidang', 'prefix' => 'api/v1/backoffice'], function () {
-    // Akun resource
+    // Bidang resource
     Route::resource('bidang', 'BidangController');
 });
 
 Route::group(['namespace' => 'Api\V1\Kegiatan', 'prefix' => 'api/v1/backoffice'], function () {
-    // Akun resource
+    // Kegiatan resource
     Route::resource('kegiatan', 'KegiatanController');
 });
 
 Route::group(['namespace' => 'Api\V1\Kewenangan', 'prefix' => 'api/v1/backoffice'], function () {
-    // Akun resource
+    // Kewenangan resource
     Route::resource('kewenangan', 'KewenanganController');
 });
 
 Route::group(['namespace' => 'Api\V1\Program', 'prefix' => 'api/v1/backoffice'], function () {
-    // Akun resource
+    // Program resource
     Route::resource('program', 'ProgramController');
 });
 
 Route::group(['namespace' => 'Api\V1\RPJMDES', 'prefix' => 'api/v1/backoffice'], function () {
-    // Akun resource
+    // RPJMDES resource
     Route::resource('rpjmdes', 'RpjmdesController');
 });
 
 Route::group(['namespace' => 'Api\V1\RPJMDES_Misi', 'prefix' => 'api/v1/backoffice'], function () {
-    // Akun resource
+    // RPJMDES Misi resource
     Route::resource('rpjmdes-misi', 'RpjmdesMisiController');
 });
 
 Route::group(['namespace' => 'Api\V1\StandarSatuanHarga', 'prefix' => 'api/v1/backoffice'], function () {
-    // Akun resource
+    // Standar Satuan Harga resource
     Route::resource('standar-satuan-harga', 'StandarSatuanHargaController');
+});
+
+Route::group(['namespace' => 'Api\V1\SumberDana', 'prefix' => 'api/v1/backoffice'], function () {
+    // Sumber Dana resource
+    Route::resource('sumber-dana', 'SumberDanaController');
+});
+
+Route::group(['namespace' => 'Api\V1\RKPDES', 'prefix' => 'api/v1/backoffice'], function () {
+    // Rkpdes resource
+    Route::resource('rkpdes', 'RkpdesController');
+});
+
+Route::group(['namespace' => 'Api\V1\PejabatDesa', 'prefix' => 'api/v1/backoffice'], function () {
+    // Rkpdes resource
+    Route::resource('pejabat-desa', 'PejabatDesaController');
 });
 
 Route::get('get-token', function(){
