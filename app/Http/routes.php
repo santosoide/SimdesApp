@@ -126,6 +126,11 @@ Route::group(['namespace' => 'Api\V1\Transaksi_Belanja', 'prefix' => 'api/v1'], 
     Route::resource('transaksi-belanja', 'TransaksiBelanjaController');
 });
 
+Route::group(['namespace' => 'Api\V1\DanaDesa', 'prefix' => 'api/v1'], function () {
+    // Dana Desa resource
+    Route::resource('dana-desa', 'DanaDesaController');
+});
+
 Route::get('get-token', function () {
     return csrf_token();
 });
