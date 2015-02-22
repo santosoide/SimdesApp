@@ -2,19 +2,24 @@
 
 use SimdesApp\Models\TransaksiBelanja;
 use SimdesApp\Repositories\AbstractRepository;
+use SimdesApp\Repositories\Organisasi\OrganisasiRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
-class TransaksiBelanjaRepository extends AbstractRepository {
+class TransaksiBelanjaRepository extends AbstractRepository
+{
 
     /**
      * @var LaraCacheInterface
      */
     protected $cache;
 
-    public function __construct(TransaksiBelanja $transaksiBelanja, LaraCacheInterface $cache)
+    protected $organisasi;
+
+    public function __construct(TransaksiBelanja $transaksiBelanja, LaraCacheInterface $cache, OrganisasiRepository $organisasi)
     {
         $this->model = $transaksiBelanja;
         $this->cache = $cache;
+        $this->organisasi = $organisasi;
     }
 
     /**
@@ -61,16 +66,16 @@ class TransaksiBelanjaRepository extends AbstractRepository {
         try {
             $belanja = $this->getNew();
 
-            //$kode_desa = $this->organisasi->getKodeDesa($data['organisasi_id']);
-            //$kode_rekening = e($data['kode_rekening']);
-            //$no_bukti = e($data['nomor_bukti']);
-            //$nomor_bukti = $no_bukti . '/STS-' . $kode_rekening . '/' . $kode_desa . '/' . date('Y');
-            //$nomor_bku_sts = $no_bukti . '/BKT.STS-' . $kode_rekening . '/' . $kode_desa . '/' . date('Y');
+            $kode_desa = $this->organisasi->getKodeDesa($data['organisasi_id']);
+            $kode_rekening = e($data['kode_rekening']);
+            $no_bukti = e($data['nomor_bukti']);
+            $nomor_bukti = $no_bukti . '/STS-' . $kode_rekening . '/' . $kode_desa . '/' . date('Y');
+            $nomor_bku_sts = $no_bukti . '/BKT.STS-' . $kode_rekening . '/' . $kode_desa . '/' . date('Y');
 
-            //$belanja->kode_rekening = $kode_rekening;
-            //$belanja->nomor_bukti = $no_bukti;
-            //$belanja->nomor_bku = $nomor_bukti;
-            //$belanja->nomor_bku_sts = $nomor_bku_sts;
+            $belanja->kode_rekening = $kode_rekening;
+            $belanja->nomor_bukti = $no_bukti;
+            $belanja->nomor_bku = $nomor_bukti;
+            $belanja->nomor_bku_sts = $nomor_bku_sts;
 
             $belanja->belanja = e($data['belanja']);
             $belanja->belanja_id = e($data['belanja_id']);
@@ -117,16 +122,16 @@ class TransaksiBelanjaRepository extends AbstractRepository {
         try {
             $belanja = $this->findById($id);
 
-            //$kode_desa = $this->organisasi->getKodeDesa($data['organisasi_id']);
-            //$kode_rekening = e($data['kode_rekening']);
-            //$no_bukti = e($data['nomor_bukti']);
-            //$nomor_bukti = $no_bukti . '/STS-' . $kode_rekening . '/' . $kode_desa . '/' . date('Y');
-            //$nomor_bku_sts = $no_bukti . '/BKT.STS-' . $kode_rekening . '/' . $kode_desa . '/' . date('Y');
+            $kode_desa = $this->organisasi->getKodeDesa($data['organisasi_id']);
+            $kode_rekening = e($data['kode_rekening']);
+            $no_bukti = e($data['nomor_bukti']);
+            $nomor_bukti = $no_bukti . '/STS-' . $kode_rekening . '/' . $kode_desa . '/' . date('Y');
+            $nomor_bku_sts = $no_bukti . '/BKT.STS-' . $kode_rekening . '/' . $kode_desa . '/' . date('Y');
 
-            //$belanja->kode_rekening = $kode_rekening;
-            //$belanja->nomor_bukti = $no_bukti;
-            //$belanja->nomor_bku = $nomor_bukti;
-            //$belanja->nomor_bku_sts = $nomor_bku_sts;
+            $belanja->kode_rekening = $kode_rekening;
+            $belanja->nomor_bukti = $no_bukti;
+            $belanja->nomor_bku = $nomor_bukti;
+            $belanja->nomor_bku_sts = $nomor_bku_sts;
 
             $belanja->belanja = e($data['belanja']);
             $belanja->belanja_id = e($data['belanja_id']);
@@ -146,7 +151,8 @@ class TransaksiBelanjaRepository extends AbstractRepository {
 
         } catch (\Exception $ex) {
             \Log::error('TransaksiBelanjaRepository update action something wrong -' . $ex);
-            return $this->errorUpdateResponse();
+            //return $this->errorUpdateResponse();
+            return $ex;
         }
     }
 

@@ -2,6 +2,9 @@
 
 use SimdesApp\Models\Belanja;
 use SimdesApp\Repositories\AbstractRepository;
+use SimdesApp\Repositories\Jenis\JenisRepository;
+use SimdesApp\Repositories\Kelompok\KelompokRepository;
+use SimdesApp\Repositories\Obyek\ObyekRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
 class BelanjaRepository extends AbstractRepository
@@ -11,14 +14,23 @@ class BelanjaRepository extends AbstractRepository
      */
     protected $cache;
 
+    protected $obyek;
+
+    protected $kelompok;
+
+    protected $jenis;
+
     /**
      * @param Belanja $belanja
      * @param LaraCacheInterface $cache
      */
-    public function __construct(Belanja $belanja, LaraCacheInterface $cache)
+    public function __construct(Belanja $belanja, LaraCacheInterface $cache, ObyekRepository $obyek, JenisRepository $jenis, KelompokRepository $kelompok)
     {
         $this->model = $belanja;
         $this->cache = $cache;
+        $this->obyek = $obyek;
+        $this->kelompok = $kelompok;
+        $this->jenis = $jenis;
     }
 
     /**
@@ -79,8 +91,8 @@ class BelanjaRepository extends AbstractRepository
             $satuan_harga = (empty($data['satuan_harga'])) ? '1' : $data['satuan_harga'];
             $jumlah = $volume1 * $volume2 * $volume3 * $satuan_harga;
 
-            //$belanja->belanja = $this->getNamaBelanja($kelompok_id, $jenis_id, $obyek_id);
-            //$belanja->kode_rekening = $this->getKodeRekening($kelompok_id, $jenis_id, $obyek_id);
+            $belanja->belanja = $this->getNamaBelanja($kelompok_id, $jenis_id, $obyek_id);
+            $belanja->kode_rekening = $this->getKodeRekening($kelompok_id, $jenis_id, $obyek_id);
             $belanja->tahun = e($data['tahun']);
             $belanja->kelompok_id = $kelompok_id;
             $belanja->jenis_id = $jenis_id;
@@ -143,8 +155,8 @@ class BelanjaRepository extends AbstractRepository
             $satuan_harga = (empty($data['satuan_harga'])) ? '1' : $data['satuan_harga'];
             $jumlah = $volume1 * $volume2 * $volume3 * $satuan_harga;
 
-            //$belanja->belanja = $this->getNamaBelanja($kelompok_id, $jenis_id, $obyek_id);
-            //$belanja->kode_rekening = $this->getKodeRekening($kelompok_id, $jenis_id, $obyek_id);
+            $belanja->belanja = $this->getNamaBelanja($kelompok_id, $jenis_id, $obyek_id);
+            $belanja->kode_rekening = $this->getKodeRekening($kelompok_id, $jenis_id, $obyek_id);
             $belanja->tahun = e($data['tahun']);
             $belanja->kelompok_id = $kelompok_id;
             $belanja->jenis_id = $jenis_id;
@@ -200,4 +212,41 @@ class BelanjaRepository extends AbstractRepository
         }
     }
 
+    /**
+     * Get name pendapatan from kelompok, jenis, obyek
+     *
+     * @param $kelompok_id
+     * @param $jenis_id
+     * @param $obyek_id
+     * @return mixed
+     */
+    public function getNamaBelanja($kelompok_id, $jenis_id, $obyek_id)
+    {
+        if (!empty($obyek_id)) {
+            return $this->obyek->getNamaObyek($obyek_id);
+        } elseif (!empty($jenis_id)) {
+            return $this->jenis->getNamaJenis($jenis_id);
+        } elseif (!empty($kelompok_id)) {
+            return $this->kelompok->getNamaKelompok($kelompok_id);
+        }
+    }
+
+    /**
+     * Get kode rekening from kelompok, jenis, obyek
+     *
+     * @param $kelompok_id
+     * @param $jenis_id
+     * @param $obyek_id
+     * @return mixed
+     */
+    public function getKodeRekening($kelompok_id, $jenis_id, $obyek_id)
+    {
+        if (!empty($obyek_id)) {
+            return $this->obyek->getKodeRekening($obyek_id);
+        } elseif (!empty($jenis_id)) {
+            return $this->jenis->getKodeRekening($jenis_id);
+        } elseif (!empty($kelompok_id)) {
+            return $this->kelompok->getKodeRekening($kelompok_id);
+        }
+    }
 }

@@ -169,4 +169,10 @@ class OrganisasiRepository extends AbstractRepository
             return $this->errorDeleteResponse();
         }
     }
+
+    public function getKodeDesa($id)
+    {
+        $data = $this->findById($id);
+        return $data->kode_desa;
+    }
 }

@@ -223,7 +223,7 @@ class PendapatanRepository extends AbstractRepository
         if (!empty($obyek_id)) {
             return $this->obyek->getNamaObyek($obyek_id);
         } elseif (!empty($jenis_id)) {
-            return $this->jenis->getKodeRekening($jenis_id);
+            return $this->jenis->getNamaJenis($jenis_id);
         } elseif (!empty($kelompok_id)) {
             return $this->kelompok->getNamaKelompok($kelompok_id);
         }
