@@ -92,13 +92,18 @@ Route::group(['namespace' => 'Api\V1\Pendapatan', 'prefix' => 'api/v1'], functio
 });
 
 Route::group(['namespace' => 'Api\V1\Pembiayaan', 'prefix' => 'api/v1'], function () {
-    // Pendapatan resource
+    // Pembiayaan resource
     Route::resource('pembiayaan', 'PembiayaanController');
 });
 
 Route::group(['namespace' => 'Api\V1\Belanja', 'prefix' => 'api/v1'], function () {
-    // Pendapatan resource
+    // Belanja resource
     Route::resource('belanja', 'BelanjaController');
+});
+
+Route::group(['namespace' => 'Api\V1\Transaksi_Pendapatan', 'prefix' => 'api/v1'], function () {
+    // Transaksi Pendapatan resource
+    Route::resource('transaksi-pendapatan', 'TransaksiPendapatanController');
 });
 
 Route::get('get-token', function(){
