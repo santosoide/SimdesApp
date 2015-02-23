@@ -40,6 +40,7 @@ class KegiatanRepository extends AbstractRepository {
 
         // Search data
         $kegiatan = $this->model
+            ->orderBy('kode_rekening', 'asc')
             ->where('kode_rekening', 'like', '%' . $term . '%')
             ->paginate($limit)
             ->toArray();
@@ -61,10 +62,13 @@ class KegiatanRepository extends AbstractRepository {
         try {
             $kegiatan = $this->getNew();
 
+            // jika organisasi_id null Kewenangan Kegiatan diinput oleh Kabupaten
+            $organisasi_id = (empty($data['organisasi_id'])) ? '' : $data['organisasi_id'];
+
             $kegiatan->kode_rekening = e($data['kode_rekening']);
-            $kegiatan->program_id = $data['program_id'];
+            $kegiatan->program_id = e($data['program_id']);
             $kegiatan->kegiatan = e($data['kegiatan']);
-            $kegiatan->organisasi_id = e($data['organisasi_id']);
+            $kegiatan->organisasi_id = $organisasi_id;
 
             $kegiatan->save();
 
@@ -101,9 +105,8 @@ class KegiatanRepository extends AbstractRepository {
             $kegiatan = $this->findById($id);
 
             $kegiatan->kode_rekening = e($data['kode_rekening']);
-            $kegiatan->program_id = $data['program_id'];
+            $kegiatan->program_id = e($data['program_id']);
             $kegiatan->kegiatan = e($data['kegiatan']);
-            $kegiatan->organisasi_id = e($data['organisasi_id']);
 
             $kegiatan->save();
 

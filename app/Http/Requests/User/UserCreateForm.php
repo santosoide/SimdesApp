@@ -13,7 +13,6 @@ class UserCreateForm extends Request
         'email'     => 'Email',
         'nama'      => 'Nama',
         'password'  => 'Password',
-        'is_active' => 'Is Active',
         'level'     => 'Level'
     ];
 
@@ -26,7 +25,6 @@ class UserCreateForm extends Request
             'email'     => 'required|email|unique:users,email',
             'nama'      => 'required',
             'password'  => 'required|between:6,25|confirmed',
-            'is_active' => 'required|integer',
             'level'     => 'required|integer'
         ];
     }

@@ -4,10 +4,19 @@ namespace SimdesApp\Repositories\Organisasi;
 
 use SimdesApp\Models\Organisasi;
 use SimdesApp\Repositories\AbstractRepository;
+use SimdesApp\Repositories\User\UserRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
 class OrganisasiRepository extends AbstractRepository
 {
+
+    /**
+     * User Model
+     *
+     * @var User
+     */
+    protected $user;
+
     /**
      * @var LaraCacheInterface
      */
@@ -15,11 +24,13 @@ class OrganisasiRepository extends AbstractRepository
 
     /**
      * @param Organisasi $organisasi
+     * @param UserRepository $user
      * @param LaraCacheInterface $cache
      */
-    public function __construct(Organisasi $organisasi, LaraCacheInterface $cache)
+    public function __construct(Organisasi $organisasi, UserRepository $user,  LaraCacheInterface $cache)
     {
         $this->model = $organisasi;
+        $this->user = $user;
         $this->cache = $cache;
     }
 
@@ -46,6 +57,7 @@ class OrganisasiRepository extends AbstractRepository
 
         // Search data
         $organisasi = $this->model
+            ->orderBy('kode_kec', 'asc')
             ->where('nama', 'like', '%' . $term . '%')
             ->paginate($limit)
             ->toArray();
@@ -159,10 +171,14 @@ class OrganisasiRepository extends AbstractRepository
         try {
             $organisasi = $this->findById($id);
 
-            if ($organisasi){
+            if ($organisasi) {
+                $result = $this->cekForDelete($organisasi->_id);
+                if (count($result) > 0) {
+                    return $this->relationDeleteResponse();
+                }
+
                 $organisasi->delete();
 
-                // Return result success
                 return $this->successDeleteResponse();
             }
 
@@ -172,6 +188,18 @@ class OrganisasiRepository extends AbstractRepository
             \Log::error('OrganisasiRepository create action something wrong -' . $ex);
             return $this->errorDeleteResponse();
         }
+    }
+
+    /**
+     * check data user before delete
+     *
+     * @param $organisasi_id
+     *
+     * @return mixed
+     */
+    public function cekForDelete($organisasi_id)
+    {
+        return $this->user->findIsExists($organisasi_id);
     }
 
     /**

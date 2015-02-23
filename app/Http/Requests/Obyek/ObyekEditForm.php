@@ -13,8 +13,7 @@ class ObyekEditForm extends Request {
     protected $customAttributes = [
         'kode_rekening' => 'Kode Rekening',
         'jenis_id'      => 'Jenis Id',
-        'obyek'         => 'Obyek',
-        'organisasi_id' => 'Organisasi Id'
+        'obyek'         => 'Obyek'
     ];
 
     /**
@@ -25,8 +24,7 @@ class ObyekEditForm extends Request {
         return [
             'kode_rekening' => 'max:255',
             'jenis_id'      => 'integer',
-            'obyek'         => 'max:255',
-            'organisasi_id' => 'max:255'
+            'obyek'         => 'max:255'
         ];
     }
 
@@ -52,8 +50,7 @@ class ObyekEditForm extends Request {
             'validation' => [
                 'kode_rekening' => $message->first('kode_rekening'),
                 'jenis_id'      => $message->first('jenis_id'),
-                'obyek'         => $message->first('obyek'),
-                'organisasi_id' => $message->first('organisasi_id')
+                'obyek'         => $message->first('obyek')
             ]
         ];
     }

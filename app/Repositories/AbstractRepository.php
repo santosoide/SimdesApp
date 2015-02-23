@@ -92,6 +92,19 @@ abstract class AbstractRepository
     /**
      * @return mixed
      */
+    public function relationDeleteResponse()
+    {
+        return $this->successResponseOk([
+            'success' => false,
+            'message' => [
+                'msg' => 'Data tidak boleh dihapus, karena data sudah terelasi',
+            ],
+        ]);
+    }
+
+    /**
+     * @return mixed
+     */
     public function successDeleteResponse()
     {
         return $this->successResponseOk([

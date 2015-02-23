@@ -3,21 +3,32 @@ namespace SimdesApp\Repositories\Akun;
 
 use SimdesApp\Models\Akun;
 use SimdesApp\Repositories\AbstractRepository;
+use SimdesApp\Repositories\Kelompok\KelompokRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
 class AkunRepository extends AbstractRepository {
+
+    /**
+     * @var KelompokRepository
+     */
+    protected $kelompok;
 
     /**
      * @var LaraCacheInterface
      */
     protected $cache;
 
-	/**
+    /**
+     * create instance interface
+     *
+     * @param Akun $akun
+     * @param KelompokRepository $kelompok
      * @param LaraCacheInterface $cache
      */
-    public function __construct(Akun $akun, LaraCacheInterface $cache)
+    public function __construct(Akun $akun, KelompokRepository $kelompok, LaraCacheInterface $cache)
     {
         $this->model = $akun;
+        $this->kelompok = $kelompok;
         $this->cache = $cache;
     }
 
@@ -44,6 +55,7 @@ class AkunRepository extends AbstractRepository {
 
         // Search data
         $organisasi = $this->model
+            ->orderBy('kode_rekening', 'asc')
             ->where('akun', 'like', '%' . $term . '%')
             ->paginate($limit)
             ->toArray();

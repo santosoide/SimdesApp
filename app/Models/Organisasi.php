@@ -23,7 +23,7 @@ class Organisasi extends UuidModel
     /**
      * @var array
      */
-//    protected $with = ['kecamatan'];
+    protected $with = ['kecamatan'];
 
     /**
      * The attributes that aren't mass assignable.
@@ -92,6 +92,6 @@ class Organisasi extends UuidModel
      */
     public function kecamatan()
     {
-        return $this->belongsTo('AppDesa\Models\Kecamatan', 'kec_id');
+        return $this->belongsTo('SimdesApp\Models\Kecamatan', 'kec_id');
     }
 }

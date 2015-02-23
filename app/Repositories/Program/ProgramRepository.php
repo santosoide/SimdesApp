@@ -142,4 +142,16 @@ class ProgramRepository extends AbstractRepository {
         }
     }
 
+    /**
+     * @param $bidang_id
+     * @return mixed
+     */
+    public function findIsExists($bidang_id)
+    {
+        return $this->model
+            ->where('bidang_id', '=', $bidang_id)
+            ->get();
+    }
+
+
 }

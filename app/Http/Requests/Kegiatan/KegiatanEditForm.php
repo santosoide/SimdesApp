@@ -14,7 +14,6 @@ class KegiatanEditForm extends Request {
         'kode_rekening' => 'Kode Rekening',
         'program_id'    => 'Program Id',
         'kegiatan'      => 'Kegiatan',
-        'organisasi_id' => 'Organisasi Id'
     ];
 
     /**
@@ -26,7 +25,6 @@ class KegiatanEditForm extends Request {
             'kode_rekening' => 'max:255',
             'program_id'    => 'integer',
             'kegiatan'      => 'max:255',
-            'organisasi_id' => 'max:255'
         ];
     }
 
@@ -52,8 +50,7 @@ class KegiatanEditForm extends Request {
             'validation' => [
                 'kode_rekening' => $message->first('kode_rekening'),
                 'program_id'    => $message->first('program_id'),
-                'kegiatan'      => $message->first('kegiatan'),
-                'organisasi_id' => $message->first('organisasi_id')
+                'kegiatan'      => $message->first('kegiatan')
             ]
         ];
     }

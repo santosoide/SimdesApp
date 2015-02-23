@@ -45,6 +45,7 @@ class ObyekRepository extends AbstractRepository
 
         // Search data
         $obyek = $this->model
+            ->orderBy('kode_rekening', 'asc')
             ->where('kode_rekening', 'like', '%' . $term . '%')
             ->paginate($limit)
             ->toArray();
@@ -66,10 +67,13 @@ class ObyekRepository extends AbstractRepository
         try {
             $obyek = $this->getNew();
 
+            // jika organisasi_id null APBDes obyek diinput oleh Kabupaten
+            $organisasi_id = (empty($data['organisasi_id'])) ? '' : $data['organisasi_id'];
+
             $obyek->kode_rekening = e($data['kode_rekening']);
             $obyek->jenis_id = $data['jenis_id'];
             $obyek->obyek = e($data['obyek']);
-            $obyek->organisasi_id = e($data['organisasi_id']);
+            $obyek->organisasi_id = $organisasi_id;
 
             $obyek->save();
 
@@ -108,11 +112,10 @@ class ObyekRepository extends AbstractRepository
             $obyek->kode_rekening = e($data['kode_rekening']);
             $obyek->jenis_id = $data['jenis_id'];
             $obyek->obyek = e($data['obyek']);
-            $obyek->organisasi_id = e($data['organisasi_id']);
 
             $obyek->save();
 
-            /*Return result success*/
+            // Return result success
             return $this->successUpdateResponse();
 
         } catch (\Exception $ex) {

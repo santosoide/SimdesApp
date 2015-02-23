@@ -2,18 +2,32 @@
 
 use SimdesApp\Models\Kewenangan;
 use SimdesApp\Repositories\AbstractRepository;
+use SimdesApp\Repositories\Bidang\BidangRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
 class KewenanganRepository extends AbstractRepository {
+
+    /**
+     * @var BidangRepository
+     */
+    protected $bidang;
 
     /**
      * @var LaraCacheInterface
      */
     protected $cache;
 
-    public function __construct(Kewenangan $kewenangan, LaraCacheInterface $cache)
+    /**
+     * instance interface
+     *
+     * @param Kewenangan      $kewenangan
+     * @param BidangRepository $bidang
+     * @param LaraCacheInterface  $cache
+     */
+    public function __construct(Kewenangan $kewenangan, BidangRepository $bidang, LaraCacheInterface $cache)
     {
         $this->model = $kewenangan;
+        $this->bidang = $bidang;
         $this->cache = $cache;
     }
 
@@ -40,6 +54,7 @@ class KewenanganRepository extends AbstractRepository {
 
         // Search data
         $kewenangan = $this->model
+            ->orderBy('kode_rekening', 'asc')
             ->where('kode_rekening', 'like', '%' . $term . '%')
             ->paginate($limit)
             ->toArray();

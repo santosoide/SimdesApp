@@ -2,10 +2,15 @@
 
 use SimdesApp\Models\Bidang;
 use SimdesApp\Repositories\AbstractRepository;
+use SimdesApp\Repositories\Program\ProgramRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
 class BidangRepository extends AbstractRepository
 {
+    /**
+     * @var ProgramRepository
+     */
+    protected $program;
 
     /**
      * @var LaraCacheInterface
@@ -14,11 +19,13 @@ class BidangRepository extends AbstractRepository
 
     /**
      * @param Bidang $bidang
+     * @param ProgramRepository $program
      * @param LaraCacheInterface $cache
      */
-    public function __construct(Bidang $bidang, LaraCacheInterface $cache)
+    public function __construct(Bidang $bidang, ProgramRepository $program, LaraCacheInterface $cache)
     {
         $this->model = $bidang;
+        $this->program = $program;
         $this->cache = $cache;
     }
 
@@ -45,6 +52,7 @@ class BidangRepository extends AbstractRepository
 
         // Search data
         $bidang = $this->model
+            ->orderBy('kode_rekening', 'asc')
             ->where('kode_rekening', 'like', '%' . $term . '%')
             ->paginate($limit)
             ->toArray();
@@ -67,7 +75,7 @@ class BidangRepository extends AbstractRepository
             $bidang = $this->getNew();
 
             $bidang->kode_rekening = e($data['kode_rekening']);
-            $bidang->kewenangan_id = $data['kewenangan_id'];
+            $bidang->kewenangan_id = e($data['kewenangan_id']);
             $bidang->bidang = e($data['bidang']);
 
             $bidang->save();
@@ -105,7 +113,7 @@ class BidangRepository extends AbstractRepository
             $bidang = $this->findById($id);
 
             $bidang->kode_rekening = e($data['kode_rekening']);
-            $bidang->kewenangan_id = $data['kewenangan_id'];
+            $bidang->kewenangan_id = e($data['kewenangan_id']);
             $bidang->bidang = e($data['bidang']);
 
             $bidang->save();
@@ -131,9 +139,13 @@ class BidangRepository extends AbstractRepository
             $bidang = $this->findById($id);
 
             if ($bidang) {
+                $result = $this->cekForDelete($bidang->_id);
+                if (count($result) > 0) {
+                    return $this->relationDeleteResponse();
+                }
+
                 $bidang->delete();
 
-                // Return result success
                 return $this->successDeleteResponse();
             }
 
@@ -143,5 +155,17 @@ class BidangRepository extends AbstractRepository
             \Log::error('BidangRepository destroy action something wrong -' . $ex);
             return $this->errorDeleteResponse();
         }
+    }
+
+    /**
+     * check program before delete
+     *
+     * @param $bidang_id
+     *
+     * @return mixed
+     */
+    public function cekForDelete($bidang_id)
+    {
+        return $this->program->findIsExists($bidang_id);
     }
 }

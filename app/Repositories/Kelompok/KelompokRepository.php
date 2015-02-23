@@ -2,9 +2,15 @@
 
 use SimdesApp\Models\Kelompok;
 use SimdesApp\Repositories\AbstractRepository;
+use SimdesApp\Repositories\Jenis\JenisRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
 class KelompokRepository extends AbstractRepository {
+
+    /**
+     * @var JenisRepository
+     */
+    protected $jenis;
 
     /**
      * @var LaraCacheInterface
@@ -12,12 +18,16 @@ class KelompokRepository extends AbstractRepository {
     protected $cache;
 
     /**
+     * instance interface
+     *
      * @param Kelompok $kelompok
+     * @param JenisRepository $jenis
      * @param LaraCacheInterface $cache
      */
-    public function __construct(Kelompok $kelompok, LaraCacheInterface $cache)
+    public function __construct(Kelompok $kelompok, JenisRepository $jenis, LaraCacheInterface $cache)
     {
         $this->model = $kelompok;
+        $this->jenis = $jenis;
         $this->cache = $cache;
     }
 
@@ -44,6 +54,7 @@ class KelompokRepository extends AbstractRepository {
 
         // Search data
         $organisasi = $this->model
+            ->orderBy('kode_rekening', 'asc')
             ->where('kode_rekening', 'like', '%' . $term . '%')
             ->paginate($limit)
             ->toArray();
@@ -109,7 +120,7 @@ class KelompokRepository extends AbstractRepository {
 
             $kelompok->save();
 
-            /*Return result success*/
+            // Return result success
             return $this->successUpdateResponse();
 
         } catch (\Exception $ex) {

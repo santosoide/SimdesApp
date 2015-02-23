@@ -47,6 +47,8 @@ class UserRepository extends AbstractRepository
 
         // Search data
         $user = $this->model
+            ->orderBy('level', 'asc')
+            ->whereBetween('level', [1, 10])
             ->where('nama', 'like', '%' . $term . '%')
             ->paginate($limit)
             ->toArray();
@@ -68,11 +70,20 @@ class UserRepository extends AbstractRepository
         try {
             $user = $this->getNew();
 
+            // organisasi_id
+            $organisasi_id = $data['organisasi_id'];
+
+            // set the level user
+            if (empty($organisasi_id)) {
+                $level = $this->getLevel($data['level']);
+            } else {
+                $level = $data['level'];
+            }
+
             $user->email = e($data['email']);
             $user->nama = e($data['nama']);
             $user->password = bcrypt($data['password']);
-            $user->is_active = $data['is_active'];
-            $user->level = $data['level'];
+            $user->level = $level;
 
             $user->save();
 
@@ -108,10 +119,20 @@ class UserRepository extends AbstractRepository
         try {
             $user = $this->findById($id);
 
+            // organisasi_id
+            $organisasi_id = $data['organisasi_id'];
+
+            // set the level user
+            if (empty($organisasi_id)) {
+                $level = $this->getLevel($data['level']);
+            } else {
+                $level = $data['level'];
+            }
+
             $user->email = e($data['email']);
             $user->nama = e($data['nama']);
-            $user->is_active = $data['is_active'];
-            $user->level = $data['level'];
+            $user->is_active = e($data['is_active'], 1);
+            $user->level = $level;
 
             $user->save();
 
@@ -135,14 +156,90 @@ class UserRepository extends AbstractRepository
         try {
             $user = $this->findById($id);
 
-            $user->delete();
+            if ($user) {
+                $user->delete();
+                return $this->successDeleteResponse();
+            }
 
-            // Return result success
-            return $this->successDeleteResponse();
+            return $this->emptyDeleteResponse();
 
         } catch (\Exception $ex) {
             \Log::error('UserRepository create action something wrong -' . $ex);
             return $this->errorDeleteResponse();
         }
+    }
+
+
+    /**
+     * @param $level
+     * @return int
+     */
+    public function getLevel($level)
+    {
+        switch ($level) {
+            // level Administrator
+            case 1:
+                return 210;
+                break;
+            // Kepala BPMD
+            case 2:
+                return 220;
+                break;
+            // Pimpinan / Bupati
+            case 3:
+                return 230;
+                break;
+            // SKPD-Adm. Pembangunan
+            case 4:
+                return 240;
+                break;
+            // SKPD-Adm. BAPEDA
+            case 5:
+                return 250;
+                break;
+            // SKPD BPMD
+            case 6:
+                return 260;
+                break;
+            // SKPD Fasilitator
+            case 7:
+                return 270;
+                break;
+            // SKPD HUKUM
+            case 8:
+                return 280;
+                break;
+            // SKPD Inspektorat
+            case 9:
+                return 290;
+                break;
+            // SKPD Keuangan Daerah
+            case 10:
+                return 300;
+                break;
+            // SKPD Urusan
+            case 11:
+                return 310;
+                break;
+            // SKPD Verifikasi
+            case 12:
+                return 320;
+                break;
+            default :
+                return 1;
+        }
+    }
+
+    /**
+     * check organisasi for check before delete
+     *
+     * @param $organisasi_id
+     * @return mixed
+     */
+    public function findIsExists($organisasi_id)
+    {
+        return $this->model
+            ->where('organisasi_id', '=', $organisasi_id)
+            ->get();
     }
 } 
