@@ -74,17 +74,17 @@ class PejabatDesa extends UuidModel
          */
         static::creating(function ($model) {
             // flush the cache section
-            \Cache::section('pejabat_desa')->flush();
+            \Cache::section('pejabat-desa')->flush();
         });
 
         static::updating(function ($model) {
             // flush the cache section
-            \Cache::section('pejabat_desa')->flush();
+            \Cache::section('pejabat-desa')->flush();
         });
 
         static::deleting(function ($model) {
             // flush the cache section
-            \Cache::section('pejabat_desa')->flush();
+            \Cache::section('pejabat-desa')->flush();
         });
     }
 

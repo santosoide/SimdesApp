@@ -3,7 +3,8 @@
 use SimdesApp\Http\Requests\Request;
 use Illuminate\Validation\Validator;
 
-class PejabatDesaEditForm extends Request {
+class PejabatDesaEditForm extends Request
+{
 
     /**
      * Custom attribute
@@ -13,8 +14,6 @@ class PejabatDesaEditForm extends Request {
     protected $customAttributes = [
         'nama'          => 'Nama',
         'jabatan'       => 'Jabatan',
-        'organisasi_id' => 'Organisasi Id',
-        'user_id'       => 'User Id',
         'fungsi'        => 'Fungsi',
         'level'         => 'Level'
     ];
@@ -25,12 +24,10 @@ class PejabatDesaEditForm extends Request {
     public function rules()
     {
         return [
-            'nama'          => 'max:255',
-            'jabatan'       => 'max:255',
-            'organisasi_id' => 'max:255',
-            'user_id'       => 'max:255',
-            'fungsi'        => 'max:255',
-            'level'         => 'integer|max:1'
+            'nama'          => 'required|max:255',
+            'jabatan'       => 'required|max:255',
+            'fungsi'        => 'required|max:255',
+            'level'         => 'required|integer|max:1'
         ];
     }
 
@@ -56,8 +53,6 @@ class PejabatDesaEditForm extends Request {
             'validation' => [
                 'nama'          => $message->first('nama'),
                 'jabatan'       => $message->first('jabatan'),
-                'organisasi_id' => $message->first('organisasi_id'),
-                'user_id'       => $message->first('user_id'),
                 'fungsi'        => $message->first('fungsi'),
                 'level'         => $message->first('level')
             ]

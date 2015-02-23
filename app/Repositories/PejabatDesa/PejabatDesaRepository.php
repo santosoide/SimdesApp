@@ -25,13 +25,13 @@ class PejabatDesaRepository extends AbstractRepository {
      * @param null $term
      * @return mixed
      */
-    public function find($page = 1, $limit = 10, $term = null)
+    public function find($page = 1, $limit = 10, $term = null, $organisasi_id)
     {
         // Create Key for cache
-        $key = 'find-pejabat_desa-' . $page . $limit . $term;
+        $key = 'find-pejabat-desa-' . $page . $limit . $term. $organisasi_id;
 
         // Create Section
-        $section = 'pejabat_desa';
+        $section = 'pejabat-desa';
 
         // If cache is exist get data from cache
         if ($this->cache->has($section, $key)) {
@@ -40,6 +40,8 @@ class PejabatDesaRepository extends AbstractRepository {
 
         // Search data
         $pejabatDesa = $this->model
+            ->orderBy('created_at', 'desc')
+            ->where('organisasi_id', $organisasi_id)
             ->where('nama', 'like', '%' . $term . '%')
             ->paginate($limit)
             ->toArray();
@@ -63,8 +65,6 @@ class PejabatDesaRepository extends AbstractRepository {
 
             $pejabatDesa->nama = e($data['nama']);
             $pejabatDesa->jabatan = e($data['jabatan']);
-            $pejabatDesa->organisasi_id = e($data['organisasi_id']);
-            $pejabatDesa->user_id = e($data['user_id']);
             $pejabatDesa->fungsi = e($data['fungsi']);
             $pejabatDesa->level = $data['level'];
 
@@ -104,8 +104,6 @@ class PejabatDesaRepository extends AbstractRepository {
 
             $pejabatDesa->nama = e($data['nama']);
             $pejabatDesa->jabatan = e($data['jabatan']);
-            $pejabatDesa->organisasi_id = e($data['organisasi_id']);
-            $pejabatDesa->user_id = e($data['user_id']);
             $pejabatDesa->fungsi = e($data['fungsi']);
             $pejabatDesa->level = $data['level'];
 

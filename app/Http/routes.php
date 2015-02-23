@@ -101,7 +101,7 @@ Route::group(['namespace' => 'Api\V1\RKPDES', 'prefix' => 'api/v1/backoffice'], 
     Route::resource('rkpdes', 'RkpdesController');
 });
 
-Route::group(['namespace' => 'Api\V1\PejabatDesa', 'prefix' => 'api/v1/backoffice'], function () {
+Route::group(['namespace' => 'Api\V1\PejabatDesa', 'prefix' => 'api/v1'], function () {
     // Rkpdes resource
     Route::resource('pejabat-desa', 'PejabatDesaController');
 });

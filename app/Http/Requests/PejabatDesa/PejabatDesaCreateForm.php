@@ -14,8 +14,6 @@ class PejabatDesaCreateForm extends Request
     protected $customAttributes = [
         'nama'          => 'Nama',
         'jabatan'       => 'Jabatan',
-        'organisasi_id' => 'Organisasi Id',
-        'user_id'       => 'User Id',
         'fungsi'        => 'Fungsi',
         'level'         => 'Level'
     ];
@@ -28,8 +26,6 @@ class PejabatDesaCreateForm extends Request
         return [
             'nama'          => 'required|max:255',
             'jabatan'       => 'required|max:255',
-            'organisasi_id' => 'required|max:255',
-            'user_id'       => 'required|max:255',
             'fungsi'        => 'required|max:255',
             'level'         => 'required|integer|max:1'
         ];
@@ -57,8 +53,6 @@ class PejabatDesaCreateForm extends Request
             'validation' => [
                 'nama'          => $message->first('nama'),
                 'jabatan'       => $message->first('jabatan'),
-                'organisasi_id' => $message->first('organisasi_id'),
-                'user_id'       => $message->first('user_id'),
                 'fungsi'        => $message->first('fungsi'),
                 'level'         => $message->first('level')
             ]

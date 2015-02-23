@@ -17,7 +17,7 @@ class PejabatDesaController extends Controller {
      */
     public function index(PejabatDesaRepository $program)
     {
-        return $program->find($this->input('page'), $limit = 10, $this->input('term'));
+        return $program->find($this->input('page'), $limit = 10, $this->input('term'), $this->input('organisasi_id'));
     }
 
     /**
