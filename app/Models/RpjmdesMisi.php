@@ -67,17 +67,17 @@ class RpjmdesMisi extends UuidModel {
          */
         static::creating(function ($model) {
             // flush the cache section
-            \Cache::section('rpjmdes_misi')->flush();
+            \Cache::section('rpjmdes-misi')->flush();
         });
 
         static::updating(function ($model) {
             // flush the cache section
-            \Cache::section('rpjmdes_misi')->flush();
+            \Cache::section('rpjmdes-misi')->flush();
         });
 
         static::deleting(function ($model) {
             // flush the cache section
-            \Cache::section('rpjmdes_misi')->flush();
+            \Cache::section('rpjmdes-misi')->flush();
         });
     }
 

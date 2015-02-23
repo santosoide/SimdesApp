@@ -3,7 +3,8 @@
 use SimdesApp\Http\Requests\Request;
 use Illuminate\Validation\Validator;
 
-class RpjmdesMisiEditForm extends Request {
+class RpjmdesMisiEditForm extends Request
+{
 
     /**
      * Custom attribute
@@ -12,9 +13,7 @@ class RpjmdesMisiEditForm extends Request {
      */
     protected $customAttributes = [
         'rpjmdes_id'    => 'RPJMDES Id',
-        'misi'          => 'Misi',
-        'user_id'       => 'User Id',
-        'organisasi_id' => 'Organisasi Id'
+        'misi'          => 'Misi'
     ];
 
     /**
@@ -23,10 +22,8 @@ class RpjmdesMisiEditForm extends Request {
     public function rules()
     {
         return [
-            'rpjmdes_id'    => 'max:255',
-            'misi'          => 'max:255',
-            'user_id'       => 'max:255',
-            'organisasi_id' => 'max:255'
+            'rpjmdes_id'    => 'required|max:255',
+            'misi'          => 'required|max:255'
         ];
     }
 
@@ -51,9 +48,7 @@ class RpjmdesMisiEditForm extends Request {
             'success'    => false,
             'validation' => [
                 'rpjmdes_id'    => $message->first('rpjmdes_id'),
-                'misi'          => $message->first('misi'),
-                'user_id'       => $message->first('user_id'),
-                'organisasi_id' => $message->first('organisasi_id')
+                'misi'          => $message->first('misi')
             ]
         ];
     }

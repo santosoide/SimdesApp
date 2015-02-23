@@ -13,9 +13,7 @@ class RpjmdesMisiCreateForm extends Request
      */
     protected $customAttributes = [
         'rpjmdes_id'    => 'RPJMDES Id',
-        'misi'          => 'Misi',
-        'user_id'       => 'User Id',
-        'organisasi_id' => 'Organisasi Id'
+        'misi'          => 'Misi'
     ];
 
     /**
@@ -25,9 +23,7 @@ class RpjmdesMisiCreateForm extends Request
     {
         return [
             'rpjmdes_id'    => 'required|max:255',
-            'misi'          => 'required|max:255',
-            'user_id'       => 'required|max:255',
-            'organisasi_id' => 'required|max:255'
+            'misi'          => 'required|max:255'
         ];
     }
 
@@ -52,9 +48,7 @@ class RpjmdesMisiCreateForm extends Request
             'success'    => false,
             'validation' => [
                 'rpjmdes_id'    => $message->first('rpjmdes_id'),
-                'misi'          => $message->first('misi'),
-                'user_id'       => $message->first('user_id'),
-                'organisasi_id' => $message->first('organisasi_id')
+                'misi'          => $message->first('misi')
             ]
         ];
     }

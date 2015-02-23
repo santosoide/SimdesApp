@@ -25,13 +25,13 @@ class RpjmdesMisiRepository extends AbstractRepository {
      * @param null $term
      * @return mixed
      */
-    public function find($page = 1, $limit = 10, $term = null)
+    public function find($page = 1, $limit = 10, $term = null, $organisasi_id)
     {
         // Create Key for cache
-        $key = 'find-rpjmdes_misi-' . $page . $limit . $term;
+        $key = 'find-rpjmdes-misi-' . $page . $limit . $term. $organisasi_id;
 
         // Create Section
-        $section = 'rpjmdes_misi';
+        $section = 'rpjmdes-misi';
 
         // If cache is exist get data from cache
         if ($this->cache->has($section, $key)) {
@@ -40,6 +40,8 @@ class RpjmdesMisiRepository extends AbstractRepository {
 
         // Search data
         $rpjmdesMisi = $this->model
+            ->orderBy('created_at', 'asc')
+            ->where('organisasi_id', '=', $organisasi_id)
             ->where('misi', 'like', '%' . $term . '%')
             ->paginate($limit)
             ->toArray();
@@ -63,8 +65,6 @@ class RpjmdesMisiRepository extends AbstractRepository {
 
             $rpjmdesMisi->rpjmdes_id = e($data['rpjmdes_id']);
             $rpjmdesMisi->misi = e($data['misi']);
-            $rpjmdesMisi->user_id = e($data['user_id']);
-            $rpjmdesMisi->organisasi_id = e($data['organisasi_id']);
 
             $rpjmdesMisi->save();
 
@@ -102,8 +102,6 @@ class RpjmdesMisiRepository extends AbstractRepository {
 
             $rpjmdesMisi->rpjmdes_id = e($data['rpjmdes_id']);
             $rpjmdesMisi->misi = e($data['misi']);
-            $rpjmdesMisi->user_id = e($data['user_id']);
-            $rpjmdesMisi->organisasi_id = e($data['organisasi_id']);
 
             $rpjmdesMisi->save();
 

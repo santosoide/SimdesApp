@@ -76,7 +76,7 @@ Route::group(['namespace' => 'Api\V1\RPJMDES', 'prefix' => 'api/v1'], function (
     Route::resource('rpjmdes', 'RpjmdesController');
 });
 
-Route::group(['namespace' => 'Api\V1\RPJMDES_Misi', 'prefix' => 'api/v1/backoffice'], function () {
+Route::group(['namespace' => 'Api\V1\RPJMDES_Misi', 'prefix' => 'api/v1'], function () {
     // RPJMDES Misi resource
     Route::resource('rpjmdes-misi', 'RpjmdesMisiController');
 });
