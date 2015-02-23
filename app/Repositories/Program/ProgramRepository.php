@@ -127,10 +127,14 @@ class ProgramRepository extends AbstractRepository {
         try {
             $program = $this->findById($id);
 
-            $program->delete();
+            if ($program){
+                $program->delete();
 
-            // Return result success
-            return $this->successDeleteResponse();
+                // Return result success
+                return $this->successDeleteResponse();
+            }
+
+            return $this->emptyDeleteResponse();
 
         } catch (\Exception $ex) {
             \Log::error('ProgramRepository destroy action something wrong -' . $ex);

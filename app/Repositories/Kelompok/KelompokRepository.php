@@ -129,10 +129,14 @@ class KelompokRepository extends AbstractRepository {
         try {
             $kelompok = $this->findById($id);
 
-            $kelompok->delete();
+            if ($kelompok){
+                $kelompok->delete();
 
-            /*Return result success*/
-            return $this->successDeleteResponse();
+                // Return result success
+                return $this->successDeleteResponse();
+            }
+
+            return $this->emptyDeleteResponse();
 
         } catch (\Exception $ex) {
             \Log::error('KelompokRepository destroy action something wrong -' . $ex);

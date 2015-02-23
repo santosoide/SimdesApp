@@ -178,19 +178,14 @@ class PendapatanRepository extends AbstractRepository
         try {
             $pendapatan = $this->findById($id);
 
-            if ($pendapatan) {
+            if ($pendapatan){
                 $pendapatan->delete();
 
-                /*Return result success*/
+                // Return result success
                 return $this->successDeleteResponse();
             }
 
-            return $this->successResponseOk([
-                'success' => false,
-                'message' => [
-                    'msg' => 'Record sudah tidak ada atau sudah dihapus.',
-                ],
-            ]);
+            return $this->emptyDeleteResponse();
 
         } catch (\Exception $ex) {
             \Log::error('PendapatanRepository destroy action something wrong -' . $ex);

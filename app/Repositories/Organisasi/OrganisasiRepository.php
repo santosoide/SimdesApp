@@ -159,10 +159,14 @@ class OrganisasiRepository extends AbstractRepository
         try {
             $organisasi = $this->findById($id);
 
-            $organisasi->delete();
+            if ($organisasi){
+                $organisasi->delete();
 
-            // Return result success
-            return $this->successDeleteResponse();
+                // Return result success
+                return $this->successDeleteResponse();
+            }
+
+            return $this->emptyDeleteResponse();
 
         } catch (\Exception $ex) {
             \Log::error('OrganisasiRepository create action something wrong -' . $ex);

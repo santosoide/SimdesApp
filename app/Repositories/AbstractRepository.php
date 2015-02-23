@@ -79,6 +79,19 @@ abstract class AbstractRepository
     /**
      * @return mixed
      */
+    public function emptyDeleteResponse()
+    {
+        return $this->successResponseOk([
+            'success' => false,
+            'message' => [
+                'msg' => 'Record sudah tidak ada atau sudah dihapus',
+            ],
+        ]);
+    }
+
+    /**
+     * @return mixed
+     */
     public function successDeleteResponse()
     {
         return $this->successResponseOk([

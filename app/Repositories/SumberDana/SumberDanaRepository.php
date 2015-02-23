@@ -121,10 +121,14 @@ class SumberDanaRepository extends AbstractRepository {
         try {
             $sumberDana = $this->findById($id);
 
-            $sumberDana->delete();
+            if ($sumberDana){
+                $sumberDana->delete();
 
-            // Return result success
-            return $this->successDeleteResponse();
+                // Return result success
+                return $this->successDeleteResponse();
+            }
+
+            return $this->emptyDeleteResponse();
 
         } catch (\Exception $ex) {
             \Log::error('SumberDanaRepository destroy action something wrong -' . $ex);

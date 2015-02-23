@@ -185,15 +185,12 @@ class BelanjaRepository extends AbstractRepository
             if ($belanja) {
                 $belanja->delete();
 
+                // Return result success
                 return $this->successDeleteResponse();
             }
 
-            return $this->successResponseOk([
-                'success' => false,
-                'message' => [
-                    'msg' => 'Record sudah tidak ada atau sudah dihapus.',
-                ],
-            ]);
+            return $this->emptyDeleteResponse();
+
         } catch (\Exception $ex) {
             \Log::error('BelanjaRepository destroy action something wrong -' . $ex);
             return $this->errorDeleteResponse();

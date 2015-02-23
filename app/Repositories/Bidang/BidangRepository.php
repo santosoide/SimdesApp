@@ -130,10 +130,14 @@ class BidangRepository extends AbstractRepository
         try {
             $bidang = $this->findById($id);
 
-            $bidang->delete();
+            if ($bidang) {
+                $bidang->delete();
 
-            // Return result success
-            return $this->successDeleteResponse();
+                // Return result success
+                return $this->successDeleteResponse();
+            }
+
+            return $this->emptyDeleteResponse();
 
         } catch (\Exception $ex) {
             \Log::error('BidangRepository destroy action something wrong -' . $ex);

@@ -131,10 +131,14 @@ class PejabatDesaRepository extends AbstractRepository {
         try {
             $pejabatDesa = $this->findById($id);
 
-            $pejabatDesa->delete();
+            if ($pejabatDesa){
+                $pejabatDesa->delete();
 
-            // Return result success
-            return $this->successDeleteResponse();
+                // Return result success
+                return $this->successDeleteResponse();
+            }
+
+            return $this->emptyDeleteResponse();
 
         } catch (\Exception $ex) {
             \Log::error('PejabatDesaRepository destroy action something wrong -' . $ex);

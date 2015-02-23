@@ -123,10 +123,14 @@ class KewenanganRepository extends AbstractRepository {
         try {
             $kewenangan = $this->findById($id);
 
-            $kewenangan->delete();
+            if ($kewenangan){
+                $kewenangan->delete();
 
-            /*Return result success*/
-            return $this->successDeleteResponse();
+                // Return result success
+                return $this->successDeleteResponse();
+            }
+
+            return $this->emptyDeleteResponse();
 
         } catch (\Exception $ex) {
             \Log::error('KewenanganRepository destroy action something wrong -' . $ex);

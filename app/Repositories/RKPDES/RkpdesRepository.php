@@ -139,10 +139,14 @@ class RkpdesRepository extends AbstractRepository {
         try {
             $rkpdes = $this->findById($id);
 
-            $rkpdes->delete();
+            if ($rkpdes){
+                $rkpdes->delete();
 
-            /*Return result success*/
-            return $this->successDeleteResponse();
+                // Return result success
+                return $this->successDeleteResponse();
+            }
+
+            return $this->emptyDeleteResponse();
 
         } catch (\Exception $ex) {
             \Log::error('RkpdesRepository destroy action something wrong -' . $ex);

@@ -126,11 +126,14 @@ class AkunRepository extends AbstractRepository {
         try {
             $akun = $this->findById($id);
 
-            $akun->delete();
+            if ($akun) {
+                $akun->delete();
 
+                // Return result success
+                return $this->successDeleteResponse();
+            }
 
-            /*Return result success*/
-            return $this->successDeleteResponse();
+            return $this->emptyDeleteResponse();
 
         } catch (\Exception $ex) {
             \Log::error('AkunRepository destroy action something wrong -' . $ex);

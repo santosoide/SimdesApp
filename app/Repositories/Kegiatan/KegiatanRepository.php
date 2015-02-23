@@ -127,10 +127,14 @@ class KegiatanRepository extends AbstractRepository {
         try {
             $kegiatan = $this->findById($id);
 
-            $kegiatan->delete();
+            if ($kegiatan){
+                $kegiatan->delete();
 
-            // Return result success
-            return $this->successDeleteResponse();
+                // Return result success
+                return $this->successDeleteResponse();
+            }
+
+            return $this->emptyDeleteResponse();
 
         } catch (\Exception $ex) {
             \Log::error('KegiatanRepository destroy action something wrong -' . $ex);

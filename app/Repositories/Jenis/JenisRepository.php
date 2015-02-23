@@ -132,10 +132,16 @@ class JenisRepository extends AbstractRepository
     {
         try {
             $jenis = $this->findById($id);
-            $jenis->delete();
 
-            /*Return result success*/
-            return $this->successDeleteResponse();
+            if ($jenis){
+                $jenis->delete();
+
+                // Return result success
+                return $this->successDeleteResponse();
+            }
+
+            return $this->emptyDeleteResponse();
+
 
         } catch (\Exception $ex) {
             \Log::error('JenisRepository destroy action something wrong -' . $ex);

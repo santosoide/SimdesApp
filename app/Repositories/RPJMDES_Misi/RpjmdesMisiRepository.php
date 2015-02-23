@@ -127,10 +127,14 @@ class RpjmdesMisiRepository extends AbstractRepository {
         try {
             $rpjmdesMisi = $this->findById($id);
 
-            $rpjmdesMisi->delete();
+            if ($rpjmdesMisi){
+                $rpjmdesMisi->delete();
 
-            // Return result success
-            return $this->successDeleteResponse();
+                // Return result success
+                return $this->successDeleteResponse();
+            }
+
+            return $this->emptyDeleteResponse();
 
         } catch (\Exception $ex) {
             \Log::error('RpjmdesMisiRepository destroy action something wrong -' . $ex);

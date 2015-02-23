@@ -178,18 +178,15 @@ class PembiayaanRepository extends AbstractRepository {
         try {
             $pembiayaan = $this->findById($id);
 
-            if ($pembiayaan) {
+            if ($pembiayaan){
                 $pembiayaan->delete();
 
+                // Return result success
                 return $this->successDeleteResponse();
             }
 
-            return $this->successResponseOk([
-                'success' => false,
-                'message' => [
-                    'msg' => 'Record sudah tidak ada atau sudah dihapus.',
-                ],
-            ]);
+            return $this->emptyDeleteResponse();
+
         } catch (\Exception $ex) {
             \Log::error('PembiayaanRepository destroy action something wrong -' . $ex);
             return $this->errorDeleteResponse();

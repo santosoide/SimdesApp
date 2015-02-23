@@ -130,10 +130,14 @@ class RpjmdesProgramRepository extends AbstractRepository {
         try {
             $rpjmdesProgram = $this->findById($id);
 
-            $rpjmdesProgram->delete();
+            if ($rpjmdesProgram){
+                $rpjmdesProgram->delete();
 
-            /*Return result success*/
-            return $this->successDeleteResponse();
+                // Return result success
+                return $this->successDeleteResponse();
+            }
+
+            return $this->emptyDeleteResponse();
 
         } catch (\Exception $ex) {
             \Log::error('RpjmdesProgramRepository destroy action something wrong -' . $ex);

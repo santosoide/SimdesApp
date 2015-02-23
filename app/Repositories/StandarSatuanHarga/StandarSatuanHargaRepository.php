@@ -129,10 +129,14 @@ class StandarSatuanHargaRepository extends AbstractRepository {
         try {
             $standarSatuanHarga = $this->findById($id);
 
-            $standarSatuanHarga->delete();
+            if ($standarSatuanHarga){
+                $standarSatuanHarga->delete();
 
-            // Return result success
-            return $this->successDeleteResponse();
+                // Return result success
+                return $this->successDeleteResponse();
+            }
+
+            return $this->emptyDeleteResponse();
 
         } catch (\Exception $ex) {
             \Log::error('StandarSatuanHargaRepository destroy action something wrong -' . $ex);

@@ -132,10 +132,14 @@ class ObyekRepository extends AbstractRepository
         try {
             $obyek = $this->findById($id);
 
-            $obyek->delete();
+            if ($obyek){
+                $obyek->delete();
 
-            /*Return result success*/
-            return $this->successDeleteResponse();
+                // Return result success
+                return $this->successDeleteResponse();
+            }
+
+            return $this->emptyDeleteResponse();
 
         } catch (\Exception $ex) {
             \Log::error('ObyekRepository destroy action something wrong -' . $ex);
