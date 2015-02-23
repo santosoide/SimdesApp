@@ -45,7 +45,7 @@ class StandarSatuanHargaRepository extends AbstractRepository {
             ->toArray();
 
         // Create cache
-        $this->cache->put($section, $key, $standarSatuanHarga, $limit);
+        $this->cache->put($section, $key, $standarSatuanHarga, 10);
 
         return $standarSatuanHarga;
     }

@@ -54,7 +54,7 @@ class UserRepository extends AbstractRepository
             ->toArray();
 
         // Create cache
-        $this->cache->put($section, $key, $user, $limit);
+        $this->cache->put($section, $key, $user, 10);
 
         return $user;
     }

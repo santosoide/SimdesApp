@@ -45,7 +45,7 @@ class RkpdesRepository extends AbstractRepository {
             ->toArray();
 
         // Create cache
-        $this->cache->put($section, $key, $rkpdes, $limit);
+        $this->cache->put($section, $key, $rkpdes, 10);
 
         return $rkpdes;
     }

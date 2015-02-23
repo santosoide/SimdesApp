@@ -45,7 +45,7 @@ class RpjmdesMisiRepository extends AbstractRepository {
             ->toArray();
 
         // Create cache
-        $this->cache->put($section, $key, $rpjmdesMisi, $limit);
+        $this->cache->put($section, $key, $rpjmdesMisi, 10);
 
         return $rpjmdesMisi;
     }

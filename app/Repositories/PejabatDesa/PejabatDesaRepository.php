@@ -45,7 +45,7 @@ class PejabatDesaRepository extends AbstractRepository {
             ->toArray();
 
         // Create cache
-        $this->cache->put($section, $key, $pejabatDesa, $limit);
+        $this->cache->put($section, $key, $pejabatDesa, 10);
 
         return $pejabatDesa;
     }

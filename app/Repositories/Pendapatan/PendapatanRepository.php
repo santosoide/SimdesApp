@@ -62,7 +62,7 @@ class PendapatanRepository extends AbstractRepository
             ->toArray();
 
         // Create cache
-        $this->cache->put($section, $key, $pendapatan, $limit);
+        $this->cache->put($section, $key, $pendapatan, 10);
 
         return $pendapatan;
     }

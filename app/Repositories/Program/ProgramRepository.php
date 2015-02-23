@@ -45,7 +45,7 @@ class ProgramRepository extends AbstractRepository {
             ->toArray();
 
         // Create cache
-        $this->cache->put($section, $key, $program, $limit);
+        $this->cache->put($section, $key, $program, 10);
 
         return $program;
     }

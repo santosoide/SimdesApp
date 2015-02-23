@@ -19,7 +19,11 @@ class KecamatanRepository extends AbstractRepository
     protected $organisasi;
 
     /**
+     * instance interface
+     *
+     * @param Kecamatan $kecamatan
      * @param LaraCacheInterface $cache
+     * @param OrganisasiRepository $organisasi
      */
     public function __construct(Kecamatan $kecamatan, LaraCacheInterface $cache, OrganisasiRepository $organisasi)
     {

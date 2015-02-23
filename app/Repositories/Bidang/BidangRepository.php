@@ -58,7 +58,7 @@ class BidangRepository extends AbstractRepository
             ->toArray();
 
         // Create cache
-        $this->cache->put($section, $key, $bidang, $limit);
+        $this->cache->put($section, $key, $bidang, 10);
 
         return $bidang;
     }

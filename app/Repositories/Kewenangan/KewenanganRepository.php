@@ -60,7 +60,7 @@ class KewenanganRepository extends AbstractRepository {
             ->toArray();
 
         // Create cache
-        $this->cache->put($section, $key, $kewenangan, $limit);
+        $this->cache->put($section, $key, $kewenangan, 10);
 
         return $kewenangan;
     }
