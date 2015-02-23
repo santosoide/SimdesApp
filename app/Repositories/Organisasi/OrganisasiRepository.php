@@ -173,4 +173,29 @@ class OrganisasiRepository extends AbstractRepository
             return $this->errorDeleteResponse();
         }
     }
+
+    /**
+     * Get kode desa
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function getKodeDesa($id)
+    {
+        $data = $this->findById($id);
+        return $data->kode_desa;
+    }
+
+    /**
+     * Get by kecamatan
+     *
+     * @param $kec_id
+     * @return mixed
+     */
+    public function getByKecamatan($kec_id)
+    {
+        return $this->model
+            ->where('kec_id', '=', $kec_id)
+            ->get();
+    }
 }

@@ -121,6 +121,26 @@ Route::group(['namespace' => 'Api\V1\Transaksi_Pendapatan', 'prefix' => 'api/v1'
     Route::resource('transaksi-pendapatan', 'TransaksiPendapatanController');
 });
 
-Route::get('get-token', function(){
-   return csrf_token();
+Route::group(['namespace' => 'Api\V1\Transaksi_Belanja', 'prefix' => 'api/v1'], function () {
+    // Transaksi Belanja resource
+    Route::resource('transaksi-belanja', 'TransaksiBelanjaController');
+});
+
+Route::group(['namespace' => 'Api\V1\DanaDesa', 'prefix' => 'api/v1'], function () {
+    // Dana Desa resource
+    Route::resource('dana-desa', 'DanaDesaController');
+});
+
+Route::group(['namespace' => 'Api\V1\Kecamatan', 'prefix' => 'api/v1'], function () {
+    // Dana Desa resource
+    Route::resource('kecamatan', 'KecamatanController');
+});
+
+Route::group(['namespace' => 'Api\V1\LokasiProgram', 'prefix' => 'api/v1'], function () {
+    // Dana Desa resource
+    Route::resource('lokasi-program', 'LokasiProgramController');
+});
+
+Route::get('get-token', function () {
+    return csrf_token();
 });
