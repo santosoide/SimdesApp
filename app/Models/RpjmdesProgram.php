@@ -65,17 +65,17 @@ class RpjmdesProgram extends UuidModel
          */
         static::creating(function ($model) {
             // flush the cache section
-            \Cache::section('rpjmdes_program')->flush();
+            \Cache::section('rpjmdes-program')->flush();
         });
 
         static::updating(function ($model) {
             // flush the cache section
-            \Cache::section('rpjmdes_program')->flush();
+            \Cache::section('rpjmdes-program')->flush();
         });
 
         static::deleting(function ($model) {
             // flush the cache section
-            \Cache::section('rpjmdes_program')->flush();
+            \Cache::section('rpjmdes-program')->flush();
         });
     }
 }

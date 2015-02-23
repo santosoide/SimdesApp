@@ -9,26 +9,51 @@ use SimdesApp\Http\Requests\RPJMDES_Program\RpjmdesProgramEditForm;
 
 class RpjmdesProgramController extends Controller {
 
+    /**
+     * @param RpjmdesProgramRepository $program
+     * @return mixed
+     */
     public function index(RpjmdesProgramRepository $program)
     {
-        return $program->find($this->input('page'), $limit = 10, $this->input('term'));
+        return $program->find($this->input('page'), $limit = 10, $this->input('term'), $this->input('organisasi_id'));
     }
 
+    /**
+     * @param RpjmdesProgramCreateForm $request
+     * @param RpjmdesProgramRepository $program
+     * @return mixed
+     */
     public function store(RpjmdesProgramCreateForm $request, RpjmdesProgramRepository $program)
     {
         return $program->create($request->all());
     }
 
+    /**
+     * @param RpjmdesProgramRepository $program
+     * @param $id
+     * @return \Illuminate\Support\Collection|null|static
+     */
     public function show(RpjmdesProgramRepository $program, $id)
     {
         return $program->findById($id);
     }
 
+    /**
+     * @param $id
+     * @param RpjmdesProgramEditForm $request
+     * @param RpjmdesProgramRepository $program
+     * @return mixed
+     */
     public function update($id, RpjmdesProgramEditForm $request, RpjmdesProgramRepository $program)
     {
         return $program->update($id, $request->all());
     }
 
+    /**
+     * @param $id
+     * @param RpjmdesProgramRepository $program
+     * @return mixed
+     */
     public function destroy($id, RpjmdesProgramRepository $program)
     {
         return $program->destroy($id);

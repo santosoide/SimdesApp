@@ -25,13 +25,13 @@ class RpjmdesProgramRepository extends AbstractRepository {
      * @param null $term
      * @return mixed
      */
-    public function find($page = 1, $limit = 10, $term = null)
+    public function find($page = 1, $limit = 10, $term = null, $organisasi_id)
     {
         // Create Key for cache
         $key = 'find-rpjmdes_program-' . $page . $limit . $term;
 
         // Create Section
-        $section = 'rpjmdes_program';
+        $section = 'rpjmdes-program';
 
         // If cache is exist get data from cache
         if ($this->cache->has($section, $key)) {
@@ -40,7 +40,8 @@ class RpjmdesProgramRepository extends AbstractRepository {
 
         // Search data
         $rpjmdesProgram = $this->model
-            ->where('misi', 'like', '%' . $term . '%')
+            ->orderBy('created_at', 'asc')
+            ->where('organisasi_id', '=', $organisasi_id)
             ->paginate($limit)
             ->toArray();
 
@@ -61,8 +62,6 @@ class RpjmdesProgramRepository extends AbstractRepository {
         try {
             $rpjmdesProgram = $this->getNew();
 
-            $rpjmdesProgram->user_id = e($data['user_id']);
-            $rpjmdesProgram->organisasi_id = e($data['organisasi_id']);
             $rpjmdesProgram->kegiatan_id = $data['kegiatan_id'];
             $rpjmdesProgram->pelaksanaan = $data['pelaksanaan'];
             $rpjmdesProgram->sumber_dana_id = $data['sumber_dana_id'];
@@ -101,8 +100,6 @@ class RpjmdesProgramRepository extends AbstractRepository {
         try {
             $rpjmdesProgram = $this->findById($id);
 
-            $rpjmdesProgram->user_id = e($data['user_id']);
-            $rpjmdesProgram->organisasi_id = e($data['organisasi_id']);
             $rpjmdesProgram->kegiatan_id = $data['kegiatan_id'];
             $rpjmdesProgram->pelaksanaan = $data['pelaksanaan'];
             $rpjmdesProgram->sumber_dana_id = $data['sumber_dana_id'];
