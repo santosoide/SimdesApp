@@ -31,7 +31,7 @@ class SumberDanaRepository extends AbstractRepository {
         $key = 'find-sumber_dana-' . $page . $limit . $term;
 
         // Create Section
-        $section = 'sumber_dana';
+        $section = 'sumber-dana';
 
         // If cache is exist get data from cache
         if ($this->cache->has($section, $key)) {

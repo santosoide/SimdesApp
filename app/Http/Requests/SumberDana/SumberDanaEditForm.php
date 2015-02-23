@@ -20,7 +20,7 @@ class SumberDanaEditForm extends Request {
     public function rules()
     {
         return [
-            'sumber_dana' => 'max:255'
+            'sumber_dana' => 'required|max:255'
         ];
     }
 

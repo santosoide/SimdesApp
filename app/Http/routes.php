@@ -91,7 +91,7 @@ Route::group(['namespace' => 'Api\V1\StandarSatuanHarga', 'prefix' => 'api/v1'],
     Route::resource('standar-satuan-harga', 'StandarSatuanHargaController');
 });
 
-Route::group(['namespace' => 'Api\V1\SumberDana', 'prefix' => 'api/v1/backoffice'], function () {
+Route::group(['namespace' => 'Api\V1\SumberDana', 'prefix' => 'api/v1'], function () {
     // Sumber Dana resource
     Route::resource('sumber-dana', 'SumberDanaController');
 });

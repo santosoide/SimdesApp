@@ -1,5 +1,6 @@
 <?php namespace SimdesApp\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SumberDana extends Model {
@@ -65,17 +66,17 @@ class SumberDana extends Model {
          */
         static::creating(function ($model) {
             // flush the cache section
-            \Cache::section('sumber_dana')->flush();
+            \Cache::section('sumber-dana')->flush();
         });
 
         static::updating(function ($model) {
             // flush the cache section
-            \Cache::section('sumber_dana')->flush();
+            \Cache::section('sumber-dana')->flush();
         });
 
         static::deleting(function ($model) {
             // flush the cache section
-            \Cache::section('sumber_dana')->flush();
+            \Cache::section('sumber-dana')->flush();
         });
     }
 
