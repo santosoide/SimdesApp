@@ -15,7 +15,6 @@ class ProgramCreateForm extends Request
         'kode_rekening' => 'Kode Rekening',
         'bidang_id'     => 'Bidang Id',
         'program'       => 'Program',
-        'organisasi_id' => 'Organisasi Id'
     ];
 
     /**
@@ -24,10 +23,9 @@ class ProgramCreateForm extends Request
     public function rules()
     {
         return [
-            'kode_rekening' => 'required|max:255',
-            'bidang_id'     => 'required|integer',
+            'kode_rekening' => 'required|max:10',
+            'bidang_id'     => 'required|max:5',
             'program'       => 'required|max:255',
-            'organisasi_id' => 'required|max:255'
         ];
     }
 
@@ -54,7 +52,6 @@ class ProgramCreateForm extends Request
                 'kode_rekening' => $message->first('kode_rekening'),
                 'bidang_id'     => $message->first('bidang_id'),
                 'program'       => $message->first('program'),
-                'organisasi_id' => $message->first('organisasi_id')
             ]
         ];
     }

@@ -3,7 +3,8 @@
 use SimdesApp\Http\Requests\Request;
 use Illuminate\Validation\Validator;
 
-class ProgramEditForm extends Request {
+class ProgramEditForm extends Request
+{
 
     /**
      * Custom attribute
@@ -14,7 +15,6 @@ class ProgramEditForm extends Request {
         'kode_rekening' => 'Kode Rekening',
         'bidang_id'     => 'Bidang Id',
         'program'       => 'Program',
-        'organisasi_id' => 'Organisasi Id'
     ];
 
     /**
@@ -23,10 +23,9 @@ class ProgramEditForm extends Request {
     public function rules()
     {
         return [
-            'kode_rekening' => 'max:255',
-            'bidang_id'     => 'integer',
-            'program'       => 'max:255',
-            'organisasi_id' => 'max:255'
+            'kode_rekening' => 'required|max:10',
+            'bidang_id'     => 'required|max:5',
+            'program'       => 'required|max:255',
         ];
     }
 
@@ -53,7 +52,6 @@ class ProgramEditForm extends Request {
                 'kode_rekening' => $message->first('kode_rekening'),
                 'bidang_id'     => $message->first('bidang_id'),
                 'program'       => $message->first('program'),
-                'organisasi_id' => $message->first('organisasi_id')
             ]
         ];
     }

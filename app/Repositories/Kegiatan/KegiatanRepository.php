@@ -144,4 +144,15 @@ class KegiatanRepository extends AbstractRepository {
             return $this->errorDeleteResponse();
         }
     }
+
+    /**
+     * @param $program_id
+     * @return mixed
+     */
+    public function findIsExists($program_id)
+    {
+        return $this->model
+            ->where('program_id', '=', $program_id)
+            ->get();
+    }
 }

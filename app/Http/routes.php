@@ -66,9 +66,9 @@ Route::group(['namespace' => 'Api\V1\Kewenangan', 'prefix' => 'api/v1/backoffice
     Route::resource('kewenangan', 'KewenanganController');
 });
 
-Route::group(['namespace' => 'Api\V1\Program', 'prefix' => 'api/v1/backoffice'], function () {
+Route::group(['namespace' => 'Api\V1\Program', 'prefix' => 'api/v1'], function () {
     // Program resource
-    Route::resource('program', 'ProgramController');
+    Route::resource('kewenangan-program', 'ProgramController');
 });
 
 Route::group(['namespace' => 'Api\V1\RPJMDES', 'prefix' => 'api/v1/backoffice'], function () {

@@ -2,6 +2,7 @@
 
 use SimdesApp\Models\Program;
 use SimdesApp\Repositories\AbstractRepository;
+use SimdesApp\Repositories\Kegiatan\KegiatanRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
 class ProgramRepository extends AbstractRepository {
@@ -11,10 +12,21 @@ class ProgramRepository extends AbstractRepository {
      */
     protected $cache;
 
-    public function __construct(Program $program, LaraCacheInterface $cache)
+    /**
+     * @var KegiatanRepository
+     */
+    protected $kegiatan;
+
+    /**
+     * @param Program $program
+     * @param LaraCacheInterface $cache
+     * @param KegiatanRepository $kegiatan
+     */
+    public function __construct(Program $program, LaraCacheInterface $cache, KegiatanRepository $kegiatan)
     {
         $this->model = $program;
         $this->cache = $cache;
+        $this->kegiatan = $kegiatan;
     }
 
     /**
@@ -28,10 +40,10 @@ class ProgramRepository extends AbstractRepository {
     public function find($page = 1, $limit = 10, $term = null)
     {
         // Create Key for cache
-        $key = 'find-kewenangan-' . $page . $limit . $term;
+        $key = 'kewenangan-program-find-' . $page . $limit . $term;
 
         // Create Section
-        $section = 'kewenangan';
+        $section = 'kewenangan-program';
 
         // If cache is exist get data from cache
         if ($this->cache->has($section, $key)) {
@@ -40,12 +52,13 @@ class ProgramRepository extends AbstractRepository {
 
         // Search data
         $program = $this->model
+            ->orderBy('kode_rekening', 'asc')
             ->where('kode_rekening', 'like', '%' . $term . '%')
             ->paginate($limit)
             ->toArray();
 
         // Create cache
-        $this->cache->put($section, $key, $program, $limit);
+        $this->cache->put($section, $key, $program, 10);
 
         return $program;
     }
@@ -61,10 +74,13 @@ class ProgramRepository extends AbstractRepository {
         try {
             $program = $this->getNew();
 
+            // jika organisasi_id null Kewenangan Program diinput oleh Kabupaten
+            $organisasi_id = (empty($data['organisasi_id'])) ? '' : $data['organisasi_id'];
+
             $program->kode_rekening = e($data['kode_rekening']);
-            $program->bidang_id = $data['bidang_id'];
+            $program->bidang_id = e($data['bidang_id']);
             $program->program = e($data['program']);
-            $program->organisasi_id = e($data['organisasi_id']);
+            $program->organisasi_id = $organisasi_id;
 
             $program->save();
 
@@ -101,9 +117,8 @@ class ProgramRepository extends AbstractRepository {
             $program = $this->findById($id);
 
             $program->kode_rekening = e($data['kode_rekening']);
-            $program->bidang_id = $data['bidang_id'];
+            $program->bidang_id = e($data['bidang_id']);
             $program->program = e($data['program']);
-            $program->organisasi_id = e($data['organisasi_id']);
 
             $program->save();
 
@@ -128,9 +143,12 @@ class ProgramRepository extends AbstractRepository {
             $program = $this->findById($id);
 
             if ($program){
-                $program->delete();
+                $result = $this->cekForDelete($program->_id);
+                if (count($result) > 0) {
+                    return $this->relationDeleteResponse();
+                }
 
-                // Return result success
+                $program->delete();
                 return $this->successDeleteResponse();
             }
 
@@ -153,5 +171,15 @@ class ProgramRepository extends AbstractRepository {
             ->get();
     }
 
+    /**
+     * check kegiatan before delete
+     *
+     * @param $program_id
+     * @return mixed
+     */
+    public function cekForDelete($program_id)
+    {
+        return $this->kegiatan->findIsExists($program_id);
+    }
 
 }
