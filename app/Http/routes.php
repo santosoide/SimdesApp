@@ -86,7 +86,7 @@ Route::group(['namespace' => 'Api\V1\RPJMDES_Misi', 'prefix' => 'api/v1'], funct
     Route::resource('rpjmdes-misi', 'RpjmdesMisiController');
 });
 
-Route::group(['namespace' => 'Api\V1\StandarSatuanHarga', 'prefix' => 'api/v1/backoffice'], function () {
+Route::group(['namespace' => 'Api\V1\StandarSatuanHarga', 'prefix' => 'api/v1'], function () {
     // Standar Satuan Harga resource
     Route::resource('standar-satuan-harga', 'StandarSatuanHargaController');
 });

@@ -24,11 +24,11 @@ class StandarSatuanHargaEditForm extends Request {
     public function rules()
     {
         return [
-            'kode_rekening' => 'max:255',
-            'barang'        => 'max:255',
-            'spesifikasi'   => 'max:255',
-            'satuan'        => 'max:255',
-            'harga'         => 'integer|max:1000000000'
+            'kode_rekening' => 'required|max:255',
+            'barang'        => 'required|max:255',
+            'spesifikasi'   => 'required|max:255',
+            'satuan'        => 'required|max:255',
+            'harga'         => 'required|integer|max:1000000000'
         ];
     }
 

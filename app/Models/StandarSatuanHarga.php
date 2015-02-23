@@ -1,5 +1,6 @@
 <?php namespace SimdesApp\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class StandarSatuanHarga extends Model {
@@ -69,17 +70,17 @@ class StandarSatuanHarga extends Model {
          */
         static::creating(function ($model) {
             // flush the cache section
-            \Cache::section('standar_satuan_harga')->flush();
+            \Cache::section('standar-satuan-harga')->flush();
         });
 
         static::updating(function ($model) {
             // flush the cache section
-            \Cache::section('standar_satuan_harga')->flush();
+            \Cache::section('standar-satuan-harga')->flush();
         });
 
         static::deleting(function ($model) {
             // flush the cache section
-            \Cache::section('standar_satuan_harga')->flush();
+            \Cache::section('standar-satuan-harga')->flush();
         });
     }
 

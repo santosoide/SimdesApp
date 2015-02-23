@@ -28,10 +28,10 @@ class StandarSatuanHargaRepository extends AbstractRepository {
     public function find($page = 1, $limit = 10, $term = null)
     {
         // Create Key for cache
-        $key = 'find-standar_satuan_harga-' . $page . $limit . $term;
+        $key = 'find-standar-satuan-harga-' . $page . $limit . $term;
 
         // Create Section
-        $section = 'standar_satuan_harga';
+        $section = 'standar-satuan-harga';
 
         // If cache is exist get data from cache
         if ($this->cache->has($section, $key)) {
