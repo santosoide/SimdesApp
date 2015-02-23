@@ -12,9 +12,7 @@ class RpjmdesCreateForm extends Request
      * @var array
      */
     protected $customAttributes = [
-        'visi'          => 'Visi',
-        'user_id'       => 'User Id',
-        'organisasi_id' => 'Organisasi Id'
+        'visi' => 'Visi'
     ];
 
     /**
@@ -23,9 +21,7 @@ class RpjmdesCreateForm extends Request
     public function rules()
     {
         return [
-            'visi'          => 'required|max:255',
-            'user_id'       => 'required|max:255',
-            'organisasi_id' => 'required|max:255'
+            'visi' => 'required|max:255'
         ];
     }
 
@@ -49,9 +45,7 @@ class RpjmdesCreateForm extends Request
         return [
             'success'    => false,
             'validation' => [
-                'visi'          => $message->first('visi'),
-                'user_id'       => $message->first('user_id'),
-                'organisasi_id' => $message->first('organisasi_id')
+                'visi' => $message->first('visi')
             ]
         ];
     }

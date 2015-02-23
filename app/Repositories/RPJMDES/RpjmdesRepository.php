@@ -2,19 +2,24 @@
 
 use SimdesApp\Models\Rpjmdes;
 use SimdesApp\Repositories\AbstractRepository;
+use SimdesApp\Repositories\RPJMDES_Misi\RpjmdesMisiRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
-class RpjmdesRepository extends AbstractRepository {
+class RpjmdesRepository extends AbstractRepository
+{
 
     /**
      * @var LaraCacheInterface
      */
     protected $cache;
 
-    public function __construct(Rpjmdes $rpjmdes, LaraCacheInterface $cache)
+    protected $misi;
+
+    public function __construct(Rpjmdes $rpjmdes, LaraCacheInterface $cache, RpjmdesMisiRepository $misi)
     {
         $this->model = $rpjmdes;
         $this->cache = $cache;
+        $this->misi = $misi;
     }
 
     /**
@@ -25,10 +30,10 @@ class RpjmdesRepository extends AbstractRepository {
      * @param null $term
      * @return mixed
      */
-    public function find($page = 1, $limit = 10, $term = null)
+    public function find($page = 1, $limit = 10, $term = null, $organisasi_id)
     {
         // Create Key for cache
-        $key = 'find-rpjmdes-' . $page . $limit . $term;
+        $key = 'find-rpjmdes-' . $page . $limit . $term . $organisasi_id;
 
         // Create Section
         $section = 'rpjmdes';
@@ -41,6 +46,7 @@ class RpjmdesRepository extends AbstractRepository {
         // Search data
         $rpjmdes = $this->model
             ->where('visi', 'like', '%' . $term . '%')
+            ->where('organisasi_id', '=', $organisasi_id)
             ->paginate($limit)
             ->toArray();
 
@@ -62,8 +68,6 @@ class RpjmdesRepository extends AbstractRepository {
             $rpjmdes = $this->getNew();
 
             $rpjmdes->visi = e($data['visi']);
-            $rpjmdes->user_id = e($data['user_id']);
-            $rpjmdes->organisasi_id = e($data['organisasi_id']);
 
             $rpjmdes->save();
 
@@ -100,8 +104,6 @@ class RpjmdesRepository extends AbstractRepository {
             $rpjmdes = $this->findById($id);
 
             $rpjmdes->visi = e($data['visi']);
-            $rpjmdes->user_id = e($data['user_id']);
-            $rpjmdes->organisasi_id = e($data['organisasi_id']);
 
             $rpjmdes->save();
 
@@ -125,10 +127,13 @@ class RpjmdesRepository extends AbstractRepository {
         try {
             $rpjmdes = $this->findById($id);
 
-            if ($rpjmdes){
-                $rpjmdes->delete();
+            if ($rpjmdes) {
+                $result = $this->cekForDelete($rpjmdes->_id);
+                if (count($result) > 0) {
+                    return $this->relationDeleteResponse();
+                }
 
-                // Return result success
+                $rpjmdes->delete();
                 return $this->successDeleteResponse();
             }
 
@@ -138,5 +143,15 @@ class RpjmdesRepository extends AbstractRepository {
             \Log::error('RpjmdesRepository destroy action something wrong -' . $ex);
             return $this->errorDeleteResponse();
         }
+    }
+
+    /**
+     * @param $rpjmdes_id
+     *
+     * @return mixed
+     */
+    public function cekForDelete($rpjmdes_id)
+    {
+        return $this->misi->findIsExists($rpjmdes_id);
     }
 }

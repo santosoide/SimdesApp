@@ -142,4 +142,16 @@ class RpjmdesMisiRepository extends AbstractRepository {
         }
     }
 
+    /**
+     * @param $rpjmdes_id
+     *
+     * @return mixed
+     */
+    public function findIsExists($rpjmdes_id)
+    {
+        return $this->model
+            ->where('rpjmdes_id', '=', $rpjmdes_id)
+            ->get();
+    }
+
 }
