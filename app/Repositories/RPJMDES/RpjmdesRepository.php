@@ -45,7 +45,7 @@ class RpjmdesRepository extends AbstractRepository {
             ->toArray();
 
         // Create cache
-        $this->cache->put($section, $key, $rpjmdes, $limit);
+        $this->cache->put($section, $key, $rpjmdes, 10);
 
         return $rpjmdes;
     }
@@ -105,7 +105,7 @@ class RpjmdesRepository extends AbstractRepository {
 
             $rpjmdes->save();
 
-            /*Return result success*/
+            // Return result success
             return $this->successUpdateResponse();
 
         } catch (\Exception $ex) {

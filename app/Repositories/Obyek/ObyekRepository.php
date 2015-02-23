@@ -51,7 +51,7 @@ class ObyekRepository extends AbstractRepository
             ->toArray();
 
         // Create cache
-        $this->cache->put($section, $key, $obyek, $limit);
+        $this->cache->put($section, $key, $obyek, 10);
 
         return $obyek;
     }

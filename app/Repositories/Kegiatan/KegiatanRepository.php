@@ -46,7 +46,7 @@ class KegiatanRepository extends AbstractRepository {
             ->toArray();
 
         // Create cache
-        $this->cache->put($section, $key, $kegiatan, $limit);
+        $this->cache->put($section, $key, $kegiatan, 10);
 
         return $kegiatan;
     }

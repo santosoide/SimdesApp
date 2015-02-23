@@ -61,7 +61,7 @@ class JenisRepository extends AbstractRepository
             ->toArray();
 
         // Create cache
-        $this->cache->put($section, $key, $jenis, $limit);
+        $this->cache->put($section, $key, $jenis, 10);
 
         return $jenis;
     }

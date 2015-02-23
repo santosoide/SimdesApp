@@ -45,7 +45,7 @@ class SumberDanaRepository extends AbstractRepository {
             ->toArray();
 
         // Create cache
-        $this->cache->put($section, $key, $sumberDana, $limit);
+        $this->cache->put($section, $key, $sumberDana, 10);
 
         return $sumberDana;
     }

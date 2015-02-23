@@ -61,7 +61,7 @@ class AkunRepository extends AbstractRepository {
             ->toArray();
 
         // Create cache
-        $this->cache->put($section, $key, $organisasi, $limit);
+        $this->cache->put($section, $key, $organisasi, 10);
 
         return $organisasi;
     }
