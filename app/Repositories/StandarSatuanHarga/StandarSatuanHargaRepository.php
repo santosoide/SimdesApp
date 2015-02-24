@@ -28,7 +28,7 @@ class StandarSatuanHargaRepository extends AbstractRepository {
     public function find($page = 1, $limit = 10, $term = null)
     {
         // Create Key for cache
-        $key = 'find-standar-satuan-harga-' . $page . $limit . $term;
+        $key = 'standar-satuan-harga-find-' . $page . $limit . $term;
 
         // Create Section
         $section = 'standar-satuan-harga';

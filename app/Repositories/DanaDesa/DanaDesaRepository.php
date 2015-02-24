@@ -31,7 +31,7 @@ class DanaDesaRepository extends AbstractRepository {
     public function find($page = 1, $limit = 10, $term = null)
     {
         // set key
-        $key = 'dana-desa-find' . $page . $limit . $term;
+        $key = 'dana-desa-find-' . $page . $limit . $term;
 
         // set section
         $section = 'dana-desa';

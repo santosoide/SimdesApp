@@ -28,7 +28,7 @@ class PejabatDesaRepository extends AbstractRepository {
     public function find($page = 1, $limit = 10, $term = null, $organisasi_id)
     {
         // Create Key for cache
-        $key = 'find-pejabat-desa-' . $page . $limit . $term. $organisasi_id;
+        $key = 'pejabat-desa-find-' . $page . $limit . $term. $organisasi_id;
 
         // Create Section
         $section = 'pejabat-desa';

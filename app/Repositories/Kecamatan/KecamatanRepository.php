@@ -43,7 +43,7 @@ class KecamatanRepository extends AbstractRepository
     public function find($page = 1, $limit = 10, $term = null)
     {
         // set key
-        $key = 'kecamatan-find' . $page . $limit . $term;
+        $key = 'kecamatan-find-' . $page . $limit . $term;
 
         // set section
         $section = 'kecamatan';

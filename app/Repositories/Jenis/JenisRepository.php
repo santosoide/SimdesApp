@@ -44,7 +44,7 @@ class JenisRepository extends AbstractRepository
     public function find($page = 1, $limit = 10, $term = null)
     {
         // Create Key for cache
-        $key = 'find-jenis-' . $page . $limit . $term;
+        $key = 'jenis-find-' . $page . $limit . $term;
 
         // Create Section
         $section = 'jenis';

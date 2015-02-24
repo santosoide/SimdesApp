@@ -45,7 +45,7 @@ class OrganisasiRepository extends AbstractRepository
     public function find($page = 1, $limit = 10, $term = null)
     {
         // Create Key for cache
-        $key = 'find-organisasi-' . $page . $limit . $term;
+        $key = 'organisasi-find-' . $page . $limit . $term;
 
         // Create Section
         $section = 'organisasi';

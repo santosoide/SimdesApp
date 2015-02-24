@@ -36,7 +36,7 @@ class TransaksiPendapatanRepository extends AbstractRepository {
     public function find($page = 1, $limit = 10, $term = null)
     {
         // set key
-        $key = 'transaksi-pendapatan-find' . $page . $limit . $term;
+        $key = 'transaksi-pendapatan-find-' . $page . $limit . $term;
 
         // set section
         $section = 'transaksi-pendapatan';

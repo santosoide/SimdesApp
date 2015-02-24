@@ -44,7 +44,7 @@ class PendapatanRepository extends AbstractRepository
     public function find($page = 1, $limit = 10, $term = null, $organisasi_id)
     {
         // Create Key for cache
-        $key = 'find-pendapatan' . $page . $limit . $term;
+        $key = 'pendapatan-find-' . $page . $limit . $term;
 
         // Create Section
         $section = 'pendapatan';

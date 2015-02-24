@@ -33,7 +33,7 @@ class RpjmdesRepository extends AbstractRepository
     public function find($page = 1, $limit = 10, $term = null, $organisasi_id)
     {
         // Create Key for cache
-        $key = 'find-rpjmdes-' . $page . $limit . $term . $organisasi_id;
+        $key = 'rpjmdes-find-' . $page . $limit . $term . $organisasi_id;
 
         // Create Section
         $section = 'rpjmdes';

@@ -28,7 +28,7 @@ class RpjmdesMisiRepository extends AbstractRepository {
     public function find($page = 1, $limit = 10, $term = null, $organisasi_id)
     {
         // Create Key for cache
-        $key = 'find-rpjmdes-misi-' . $page . $limit . $term. $organisasi_id;
+        $key = 'rpjmdes-misi-find-' . $page . $limit . $term. $organisasi_id;
 
         // Create Section
         $section = 'rpjmdes-misi';

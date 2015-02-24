@@ -40,7 +40,7 @@ class BidangRepository extends AbstractRepository
     public function find($page = 1, $limit = 10, $term = null)
     {
         // Create Key for cache
-        $key = 'find-bidang-' . $page . $limit . $term;
+        $key = 'bidang-find-' . $page . $limit . $term;
 
         // Create Section
         $section = 'bidang';

@@ -35,7 +35,7 @@ class UserRepository extends AbstractRepository
     public function find($page = 1, $limit = 10, $term = null)
     {
         // Create Key for cache
-        $key = 'find-user-' . $page . $limit . $term;
+        $key = 'user-find-' . $page . $limit . $term;
 
         // Create Section
         $section = 'user';

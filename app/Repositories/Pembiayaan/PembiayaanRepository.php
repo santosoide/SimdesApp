@@ -44,7 +44,7 @@ class PembiayaanRepository extends AbstractRepository {
     public function find($page = 1, $limit = 10, $term = null, $organisasi_id)
     {
         // set key
-        $key = 'pembiayaan-find' . $page . $limit . $term . $organisasi_id;
+        $key = 'pembiayaan-find-' . $page . $limit . $term . $organisasi_id;
 
         // set section
         $section = 'pembiayaan';

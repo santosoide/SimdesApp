@@ -42,7 +42,7 @@ class KelompokRepository extends AbstractRepository {
     public function find($page = 1, $limit = 10, $term = null)
     {
         // Create Key for cache
-        $key = 'find-kelompok-' . $page . $limit . $term;
+        $key = 'kelompok-find-' . $page . $limit . $term;
 
         // Create Section
         $section = 'kelompok';

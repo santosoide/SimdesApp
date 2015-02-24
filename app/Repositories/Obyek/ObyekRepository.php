@@ -33,7 +33,7 @@ class ObyekRepository extends AbstractRepository
     public function find($page = 1, $limit = 10, $term = null)
     {
         // Create Key for cache
-        $key = 'find-obyek-' . $page . $limit . $term;
+        $key = 'obyek-find-' . $page . $limit . $term;
 
         // Create Section
         $section = 'obyek';

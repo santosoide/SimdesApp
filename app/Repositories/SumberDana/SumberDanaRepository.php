@@ -28,7 +28,7 @@ class SumberDanaRepository extends AbstractRepository {
     public function find($page = 1, $limit = 10, $term = null)
     {
         // Create Key for cache
-        $key = 'find-sumber_dana-' . $page . $limit . $term;
+        $key = 'sumber_dana-find-' . $page . $limit . $term;
 
         // Create Section
         $section = 'sumber-dana';

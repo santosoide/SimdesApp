@@ -28,7 +28,7 @@ class RkpdesRepository extends AbstractRepository {
     public function find($page = 1, $limit = 10, $term = null)
     {
         // Create Key for cache
-        $key = 'find-rkpdes-' . $page . $limit . $term;
+        $key = 'rkpdes-find-' . $page . $limit . $term;
 
         // Create Section
         $section = 'rkpdes';
