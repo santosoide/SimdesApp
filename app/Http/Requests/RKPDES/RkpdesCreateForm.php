@@ -12,8 +12,6 @@ class RkpdesCreateForm extends Request
      * @var array
      */
     protected $customAttributes = [
-        'user_id'            => 'User Id',
-        'organisasi_id'      => 'Organisasi Id',
         'rpjmdes_program_id' => 'RPJMDES Program Id',
         'dana_desa_id'       => 'Dana Desa Id',
         'tahun'              => 'Tahun',
@@ -30,8 +28,6 @@ class RkpdesCreateForm extends Request
     public function rules()
     {
         return [
-            'user_id'            => 'required|max:255',
-            'organisasi_id'      => 'required|max:255',
             'rpjmdes_program_id' => 'required|max:255',
             'dana_desa_id'       => 'required|max:255',
             'tahun'              => 'required|max:255',
@@ -63,8 +59,6 @@ class RkpdesCreateForm extends Request
         return [
             'success'    => false,
             'validation' => [
-                'user_id'            => $message->first('user_id'),
-                'organisasi_id'      => $message->first('organisasi_id'),
                 'rpjmdes_program_id' => $message->first('rpjmdes_program_id'),
                 'dana_desa_id'       => $message->first('dana_desa_id'),
                 'tahun'              => $message->first('tahun'),

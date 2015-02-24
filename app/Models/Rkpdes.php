@@ -28,7 +28,7 @@ class Rkpdes extends UuidModel
         'users',
         'organisasi',
         'rpjmdes_program',
-        //'dana_desa'
+        'dana_desa'
     ];
 
     /**
@@ -48,8 +48,6 @@ class Rkpdes extends UuidModel
      * @var array
      */
     protected $fillable = [
-        'user_id',
-        'organisasi_id',
         'rpjmdes_program_id',
         'dana_desa_id',
         'tahun',
@@ -109,8 +107,8 @@ class Rkpdes extends UuidModel
         return $this->belongsTo('SimdesApp\Models\RpjmdesProgram', 'rpjmdes_program_id');
     }
 
-//    public function dana_desa()
-//    {
-//        return $this->belongsTo('SimdesApp\Models\DanaDesa', 'dana_desa_id');
-//    }
+    public function dana_desa()
+    {
+        return $this->belongsTo('SimdesApp\Models\DanaDesa', 'dana_desa_id');
+    }
 }

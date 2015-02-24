@@ -61,8 +61,6 @@ class RkpdesRepository extends AbstractRepository {
         try {
             $rkpdes = $this->getNew();
 
-            $rkpdes->user_id = e($data['user_id']);
-            $rkpdes->organisasi_id = e($data['organisasi_id']);
             $rkpdes->rpjmdes_program_id = e($data['rpjmdes_program_id']);
             $rkpdes->dana_desa_id = e($data['dana_desa_id']);
             $rkpdes->tahun = e($data['tahun']);
@@ -106,8 +104,6 @@ class RkpdesRepository extends AbstractRepository {
         try {
             $rkpdes = $this->findById($id);
 
-            $rkpdes->user_id = e($data['user_id']);
-            $rkpdes->organisasi_id = e($data['organisasi_id']);
             $rkpdes->rpjmdes_program_id = e($data['rpjmdes_program_id']);
             $rkpdes->dana_desa_id = e($data['dana_desa_id']);
             $rkpdes->tahun = e($data['tahun']);
