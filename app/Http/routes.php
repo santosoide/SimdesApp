@@ -146,6 +146,4 @@ Route::group(['namespace' => 'Api\V1\LokasiProgram', 'prefix' => 'api/v1'], func
     Route::resource('lokasi-program', 'LokasiProgramController');
 });
 
-Route::get('get-token', function () {
-    return csrf_token();
-});
+Route::get('get-token', 'TokenController@index');
