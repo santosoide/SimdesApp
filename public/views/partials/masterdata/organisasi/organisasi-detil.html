@@ -1,0 +1,955 @@
+<div class="bg-light lter b-b wrapper-md" ng-controller="OrganisasiDetilCtrl">
+    <h1 class="m-n font-thin h3">Pemerintah Desa {{desa}}</h1>
+</div>
+<div class="wrapper-md" ng-controller="OrganisasiDetilCtrl">
+
+<!--Alert-->
+<div role="alert" class="alert alert-{{aClass}} alert-dismissable {{aShow}}" type="success">
+    <button ng-click="closeMe()" class="close" type="button">
+        <span aria-hidden="true">×</span>
+        <span class="sr-only">Close</span>
+    </button>
+    <span ng-repeat="(key, value) in aMsg"><p class="m-b-xxs">{{value}}</p></span>
+</div>
+<!--End of alert-->
+
+<!-- tab-->
+<tabset class="tab-container">
+<!--Visi-->
+<tab select="visi_getData()">
+    <tab-heading>
+        Visi
+    </tab-heading>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="col-lg-12">Visi</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="dana in visi">
+                <td>{{dana.visi}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <footer class="panel-footer">
+        <div class="row">
+            <div class="col-sm-6 text-center-xs">
+                <small class="text-muted inline m-t-sm m-b-sm">showing {{visi_from}}-{{visi_to}}
+                    of
+                    {{visi_total}} items
+                </small>
+            </div>
+            <div class="col-sm-6 text-right text-center-xs">
+                <ul class="pagination m-t-none m-b-none">
+                    <li tooltip="Halaman Pertama">
+                        <button class="btn btn-default" type="button" ng-click='visi_firstPage()'
+                                ng-disabled='visi_current_page == 1 || disUtama.btnPagging'><i
+                                class="fa fa-angle-double-left"></i></button>
+                    </li>
+                    <li tooltip="Halaman Sebelumnya">
+                        <button class="btn btn-default" type="button" ng-click='visi_previousPage()'
+                                ng-disabled='visi_current_page <= 1 || disUtama.btnPagging'><i
+                                class="fa fa-angle-left"></i></button>
+                    </li>
+                    <li tooltip="Halaman Selanjutnya">
+                        <button class="btn btn-default" type="button" ng-click='visi_nextPage()'
+                                ng-disabled='visi_main.page >= visi_last_page || disUtama.btnPagging'><i
+                                class="fa fa-angle-right"></i>
+                        </button>
+                    </li>
+                    <li tooltip="Halaman Terakhir">
+                        <button class="btn btn-default" type="button" ng-click='visi_lastPage()'
+                                ng-disabled='visi_main.page >= visi_last_page || disUtama.btnPagging'><i
+                                class="fa fa-angle-double-right"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</tab>
+
+<!--Misi-->
+<tab select="misi_getData()">
+    <tab-heading>
+        Misi
+    </tab-heading>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="col-lg-12">Misi</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="dana in misi">
+                <td>{{dana.misi}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <footer class="panel-footer">
+        <div class="row">
+            <div class="col-sm-6 text-center-xs">
+                <small class="text-muted inline m-t-sm m-b-sm">showing {{misi_from}}-{{misi_to}}
+                    of
+                    {{misi_total}} items
+                </small>
+            </div>
+            <div class="col-sm-6 text-right text-center-xs">
+                <ul class="pagination m-t-none m-b-none">
+                    <li tooltip="Halaman Pertama">
+                        <button class="btn btn-default" type="button" ng-click='misi_firstPage()'
+                                ng-disabled='misi_current_page == 1 || disUtama.btnPagging'><i
+                                class="fa fa-angle-double-left"></i></button>
+                    </li>
+                    <li tooltip="Halaman Sebelumnya">
+                        <button class="btn btn-default" type="button" ng-click='misi_previousPage()'
+                                ng-disabled='misi_current_page <= 1 || disUtama.btnPagging'><i
+                                class="fa fa-angle-left"></i></button>
+                    </li>
+                    <li tooltip="Halaman Selanjutnya">
+                        <button class="btn btn-default" type="button" ng-click='misi_nextPage()'
+                                ng-disabled='misi_main.page >= misi_last_page || disUtama.btnPagging'><i
+                                class="fa fa-angle-right"></i>
+                        </button>
+                    </li>
+                    <li tooltip="Halaman Terakhir">
+                        <button class="btn btn-default" type="button" ng-click='misi_lastPage()'
+                                ng-disabled='misi_main.page >= misi_last_page || disUtama.btnPagging'><i
+                                class="fa fa-angle-double-right"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</tab>
+
+<!--Program-->
+<tab select="program_getData(1)">
+    <tab-heading>
+        RPJM Desa
+    </tab-heading>
+    <div class="btn-group">
+        <button class="btn btn-success" ng-show="programTab == 1" ng-disabled="btnRefresh" type="button"
+                ng-click="program_getData(1)">Semua
+        </button>
+        <button class="btn btn-default" ng-show="programTab != 1" ng-disabled="btnRefresh" type="button"
+                ng-click="program_getData(1)">Semua
+        </button>
+        <button class="btn btn-success" ng-show="programTab == 2" ng-disabled="btnRefresh" type="button"
+                ng-click="program_getData(2)">Proses
+        </button>
+        <button class="btn btn-default" ng-show="programTab != 2" ng-disabled="btnRefresh" type="button"
+                ng-click="program_getData(2)">Proses
+        </button>
+        <button class="btn btn-success" ng-show="programTab == 3" ng-disabled="btnRefresh" type="button"
+                ng-click="program_getData(3)">Final
+        </button>
+        <button class="btn btn-default" ng-show="programTab != 3" ng-disabled="btnRefresh" type="button"
+                ng-click="program_getData(3)">Final
+        </button>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="col-lg-4">Program</th>
+                <th class="col-lg-5">Kegiatan</th>
+                <th class="col-lg-1">Status</th>
+                <th class="col-lg-2">Aksi</th>
+            </tr>
+            </thead>
+
+            <tbody ng-repeat="k in program">
+            <tr>
+                <td>{{k.kegiatan.program.program}}</td>
+                <td>{{k.kegiatan.kegiatan}}</td>
+                <td>
+                    <span ng-if="k.is_finish == 1" class="label bg-info">Proses</span>
+                    <span ng-if="k.is_finish == 2" class="label bg-warning">Revisi</span>
+                    <span ng-if="k.is_finish == 3" class="label bg-success">Final</span>
+                    <span ng-if="k.is_finish == 4" class="label bg-danger">Ditolak</span>
+                </td>
+                <td>
+                    <a ui-sref="app.backoffice.detil_rpjmdes({rpjmdes_id:k._id, organisasi_id:k.organisasi._id})" tooltip="Lihat Rincian"
+                       class="btn btn-sm btn-info"
+                       ng-disabled="disAksi.btnVerifikasi"><i
+                            class="icon icon-eye"></i>
+                    </a>
+                    <button tooltip="Verifikasi" class="btn btn-sm btn-info" ng-show="k.is_finish==1"
+                            ng-click="program_verifikasi(k._id)"
+                            ng-disabled="disAksi.btnVerifikasi"><i
+                            class="icon icon-check"></i>
+                    </button>
+                    <button tooltip="Revisi" class="btn btn-sm btn-warning" ng-show="k.is_finish==1"
+                            ng-click="program_revisi(k)"
+                            ng-disabled="disAksi.btnVerifikasi"><i
+                            class="glyphicon glyphicon-edit"></i>
+                    </button>
+                    <button tooltip="Tolak" class="btn btn-sm btn-danger" ng-show="k.is_finish==1"
+                            ng-click="program_tolak(k)"
+                            ng-disabled="disAksi.btnVerifikasi"><i
+                            class="icon icon-close"></i>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <footer class="panel-footer">
+        <div class="row">
+            <div class="col-sm-6 text-center-xs">
+                <small class="text-muted inline m-t-sm m-b-sm">showing {{program_from}}-{{program_to}} of
+                    {{program_total}} items
+                </small>
+            </div>
+            <div class="col-sm-6 text-right text-center-xs">
+                <ul class="pagination m-t-none m-b-none">
+                    <li tooltip="Halaman Pertama">
+                        <button class="btn btn-default" type="button" ng-click='program_firstPage()'
+                                ng-disabled='program_current_page == 1 || disUtama.btnPagging'><i
+                                class="fa fa-angle-double-left"></i></button>
+                    </li>
+                    <li tooltip="Halaman Sebelumnya">
+                        <button class="btn btn-default" type="button" ng-click='program_previousPage()'
+                                ng-disabled='program_current_page <= 1 || disUtama.btnPagging'><i
+                                class="fa fa-angle-left"></i></button>
+                    </li>
+                    <li tooltip="Halaman Selanjutnya">
+                        <button class="btn btn-default" type="button" ng-click='program_nextPage()'
+                                ng-disabled='program_main.page >= program_last_page || disUtama.btnPagging'>
+                            <i
+                                    class="fa fa-angle-right"></i>
+                        </button>
+                    </li>
+                    <li tooltip="Halaman Terakhir">
+                        <button class="btn btn-default" type="button" ng-click='program_lastPage()'
+                                ng-disabled='program_main.page >= program_last_page || disUtama.btnPagging'>
+                            <i
+                                    class="fa fa-angle-double-right"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</tab>
+
+<!--RKP Desa-->
+<tab select="rkpdes_getData()">
+    <tab-heading>
+        RKP Desa
+    </tab-heading>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="col-lg-4">Kegiatan</th>
+                <th class="col-lg-2">Lokasi</th>
+                <th class="col-lg-4">Pelaksana Kegiatan</th>
+                <th class="col-lg-2 text-right">Anggaran (Rp)</th>
+            </tr>
+            </thead>
+
+            <tbody ng-repeat="k in rkpdes">
+            <tr>
+                <td>{{k.kegiatan}}</td>
+                <td>{{k.lokasi}}</td>
+                <td>{{k.pejabat_desa.nama}}</td>
+                <td class="text-right">{{convertToRupiah(k.anggaran)}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <footer class="panel-footer">
+        <div class="row">
+            <div class="col-sm-6 text-center-xs">
+                <small class="text-muted inline m-t-sm m-b-sm">showing {{rkpdes_from}}-{{rkpdes_to}} of
+                    {{rkpdes_total}} items
+                </small>
+            </div>
+            <div class="col-sm-6 text-right text-center-xs">
+                <ul class="pagination m-t-none m-b-none">
+                    <li tooltip="Halaman Pertama">
+                        <button class="btn btn-default" type="button" ng-click='rkpdes_firstPage()'
+                                ng-disabled='rkpdes_current_page == 1 || disUtama.btnPagging'><i
+                                class="fa fa-angle-double-left"></i></button>
+                    </li>
+                    <li tooltip="Halaman Sebelumnya">
+                        <button class="btn btn-default" type="button" ng-click='rkpdes_previousPage()'
+                                ng-disabled='rkpdes_current_page <= 1 || disUtama.btnPagging'><i
+                                class="fa fa-angle-left"></i></button>
+                    </li>
+                    <li tooltip="Halaman Selanjutnya">
+                        <button class="btn btn-default" type="button" ng-click='rkpdes_nextPage()'
+                                ng-disabled='rkpdes_main.page >= rkpdes_last_page || disUtama.btnPagging'>
+                            <i
+                                    class="fa fa-angle-right"></i>
+                        </button>
+                    </li>
+                    <li tooltip="Halaman Terakhir">
+                        <button class="btn btn-default" type="button" ng-click='rkpdes_lastPage()'
+                                ng-disabled='rkpdes_main.page >= rkpdes_last_page || disUtama.btnPagging'>
+                            <i
+                                    class="fa fa-angle-double-right"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</tab>
+
+<!--Pendapatan-->
+<tab select="pendapatan_getData(1)">
+    <tab-heading>
+        Pendapatan
+    </tab-heading>
+    <div class="btn-group">
+        <button class="btn btn-success" ng-show="pendapatanTab == 1" ng-disabled="btnRefresh" type="button"
+                ng-click="pendapatan_getData(1)">Semua
+        </button>
+        <button class="btn btn-default" ng-show="pendapatanTab != 1" ng-disabled="btnRefresh" type="button"
+                ng-click="pendapatan_getData(1)">Semua
+        </button>
+        <button class="btn btn-success" ng-show="pendapatanTab == 2" ng-disabled="btnRefresh" type="button"
+                ng-click="pendapatan_getData(2)">Proses
+        </button>
+        <button class="btn btn-default" ng-show="pendapatanTab != 2" ng-disabled="btnRefresh" type="button"
+                ng-click="pendapatan_getData(2)">Proses
+        </button>
+        <button class="btn btn-success" ng-show="pendapatanTab == 3" ng-disabled="btnRefresh" type="button"
+                ng-click="pendapatan_getData(3)">Final
+        </button>
+        <button class="btn btn-default" ng-show="pendapatanTab != 3" ng-disabled="btnRefresh" type="button"
+                ng-click="pendapatan_getData(3)">Final
+        </button>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="col-md-1">Tahun</th>
+                <th class="col-md-3">Pendapatan</th>
+                <th class="col-md-1">Volume</th>
+                <th class="col-md-2">Satuan</th>
+                <th class="col-md-2 text-right">Harga Satuan (Rp)</th>
+                <th class="col-md-2 text-right">Jumlah (Rp)</th>
+                <th class="col-md-1">Aksi</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="k in pendapatan">
+                <td>{{k.tahun}}</td>
+                <td>{{k.pendapatan}}</td>
+                <td><span>{{k.volume1}}</span><span ng-if="k.volume2 != ''">/{{k.volume2}}</span><span
+                        ng-if="k.volume3 != ''">/{{k.volume3}}</span></td>
+                <td><span>{{k.satuan1}}</span><span ng-if="k.satuan2 != ''">/{{k.satuan2}}</span><span
+                        ng-if="k.satuan3 != ''">/{{k.satuan3}}</span></td>
+                <td class="text-right">{{convertToRupiah(k.satuan_harga)}}</td>
+                <td class="text-right">{{convertToRupiah(k.jumlah)}}</td>
+                <td>
+                    <button tooltip="Verifikasi" ng-if="k.is_dpa==1 && k.is_finish==0" class="btn btn-sm btn-info"
+                            ng-click="pendapatan_verifikasi(k._id)" ng-disabled="disAksi.btnVerifikasi">
+                        <i class="fa fa-check"></i>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <footer class="panel-footer">
+        <div class="row">
+            <div class="col-sm-6 text-center-xs">
+                <small class="text-muted inline m-t-sm m-b-sm">showing {{pendapatan_from}}-{{pendapatan_to}}
+                    of
+                    {{pendapatan_total}} items
+                </small>
+            </div>
+            <div class="col-sm-6 text-right text-center-xs">
+                <ul class="pagination m-t-none m-b-none">
+                    <li tooltip="Halaman Pertama">
+                        <button class="btn btn-default" type="button" ng-click='pendapatan_firstPage()'
+                                ng-disabled='pendapatan_current_page == 1 || disUtama.btnPagging'><i
+                                class="fa fa-angle-double-left"></i></button>
+                    </li>
+                    <li tooltip="Halaman Sebelumnya">
+                        <button class="btn btn-default" type="button" ng-click='pendapatan_previousPage()'
+                                ng-disabled='pendapatan_current_page <= 1 || disUtama.btnPagging'><i
+                                class="fa fa-angle-left"></i></button>
+                    </li>
+                    <li tooltip="Halaman Selanjutnya">
+                        <button class="btn btn-default" type="button" ng-click='pendapatan_nextPage()'
+                                ng-disabled='pendapatan_main.page >= pendapatan_last_page || disUtama.btnPagging'><i
+                                class="fa fa-angle-right"></i>
+                        </button>
+                    </li>
+                    <li tooltip="Halaman Terakhir">
+                        <button class="btn btn-default" type="button" ng-click='pendapatan_lastPage()'
+                                ng-disabled='pendapatan_main.page >= pendapatan_last_page || disUtama.btnPagging'><i
+                                class="fa fa-angle-double-right"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</tab>
+
+<!--Belanja-->
+<tab select="belanja_getData(1)">
+    <tab-heading>
+        Belanja
+    </tab-heading>
+    <div class="btn-group">
+        <button class="btn btn-success" ng-show="belanjaTab == 1" ng-disabled="btnRefresh" type="button"
+                ng-click="belanja_getData(1)">Semua
+        </button>
+        <button class="btn btn-default" ng-show="belanjaTab != 1" ng-disabled="btnRefresh" type="button"
+                ng-click="belanja_getData(1)">Semua
+        </button>
+        <button class="btn btn-success" ng-show="belanjaTab == 2" ng-disabled="btnRefresh" type="button"
+                ng-click="belanja_getData(2)">Proses
+        </button>
+        <button class="btn btn-default" ng-show="belanjaTab != 2" ng-disabled="btnRefresh" type="button"
+                ng-click="belanja_getData(2)">Proses
+        </button>
+        <button class="btn btn-success" ng-show="belanjaTab == 3" ng-disabled="btnRefresh" type="button"
+                ng-click="belanja_getData(3)">Final
+        </button>
+        <button class="btn btn-default" ng-show="belanjaTab != 3" ng-disabled="btnRefresh" type="button"
+                ng-click="belanja_getData(3)">Final
+        </button>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="col-md-1">Tahun</th>
+                <th class="col-md-3">Belanja</th>
+                <th class="col-md-1">Volume</th>
+                <th class="col-md-2">Satuan</th>
+                <th class="col-md-2 text-right">Harga Satuan (Rp)</th>
+                <th class="col-md-2 text-right">Jumlah (Rp)</th>
+                <th class="col-md-1">Aksi</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="k in belanja">
+                <td>{{k.tahun}}</td>
+                <td>{{k.belanja}}</td>
+                <td><span>{{k.volume1}}</span><span ng-if="k.volume2 != ''">/{{k.volume2}}</span><span
+                        ng-if="k.volume3 != ''">/{{k.volume3}}</span></td>
+                <td><span>{{k.satuan1}}</span><span ng-if="k.satuan2 != ''">/{{k.satuan2}}</span><span
+                        ng-if="k.satuan3 != ''">/{{k.satuan3}}</span></td>
+                <td class="text-right">{{convertToRupiah(k.satuan_harga)}}</td>
+                <td class="text-right">{{convertToRupiah(k.jumlah)}}</td>
+                <td>
+                    <button tooltip="Verifikasi" ng-if="k.is_dpa==1 && k.is_finish==0" class="btn btn-sm btn-info"
+                            ng-click="belanja_verifikasi(k._id)" ng-disabled="disAksi.btnVerifikasi">
+                        <i class="fa fa-check"></i>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <footer class="panel-footer">
+        <div class="row">
+            <div class="col-sm-6 text-center-xs">
+                <small class="text-muted inline m-t-sm m-b-sm">showing {{belanja_from}}-{{belanja_to}} of
+                    {{belanja_total}} items
+                </small>
+            </div>
+            <div class="col-sm-6 text-right text-center-xs">
+                <ul class="pagination m-t-none m-b-none">
+                    <li tooltip="Halaman Pertama">
+                        <button class="btn btn-default" type="button" ng-click='belanja_firstPage()'
+                                ng-disabled='belanja_current_page == 1 || disUtama.btnPagging'><i
+                                class="fa fa-angle-double-left"></i></button>
+                    </li>
+                    <li tooltip="Halaman Sebelumnya">
+                        <button class="btn btn-default" type="button" ng-click='belanja_previousPage()'
+                                ng-disabled='belanja_current_page <= 1 || disUtama.btnPagging'><i
+                                class="fa fa-angle-left"></i></button>
+                    </li>
+                    <li tooltip="Halaman Selanjutnya">
+                        <button class="btn btn-default" type="button" ng-click='belanja_nextPage()'
+                                ng-disabled='belanja_main.page >= belanja_last_page || disUtama.btnPagging'>
+                            <i
+                                    class="fa fa-angle-right"></i>
+                        </button>
+                    </li>
+                    <li tooltip="Halaman Terakhir">
+                        <button class="btn btn-default" type="button" ng-click='belanja_lastPage()'
+                                ng-disabled='belanja_main.page >= belanja_last_page || disUtama.btnPagging'>
+                            <i
+                                    class="fa fa-angle-double-right"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</tab>
+
+<!--Pembiayaan-->
+<tab select="pembiayaan_getData(1)">
+    <tab-heading>
+        Pembiayaan
+    </tab-heading>
+    <div class="btn-group">
+        <button class="btn btn-success" ng-show="pembiayaanTab == 1" ng-disabled="btnRefresh" type="button"
+                ng-click="pembiayaan_getData(1)">Semua
+        </button>
+        <button class="btn btn-default" ng-show="pembiayaanTab != 1" ng-disabled="btnRefresh" type="button"
+                ng-click="pembiayaan_getData(1)">Semua
+        </button>
+        <button class="btn btn-success" ng-show="pembiayaanTab == 2" ng-disabled="btnRefresh" type="button"
+                ng-click="pembiayaan_getData(2)">Proses
+        </button>
+        <button class="btn btn-default" ng-show="pembiayaanTab != 2" ng-disabled="btnRefresh" type="button"
+                ng-click="pembiayaan_getData(2)">Proses
+        </button>
+        <button class="btn btn-success" ng-show="pembiayaanTab == 3" ng-disabled="btnRefresh" type="button"
+                ng-click="pembiayaan_getData(3)">Final
+        </button>
+        <button class="btn btn-default" ng-show="pembiayaanTab != 3" ng-disabled="btnRefresh" type="button"
+                ng-click="pembiayaan_getData(3)">Final
+        </button>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="col-md-1">Tahun</th>
+                <th class="col-md-3">Pembiayaan</th>
+                <th class="col-md-1">Volume</th>
+                <th class="col-md-2">Satuan</th>
+                <th class="col-md-2 text-right">Harga Satuan (Rp)</th>
+                <th class="col-md-2 text-right">Jumlah (Rp)</th>
+                <th class="col-md-1">Aksi</th>
+            </tr>
+            </thead>
+
+            <tbody ng-repeat="k in pembiayaan">
+            <tr>
+                <td>{{k.tahun}}</td>
+                <td>{{k.pembiayaan}}</td>
+                <td><span>{{k.volume1}}</span><span ng-if="k.volume2 != ''">/{{k.volume2}}</span><span
+                        ng-if="k.volume3 != ''">/{{k.volume3}}</span></td>
+                <td><span>{{k.satuan1}}</span><span ng-if="k.satuan2 != ''">/{{k.satuan2}}</span><span
+                        ng-if="k.satuan3 != ''">/{{k.satuan3}}</span></td>
+                <td class="text-right">{{convertToRupiah(k.satuan_harga)}}</td>
+                <td class="text-right">{{convertToRupiah(k.jumlah)}}</td>
+                <td>
+                    <button tooltip="Verifikasi" ng-if="k.is_dpa==1 && k.is_finish==0" class="btn btn-sm btn-info"
+                            ng-click="pembiayaan_verifikasi(k._id)" ng-disabled="disAksi.btnVerifikasi">
+                        <i class="fa fa-check"></i>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <footer class="panel-footer">
+        <div class="row">
+            <div class="col-sm-6 text-center-xs">
+                <small class="text-muted inline m-t-sm m-b-sm">showing {{pembiayaan_from}}-{{pembiayaan_to}} of
+                    {{pembiayaan_total}} items
+                </small>
+            </div>
+            <div class="col-sm-6 text-right text-center-xs">
+                <ul class="pagination m-t-none m-b-none">
+                    <li tooltip="Halaman Pertama">
+                        <button class="btn btn-default" type="button" ng-click='pembiayaan_firstPage()'
+                                ng-disabled='pembiayaan_current_page == 1 || disUtama.btnPagging'><i
+                                class="fa fa-angle-double-left"></i></button>
+                    </li>
+                    <li tooltip="Halaman Sebelumnya">
+                        <button class="btn btn-default" type="button" ng-click='pembiayaan_previousPage()'
+                                ng-disabled='pembiayaan_current_page <= 1 || disUtama.btnPagging'><i
+                                class="fa fa-angle-left"></i></button>
+                    </li>
+                    <li tooltip="Halaman Selanjutnya">
+                        <button class="btn btn-default" type="button" ng-click='pembiayaan_nextPage()'
+                                ng-disabled='pembiayaan_main.page >= pembiayaan_last_page || disUtama.btnPagging'>
+                            <i
+                                    class="fa fa-angle-right"></i>
+                        </button>
+                    </li>
+                    <li tooltip="Halaman Terakhir">
+                        <button class="btn btn-default" type="button" ng-click='pembiayaan_lastPage()'
+                                ng-disabled='pembiayaan_main.page >= pembiayaan_last_page || disUtama.btnPagging'>
+                            <i
+                                    class="fa fa-angle-double-right"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</tab>
+
+<!--Transaksi Pendapatan-->
+<tab select="tranpendapatan_getData()">
+    <tab-heading>
+        Penerimaan
+    </tab-heading>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="col-md-2">Tanggal</th>
+                <th class="col-md-3">Nomor Bukti</th>
+                <th class="col-md-2">Uraian</th>
+                <th class="col-md-3">Penerima</th>
+                <th class="col-md-2 text-right">Jumlah (Rp)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="a in tranpendapatan">
+                <td>{{a.tanggal}}</td>
+                <td>{{a.nomor_bku}}</td>
+                <td>{{a.pendapatan}}</td>
+                <td>{{a.penerima}}</td>
+                <td class="text-right">{{convertToRupiah(a.jumlah)}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <footer class="panel-footer">
+        <div class="row">
+            <div class="col-sm-6 text-center-xs">
+                <small class="text-muted inline m-t-sm m-b-sm">showing {{tranpendapatan_from}}-{{tranpendapatan_to}} of
+                    {{tranpendapatan_total}} items
+                </small>
+            </div>
+            <div class="col-sm-6 text-right text-center-xs">
+                <ul class="pagination m-t-none m-b-none">
+                    <li tooltip="Halaman Pertama">
+                        <button class="btn btn-default" type="button" ng-click='tranpendapatan_firstPage()'
+                                ng-disabled='tranpendapatan_current_page == 1 || disUtama.btnPagging'><i
+                                class="fa fa-angle-double-left"></i></button>
+                    </li>
+                    <li tooltip="Halaman Sebelumnya">
+                        <button class="btn btn-default" type="button" ng-click='tranpendapatan_previousPage()'
+                                ng-disabled='tranpendapatan_current_page <= 1 || disUtama.btnPagging'><i
+                                class="fa fa-angle-left"></i></button>
+                    </li>
+                    <li tooltip="Halaman Selanjutnya">
+                        <button class="btn btn-default" type="button" ng-click='tranpendapatan_nextPage()'
+                                ng-disabled='tranpendapatan_main.page >= tranpendapatan_last_page || disUtama.btnPagging'>
+                            <i
+                                    class="fa fa-angle-right"></i>
+                        </button>
+                    </li>
+                    <li tooltip="Halaman Terakhir">
+                        <button class="btn btn-default" type="button" ng-click='tranpendapatan_lastPage()'
+                                ng-disabled='tranpendapatan_main.page >= tranpendapatan_last_page || disUtama.btnPagging'>
+                            <i
+                                    class="fa fa-angle-double-right"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</tab>
+
+<!--Transaksi Pengeluaran-->
+<tab select="tranbelanja_getData()">
+    <tab-heading>
+        Pengeluaran
+    </tab-heading>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="col-md-2">Tanggal</th>
+                <th class="col-md-4">Nomor Bukti</th>
+                <th class="col-md-2">Uraian</th>
+                <th class="col-md-2 text-right">Jumlah (Rp)</th>
+                <th class="col-md-2">Aksi</th>
+            </tr>
+            </thead>
+            <tbody ng-repeat="a in tranbelanja">
+            <tr>
+                <td>{{a.tanggal}}</td>
+                <td>{{a.nomor_bku}}</td>
+                <td>{{a.belanja}}</td>
+                <td class="text-right">{{convertToRupiah(a.jumlah)}}</td>
+                <td>
+                    <button tooltip="Lihat Rincian" class="btn btn-sm btn-info"
+                            ng-click="detil(a._id)" ng-disabled="disAksi.btnDetail"><i
+                            class="icon icon-info"></i>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <footer class="panel-footer">
+        <div class="row">
+            <div class="col-sm-6 text-center-xs">
+                <small class="text-muted inline m-t-sm m-b-sm">showing {{tranbelanja_from}}-{{tranbelanja_to}} of
+                    {{tranbelanja_total}} items
+                </small>
+            </div>
+            <div class="col-sm-6 text-right text-center-xs">
+                <ul class="pagination m-t-none m-b-none">
+                    <li tooltip="Halaman Pertama">
+                        <button class="btn btn-default" type="button" ng-click='tranbelanja_firstPage()'
+                                ng-disabled='tranbelanja_current_page == 1 || disUtama.btnPagging'><i
+                                class="fa fa-angle-double-left"></i></button>
+                    </li>
+                    <li tooltip="Halaman Sebelumnya">
+                        <button class="btn btn-default" type="button" ng-click='tranbelanja_previousPage()'
+                                ng-disabled='tranbelanja_current_page <= 1 || disUtama.btnPagging'><i
+                                class="fa fa-angle-left"></i></button>
+                    </li>
+                    <li tooltip="Halaman Selanjutnya">
+                        <button class="btn btn-default" type="button" ng-click='tranbelanja_nextPage()'
+                                ng-disabled='tranbelanja_main.page >= tranbelanja_last_page || disUtama.btnPagging'>
+                            <i
+                                    class="fa fa-angle-right"></i>
+                        </button>
+                    </li>
+                    <li tooltip="Halaman Terakhir">
+                        <button class="btn btn-default" type="button" ng-click='tranbelanja_lastPage()'
+                                ng-disabled='tranbelanja_main.page >= tranbelanja_last_page || disUtama.btnPagging'>
+                            <i
+                                    class="fa fa-angle-double-right"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</tab>
+</tabset>
+<!-- / tab -->
+
+<!--Tab 2        -->
+<tabset class="tab-container">
+<!--Pejabat Desa-->
+<tab select="pejabat_desa_getData()">
+    <tab-heading>
+        Pengelola Keuangan
+    </tab-heading>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="col-md-5">Nama</th>
+                <th class="col-md-4">Jabatan</th>
+                <th class="col-md-3">Fungsi</th>
+            </tr>
+            </thead>
+
+            <tbody ng-repeat="usr in pejabat_desa">
+            <tr>
+                <td>{{usr.nama}}</td>
+                <td>{{usr.jabatan}}</td>
+                <td>{{usr.fungsi}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <footer class="panel-footer">
+        <div class="row">
+            <div class="col-sm-6 text-center-xs">
+                <small class="text-muted inline m-t-sm m-b-sm">showing {{pejabat_desa_from}}-{{pejabat_desa_to}}
+                    of
+                    {{pejabat_desa_total}} items
+                </small>
+            </div>
+            <div class="col-sm-6 text-right text-center-xs">
+                <ul class="pagination m-t-none m-b-none">
+                    <li tooltip="Halaman Pertama">
+                        <button class="btn btn-default" type="button" ng-click='pejabat_desa_firstPage()'
+                                ng-disabled='pejabat_desa_current_page == 1 || disUtama.btnPagging'><i
+                                class="fa fa-angle-double-left"></i></button>
+                    </li>
+                    <li tooltip="Halaman Sebelumnya">
+                        <button class="btn btn-default" type="button" ng-click='pejabat_desa_previousPage()'
+                                ng-disabled='pejabat_desa_current_page <= 1 || disUtama.btnPagging'><i
+                                class="fa fa-angle-left"></i></button>
+                    </li>
+                    <li tooltip="Halaman Selanjutnya">
+                        <button class="btn btn-default" type="button" ng-click='pejabat_desa_nextPage()'
+                                ng-disabled='pejabat_desa_main.page >= pejabat_desa_last_page || disUtama.btnPagging'>
+                            <i
+                                    class="fa fa-angle-right"></i>
+                        </button>
+                    </li>
+                    <li tooltip="Halaman Terakhir">
+                        <button class="btn btn-default" type="button" ng-click='pejabat_desa_lastPage()'
+                                ng-disabled='pejabat_desa_main.page >= pejabat_desa_last_page || disUtama.btnPagging'>
+                            <i
+                                    class="fa fa-angle-double-right"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</tab>
+
+<!--Pengguna Desa-->
+<tab select="pengguna_desa_getData()">
+    <tab-heading>
+        Pengguna Desa
+    </tab-heading>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="col-md-4">Nama</th>
+                <th class="col-md-3">Email</th>
+                <th class="col-md-3">Jabatan/Level</th>
+                <th class="col-md-2">Status</th>
+            </tr>
+            </thead>
+
+            <tbody ng-repeat="usr in pengguna_desa">
+            <tr>
+                <td>{{usr.nama}}</td>
+                <td>{{usr.email}}</td>
+                <td>
+                    <span ng-if="usr.level == 1">Kepala Desa</span>
+                    <span ng-if="usr.level == 2">Sekretaris Desa</span>
+                    <span ng-if="usr.level == 3">Bendahara Desa</span>
+                    <span ng-if="usr.level == 4">Bendahara Pendapatan</span>
+                    <span ng-if="usr.level == 5">Bendahara Pengeluaran</span>
+
+                </td>
+                <td>
+                    <span class="label bg-success" ng-if="usr.is_active == 1">Aktif</span>
+                    <span class="label bg-warning" ng-if="usr.is_active == 0">Tidak Aktif</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <footer class="panel-footer">
+        <div class="row">
+            <div class="col-sm-6 text-center-xs">
+                <small class="text-muted inline m-t-sm m-b-sm">showing {{pengguna_desa_from}}-{{pengguna_desa_to}}
+                    of
+                    {{pengguna_desa_total}} items
+                </small>
+            </div>
+            <div class="col-sm-6 text-right text-center-xs">
+                <ul class="pagination m-t-none m-b-none">
+                    <li tooltip="Halaman Pertama">
+                        <button class="btn btn-default" type="button" ng-click='pengguna_desa_firstPage()'
+                                ng-disabled='pengguna_desa_current_page == 1 || disUtama.btnPagging'><i
+                                class="fa fa-angle-double-left"></i></button>
+                    </li>
+                    <li tooltip="Halaman Sebelumnya">
+                        <button class="btn btn-default" type="button" ng-click='pengguna_desa_previousPage()'
+                                ng-disabled='pengguna_desa_current_page <= 1 || disUtama.btnPagging'><i
+                                class="fa fa-angle-left"></i></button>
+                    </li>
+                    <li tooltip="Halaman Selanjutnya">
+                        <button class="btn btn-default" type="button" ng-click='pengguna_desa_nextPage()'
+                                ng-disabled='pengguna_desa_main.page >= pengguna_desa_last_page || disUtama.btnPagging'>
+                            <i
+                                    class="fa fa-angle-right"></i>
+                        </button>
+                    </li>
+                    <li tooltip="Halaman Terakhir">
+                        <button class="btn btn-default" type="button" ng-click='pengguna_desa_lastPage()'
+                                ng-disabled='pengguna_desa_main.page >= pengguna_desa_last_page || disUtama.btnPagging'>
+                            <i
+                                    class="fa fa-angle-double-right"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</tab>
+
+<!--Alokasi Dana-->
+<tab select="dana_desa_getData()">
+    <tab-heading>
+        Alokasi Dana
+    </tab-heading>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="col-md-3">User</th>
+                <th class="col-md-4">Pemerintah Desa</th>
+                <th class="col-md-3">Sumber Dana</th>
+                <th class="text-right col-md-2">Jumlah (Rp)</th>
+            </tr>
+            </thead>
+
+            <tbody ng-repeat="k in dana_desa">
+            <tr>
+                <td>{{k.user.nama}}</td>
+                <td>{{k.organisasi.desa}}</td>
+                <td>{{k.sumberdana.sumber_dana}}</td>
+                <td class="text-right">{{ convertToRupiah(k.jumlah)}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <footer class="panel-footer">
+        <div class="row">
+            <div class="col-sm-6 text-center-xs">
+                <small class="text-muted inline m-t-sm m-b-sm">showing {{dana_desa_from}}-{{dana_desa_to}}
+                    of
+                    {{dana_desa_total}} items
+                </small>
+            </div>
+            <div class="col-sm-6 text-right text-center-xs">
+                <ul class="pagination m-t-none m-b-none">
+                    <li tooltip="Halaman Pertama">
+                        <button class="btn btn-default" type="button" ng-click='dana_desa_firstPage()'
+                                ng-disabled='dana_desa_current_page == 1 || disUtama.btnPagging'><i
+                                class="fa fa-angle-double-left"></i></button>
+                    </li>
+                    <li tooltip="Halaman Sebelumnya">
+                        <button class="btn btn-default" type="button" ng-click='dana_desa_previousPage()'
+                                ng-disabled='dana_desa_current_page <= 1 || disUtama.btnPagging'><i
+                                class="fa fa-angle-left"></i></button>
+                    </li>
+                    <li tooltip="Halaman Selanjutnya">
+                        <button class="btn btn-default" type="button" ng-click='dana_desa_nextPage()'
+                                ng-disabled='dana_desa_main.page >= dana_desa_last_page || disUtama.btnPagging'>
+                            <i
+                                    class="fa fa-angle-right"></i>
+                        </button>
+                    </li>
+                    <li tooltip="Halaman Terakhir">
+                        <button class="btn btn-default" type="button" ng-click='dana_desa_lastPage()'
+                                ng-disabled='dana_desa_main.page >= dana_desa_last_page || disUtama.btnPagging'>
+                            <i
+                                    class="fa fa-angle-double-right"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</tab>
+</tabset>
+</div>
+<script type="text/ng-template" id="modDetilBelanja.html">
+    <div ng-include="'tpl/modal_detil_pengeluaran.html'"></div>
+</script>
+<script type="text/ng-template" id="modTolak.html">
+    <div ng-include="'tpl/modal_tolak.html'"></div>
+</script>
+<script type="text/ng-template" id="modRevisi.html">
+    <div ng-include="'tpl/modal_revisi.html'"></div>
+</script>

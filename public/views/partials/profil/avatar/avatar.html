@@ -1,0 +1,61 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h1 class="m-n font-thin h3">Pengaturan</h1>
+</div>
+<div class="wrapper-md" ng-controller="GantiAvatarCtrl">
+    <!--Alert-->
+    <div role="alert" class="alert alert-{{alertset.class}} alert-dismissable {{formHidden.alert}}" type="success">
+        <button ng-click="closeMe()" class="close" type="button">
+            <span aria-hidden="true">×</span>
+            <span class="sr-only">Close</span>
+        </button>
+        <span ng-repeat="(key, value) in alertset.msg"><p class="m-b-xxs">{{value}}</p></span>
+    </div>
+    <!--End of alert-->
+    <!--form add-->
+    <div class="panel panel-default {{formHidden.edit}}">
+        <div class="panel-heading font-bold">Ganti Avatar</div>
+        <div class="panel-body">
+            <form class="bs-example form-horizontal" name="editForm">
+                <div class="hbox hbox-auto-xs" ng-show="preview">
+                    <div class="col">
+                        <div class="wrapper-sm b-a bg-white m-r-xs m-b-xs">
+                            <div class="bg-light" style="height:320px">
+                                <img-crop
+                                        image="myImage"
+                                        result-image="myCroppedImage"
+                                        result-image-size="160"
+                                        area-type="{{cropType}}"
+                                        ></img-crop>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="inline bg-white wrapper-sm b-a">
+                            <div class="bg-light">
+                                <img ng-src="{{myCroppedImage}}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Pilih Avatar</label>
+
+                    <div class="col-lg-4">
+                        <input type="file" id="fileInput"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-offset-2 col-lg-4">
+                    <span tooltip="Simpan Data">
+                        <button class="btn btn-sm btn-info" ng-disabled="myImage == '' || btnEksekusi"
+                                ng-click="updateData()">
+                            Simpan
+                        </button>
+                    </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--end form add-->
+</div>

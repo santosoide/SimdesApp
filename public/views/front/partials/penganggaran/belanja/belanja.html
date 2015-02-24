@@ -1,0 +1,437 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h1 class="m-n font-thin h3">Belanja</h1>
+</div>
+<div class="wrapper-md" ng-controller="BelanjaCtrl">
+<!--Alert-->
+<div role="alert" class="alert alert-{{alertset.class}} alert-dismissable {{formHidden.alert}}" type="success">
+    <button ng-click="closeMe()" class="close" type="button">
+        <span aria-hidden="true">×</span>
+        <span class="sr-only">Close</span>
+    </button>
+    <span ng-repeat="(key, value) in alertset.msg"><p class="m-b-xxs">{{value}}</p></span>
+</div>
+<!--End of alert-->
+<!--list data-->
+<div class="panel panel-default {{formHidden.list}}">
+    <div class="panel-heading font-bold">Tampil Data</div>
+    <div class="row wrapper">
+        <div class="col-sm-8 m-b-xs">
+            <span tooltip="Tambah Data">
+                <button ng-click="add()" class="btn btn-sm btn-default" ng-disabled="disUtama.btnAdd">
+                    <i class="glyphicon glyphicon-plus-sign"></i></button>
+                </span>
+            <span tooltip="Refresh data">
+                <button class="btn btn-sm btn-default" ng-click="refreshData()" ng-disabled=disUtama.btnRefresh>
+                    <i class="glyphicon glyphicon-refresh"></i>
+                </button>
+            </span>
+        </div>
+        <div class="col-sm-4">
+            <div class="input-group pull-right">
+                <input type="text" class="input-sm form-control" placeholder="Search" ng-model="main.term"
+                       ng-disabled="disUtama.txtCari">
+                <span class="input-group-btn" tooltip="Cari Data">
+                    <button class="btn btn-sm btn-default" type="button" ng-click="cari()"
+                            ng-disabled="disUtama.btnCari">Cari
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="col-md-1">Tahun</th>
+                <th class="col-md-2">Belanja</th>
+                <th class="col-md-1">Volume</th>
+                <th class="col-md-1">Satuan</th>
+                <th class="col-md-2 text-right">Harga Satuan (Rp)</th>
+                <th class="col-md-2 text-right">Jumlah (Rp)</th>
+                <th class="col-md-3 text-right">Aksi</th>
+            </tr>
+            </thead>
+
+            <tbody ng-repeat="k in belanja">
+            <tr>
+                <td>{{k.tahun}}</td>
+                <td>{{k.belanja}}</td>
+                <td><span>{{k.volume1}}</span><span ng-if="k.volume2 != ''">/{{k.volume2}}</span><span
+                        ng-if="k.volume3 != ''">/{{k.volume3}}</span></td>
+                <td><span>{{k.satuan1}}</span><span ng-if="k.satuan2 != ''">/{{k.satuan2}}</span><span
+                        ng-if="k.satuan3 != ''">/{{k.satuan3}}</span></td>
+                <td class="text-right">{{convertToRupiah(k.satuan_harga)}}</td>
+                <td class="text-right">{{convertToRupiah(k.jumlah)}}</td>
+                <td class="text-right">
+                    <button tooltip="Pelaksanaan" class="btn btn-sm btn-info"
+                            ng-click="pelaksanaan(k._id, k.jumlah, k)" ng-disabled="disAksi.btnDetail"><i
+                            class="fa fa-rocket"></i>
+                    </button>
+                    <button ng-if="k.is_rka == 0 && k.is_dpa == 0"
+                            tooltip="Posting Anggara" class="btn btn-sm btn-info"
+                            ng-click="rka(k._id)" ng-disabled="disAksi.btnDetail"><i
+                            class="fa fa-gear"></i>
+                    </button>
+                    <button ng-if="k.is_dpa == 0"
+                            tooltip="Edit" class="btn btn-sm btn-info"
+                            ng-click="edit(k._id)" ng-disabled="disAksi.btnDetail"><i
+                            class="glyphicon glyphicon-edit"></i>
+                    </button>
+                    <button ng-if="k.is_dpa == 0"
+                            tooltip="Hapus" class="btn btn-sm btn-danger" ng-click="hapus(k._id)"
+                            ng-disabled="disAksi.btnDetail"><i
+                            class="glyphicon glyphicon-trash"></i>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <footer class="panel-footer">
+        <div class="row">
+            <div class="col-sm-4 text-center-xs">
+                <small class="text-muted inline m-t-sm m-b-sm">showing {{from}}-{{to}} of
+                    {{total}} items
+                </small>
+            </div>
+            <div class="col-sm-8 text-right text-center-xs">
+                <ul class="pagination m-t-none m-b-none">
+                    <li tooltip="Halaman Pertama">
+                        <button class="btn btn-default" type="button" ng-click='firstPage()'
+                                ng-disabled='current_page == 1 || disUtama.btnPagging'><i
+                                class="fa fa-angle-double-left"></i></button>
+                    </li>
+                    <li tooltip="Halaman Sebelumnya">
+                        <button class="btn btn-default" type="button" ng-click='previousPage()'
+                                ng-disabled='current_page <= 1 || disUtama.btnPagging'><i
+                                class="fa fa-angle-left"></i></button>
+                    </li>
+                    <li tooltip="Halaman Selanjutnya">
+                        <button class="btn btn-default" type="button" ng-click='nextPage()'
+                                ng-disabled='main.page >= last_page || disUtama.btnPagging'><i
+                                class="fa fa-angle-right"></i></button>
+                    </li>
+                    <li tooltip="Halaman Terakhir">
+                        <button class="btn btn-default" type="button" ng-click='lastPage()'
+                                ng-disabled='main.page >= last_page || disUtama.btnPagging'><i
+                                class="fa fa-angle-double-right"></i></button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</div>
+<!--end list data-->
+<!--form add-->
+<div class="panel panel-default {{formHidden.add}}">
+<div class="panel-heading font-bold">Form Tambah</div>
+<div class="panel-body">
+    <form class="bs-example form-horizontal" name="addForm">
+
+        <!--Tahun-->
+        <div class="form-group">
+            <label class="col-lg-2 control-label">Tahun</label>
+
+            <div class="col-lg-4">
+                <input type="text" class="form-control" ng-model="inputData.tahun" placeholder="Tahun" required>
+            </div>
+        </div>
+
+        <!--RKP Desa-->
+        <div class="form-group">
+            <label class="col-lg-2 control-label">RKP Desa</label>
+
+            <div class="col-lg-4">
+                <select class="form-control" ng-model="inputData.rkpdes"
+                        ng-options="o as o.kewenangan_kegiatan.kegiatan for o in objRKPDes" required>
+                </select>
+            </div>
+        </div>
+
+        <!--Kelompok-->
+        <div class="form-group">
+            <label class="col-lg-2 control-label">Kelompok</label>
+
+            <div class="col-lg-4">
+                <select class="form-control" ng-model="inputData.kelompok"
+                        ng-options="o as o.kelompok for o in objKelompok" ng-change="setKelompok()">
+                </select>
+
+                <div class="text-info" ng-show="alert1">
+                    Data Jenis belum tersedia
+                </div>
+            </div>
+        </div>
+
+        <!--Jenis-->
+        <div class="form-group">
+            <label class="col-lg-2 control-label">Jenis</label>
+
+            <div class="col-lg-4">
+                <select class="form-control" ng-model="inputData.jenis"
+                        ng-options="o as o.jenis for o in objJenis" ng-change="setJenis()"
+                        ng-disabled="loadKelompok">
+                </select>
+
+                <div class="text-info" ng-show="alert2">
+                    Data obyek belum tersedia.
+                </div>
+            </div>
+        </div>
+
+        <!--Obyek-->
+        <div class="form-group">
+            <label class="col-lg-2 control-label">Obyek</label>
+
+            <div class="col-lg-4">
+                <select class="form-control" ng-model="inputData.obyek"
+                        ng-options="o as o.obyek for o in objObyek"
+                        ng-disabled="loadJenis">
+                </select>
+            </div>
+        </div>
+
+        <!--Volume 1-->
+        <div class="form-group">
+            <label class="col-lg-2 control-label">Volume 1</label>
+
+            <div class="col-lg-4">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" ng-model="inputData.volume1" placeholder="Jumlah"
+                               required>
+                    </div>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" ng-model="inputData.satuan1" placeholder="Satuan"
+                               required>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Volume 2-->
+        <div class="form-group">
+            <label class="col-lg-2 control-label">Volume 2</label>
+
+            <div class="col-lg-4">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" ng-model="inputData.volume2" placeholder="Jumlah">
+                    </div>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" ng-model="inputData.satuan2" placeholder="Satuan">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Volume 3-->
+        <div class="form-group">
+            <label class="col-lg-2 control-label">Volume 3</label>
+
+            <div class="col-lg-4">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" ng-model="inputData.volume3" placeholder="Jumlah">
+                    </div>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" ng-model="inputData.satuan3" placeholder="Satuan">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Harga Satuan-->
+        <div class="form-group">
+            <label class="col-lg-2 control-label">Satuan Harga</label>
+
+            <div class="col-lg-4">
+                <input type="text" class="form-control" ng-model="inputData.satuan_harga" placeholder="Satuan Harga"
+                       required>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-lg-offset-2 col-lg-4">
+                    <span tooltip="Simpan Data">
+                        <button type="submit" class="btn btn-sm btn-info" ng-disabled="addForm.$invalid || btnEksekusi"
+                                ng-click="submitData(0)">
+                            Simpan
+                        </button>
+                    </span>
+                    <span tooltip="Simpan Data dan Kembali">
+                        <button type="submit" class="btn btn-sm btn-info" ng-disabled="addForm.$invalid || btnEksekusi"
+                                ng-click="submitData(1)">
+                            Simpan & Kembali
+                        </button>
+                    </span>
+                    <span tooltip="Reset">
+                        <button type="reset" class="btn btn-sm btn-default" ng-disabled="btnEksekusi">
+                            Reset
+                        </button>
+                    </span>
+                    <span tooltip="Kembali">
+                        <button type="button" ng-disabled="btnEksekusi" class="btn btn-sm btn-default"
+                                ng-click="back()">
+                            Kembali
+                        </button>
+                    </span>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+<!--end form add-->
+<!--form edit-->
+<div class="panel panel-default {{formHidden.edit}}">
+    <div class="panel-heading font-bold">Form Edit</div>
+    <div class="panel-body">
+        <form class="bs-example form-horizontal" name="editForm" ng-submit="updateData(editForm.$valid)">
+            <!--Tahun-->
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Tahun</label>
+
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" ng-model="inputData.tahun" placeholder="Tahun" required>
+                </div>
+            </div>
+
+            <!--RKP Desa-->
+            <div class="form-group">
+                <label class="col-lg-2 control-label">RKP Desa</label>
+
+                <div class="col-lg-4">
+                    <select class="form-control" ng-model="inputData.rkpdes"
+                            ng-options="o as o.kewenangan_kegiatan.kegiatan for o in objRKPDes" required>
+                    </select>
+                </div>
+            </div>
+
+            <!--Kelompok-->
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Kelompok</label>
+
+                <div class="col-lg-4">
+                    <select class="form-control" ng-model="inputData.kelompok"
+                            ng-options="o as o.kelompok for o in objKelompok" ng-change="setKelompok()">
+                    </select>
+
+                    <div class="text-info" ng-show="alert1">
+                        Data Jenis belum tersedia.
+                    </div>
+                </div>
+            </div>
+
+            <!--Jenis-->
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Jenis</label>
+
+                <div class="col-lg-4">
+                    <select class="form-control" ng-model="inputData.jenis"
+                            ng-options="o as o.jenis for o in objJenis" ng-change="setJenis()"
+                            ng-disabled="loadKelompok">
+                    </select>
+
+                    <div class="text-info" ng-show="alert2">
+                        Data obyek belum tersedia
+                    </div>
+                </div>
+            </div>
+
+            <!--Obyek-->
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Obyek</label>
+
+                <div class="col-lg-4">
+                    <select class="form-control" ng-model="inputData.obyek"
+                            ng-options="o as o.obyek for o in objObyek"
+                            ng-disabled="loadJenis">
+                    </select>
+                </div>
+            </div>
+
+            <!--Volume 1-->
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Volume 1</label>
+
+                <div class="col-lg-4">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" ng-model="inputData.volume1" placeholder="Jumlah"
+                                   required>
+                        </div>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" ng-model="inputData.satuan1" placeholder="Satuan"
+                                   required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Volume 2-->
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Volume 2</label>
+
+                <div class="col-lg-4">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" ng-model="inputData.volume2" placeholder="Jumlah">
+                        </div>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" ng-model="inputData.satuan2" placeholder="Satuan">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Volume 3-->
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Volume 3</label>
+
+                <div class="col-lg-4">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" ng-model="inputData.volume3" placeholder="Jumlah">
+                        </div>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" ng-model="inputData.satuan3" placeholder="Satuan">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Harga Satuan-->
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Satuan Harga</label>
+
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" ng-model="inputData.satuan_harga" placeholder="Satuan Harga"
+                           required>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-4">
+                    <button type="submit" class="btn btn-sm btn-info" ng-disabled="editForm.$invalid || btnEksekusi"
+                            tooltip="Simpan Data">Simpan
+                    </button>
+                    <button type="button" ng-disabled="btnEksekusi"
+                            class="btn btn-sm btn-default" tooltip="Kembali" ng-click="back()">Kembali
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--end form edit-->
+
+<script type="text/ng-template" id="myModalContent.html">
+    <div ng-include="'tpl/modal.html'"></div>
+</script>
+
+<script type="text/ng-template" id="modRealisasi.html">
+    <div ng-include="'tpl/modal_realisasi.html'"></div>
+</script>
+</div>

@@ -1,0 +1,108 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm">
+<!-- main -->
+<div class="col" ng-controller="DashboardBackCtrl">
+<!-- main header -->
+<div class="bg-light lter b-b wrapper-md">
+    <div class="row">
+        <div class="col-sm-6 col-xs-12">
+            <h1 class="m-n font-thin h3 text-black">Dashboard</h1>
+        </div>
+        <div class="col-sm-6 text-right hidden-xs">
+            <div class="inline m-r text-left">
+                <div class="m-b-xs">1290 <span class="text-muted">items</span></div>
+                <div ng-init="data1=[ 106,108,110,105,110,109,105,104,107,109,105,100,105,102,101,99,98 ]"
+                     ui-jq="sparkline"
+                     ui-options="{{data1}}, {type:'bar', height:20, barWidth:5, barSpacing:1, barColor:'#dce5ec'}"
+                     class="sparkline inline">loading...
+                </div>
+            </div>
+            <div class="inline text-left">
+                <div class="m-b-xs">$30,000 <span class="text-muted">revenue</span></div>
+                <div ng-init="data2=[ 105,102,106,107,105,104,101,99,98,109,105,100,108,110,105,110,109 ]"
+                     ui-jq="sparkline"
+                     ui-options="{{data2}}, {type:'bar', height:20, barWidth:5, barSpacing:1, barColor:'#dce5ec'}"
+                     class="sparkline inline">loading...
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- / main header -->
+<div class="wrapper-md">
+    <!-- stats -->
+    <div class="row">
+        <div class="col-md-5">
+            <div class="row row-sm text-center">
+                <!--RPJMDes Program-->
+                <div class="col-xs-6">
+                    <a ui-sref="app.verifikasi.rpjmdes_program" class="block panel padder-v bg-white item">
+                        <span class="text-info font-thin h1 block">{{jumlah.program}}</span>
+                        <span class="text-muted text-xs">RPJM Desa</span>
+                    </a>
+                </div>
+                <!--DPa Pendapatan-->
+                <div class="col-xs-6">
+                    <a ui-sref="app.dpa.pendapatan" class="block panel padder-v bg-primary item">
+                        <span class="text-white font-thin h1 block">{{jumlah.pendapatan}}</span>
+                        <span class="text-muted text-xs">DRK Pendapatan</span>
+                    </a>
+                </div>
+                <!--DPA Belanja-->
+                <div class="col-xs-6">
+                    <a ui-sref="app.dpa.belanja" class="block panel padder-v bg-info item">
+                        <span class="text-white font-thin h1 block">{{jumlah.belanja}}</span>
+                        <span class="text-muted text-xs">DRK Belanja</span>
+                    </a>
+                </div>
+                <!--DPA Pembiayaan-->
+                <div class="col-xs-6">
+                    <a ui-sref="app.dpa.pembiayaan" class="block panel padder-v bg-white item">
+                        <span class="text-info font-thin h1 block">{{jumlah.pembiayaan}}</span>
+                        <span class="text-muted text-xs">DRK Pembiayaan</span>
+                    </a>
+                </div>
+                <div class="col-xs-12 m-b-md">
+                    <div class="r bg-light dker item hbox no-border">
+                        <div class="col w-xs v-middle hidden-md">
+                            <div ng-init="data1=[60,40]" ui-jq="sparkline"
+                                 ui-options="{{data1}}, {type:'pie', height:40, sliceColors:['{{app.color.warning}}','#fff']}"
+                                 class="sparkline inline"></div>
+                        </div>
+                        <div class="col dk padder-v r-r">
+                            <div class="text-primary-dk font-thin h1"><span>$12,670</span></div>
+                            <span class="text-muted text-xs">Revenue, 60% of the goal</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="panel wrapper">
+                <label class="i-switch bg-warning pull-right" ng-init="showSpline=true">
+                    <input type="checkbox" ng-model="showSpline">
+                    <i></i>
+                </label>
+                <h4 class="font-thin m-t-none m-b text-muted">Latest Campaign</h4>
+
+                <div ui-jq="plot" ui-refresh="showSpline" ui-options="
+              [
+                { data: {{d0_1}}, label:'TV', points: { show: true, radius: 1}, splines: { show: showSpline, tension: 0.4, lineWidth: 1, fill: 0.8 } },
+                { data: {{d0_2}}, label:'Mag', points: { show: true, radius: 1}, splines: { show: showSpline, tension: 0.4, lineWidth: 1, fill: 0.8 } }
+              ], 
+              {
+                colors: ['{{app.color.info}}', '{{app.color.primary}}'],
+                series: { shadowSize: 3 },
+                xaxis:{ font: { color: '#a1a7ac' } },
+                yaxis:{ font: { color: '#a1a7ac' }, max:20 },
+                grid: { hoverable: true, clickable: true, borderWidth: 0, color: '#dce5ec' },
+                tooltip: true,
+                tooltipOpts: { content: '%s of %x.1 is %y.4',  defaultTheme: false, shifts: { x: 10, y: -25 } }
+              }
+            " style="height:246px">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>

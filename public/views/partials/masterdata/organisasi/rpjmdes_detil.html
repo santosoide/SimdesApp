@@ -1,0 +1,218 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h1 class="m-n font-thin h3">Rincian RPJM Desa</h1>
+</div>
+<div class="wrapper-md" ng-controller="RPJMDesDetilCtrl">
+<!--Alert-->
+<div role="alert" class="alert alert-{{aClass}} alert-dismissable {{aShow}}" type="success">
+    <button ng-click="closeMe()" class="close" type="button">
+        <span aria-hidden="true">×</span>
+        <span class="sr-only">Close</span>
+    </button>
+    <span ng-repeat="(key, value) in aMsg"><p class="m-b-xxs">{{value}}</p></span>
+</div>
+<!--End of alert-->
+<!--list data-->
+<div class="panel panel-default">
+    <div class="panel-heading font-bold">Rincian RPJM Desa</div>
+    <div class="row wrapper">
+        <div class="col-sm-8 m-b-xs">
+            <button tooltip="Verifikasi" class="btn btn-sm btn-info" ng-show="data.is_finish==1"
+                    ng-click="program_verifikasi(data._id)"
+                    ng-disabled="disAksi.btnVerifikasi"><i
+                    class="icon icon-check"></i>
+            </button>
+            <button tooltip="Revisi" class="btn btn-sm btn-warning" ng-show="data.is_finish==1"
+                    ng-click="program_revisi(data)"
+                    ng-disabled="disAksi.btnVerifikasi"><i
+                    class="glyphicon glyphicon-edit"></i>
+            </button>
+            <button tooltip="Tolak" class="btn btn-sm btn-danger" ng-show="data.is_finish==1"
+                    ng-click="program_tolak(data)"
+                    ng-disabled="disAksi.btnVerifikasi"><i
+                    class="icon icon-close"></i>
+            </button>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-responsive table-striped">
+            <tbody>
+            <tr>
+                <td class="col-md-2 text-right">Desa</td>
+                <td class="col-md-9">{{data.organisasi.desa}}</td>
+            </tr>
+            <tr>
+                <td class="col-md-2 text-right">Kecamatan</td>
+                <td class="col-md-9">{{data.organisasi.kecamatan.kec}}</td>
+            </tr>
+            <tr>
+                <td class="col-md-2 text-right">Program</td>
+                <td class="col-md-9">{{data.kegiatan.program.program}}</td>
+            </tr>
+            <tr>
+                <td class="col-md-2 text-right">Kegiatan</td>
+                <td class="col-md-9">{{data.kegiatan.kegiatan}}</td>
+            </tr>
+            <tr>
+                <td class="col-md-2 text-right">Sumber Dana</td>
+                <td class="col-md-9">{{data.sumber_dana.sumber_dana}}</td>
+            </tr>
+            <tr>
+                <td class="col-md-2 text-right">Jenis Pelaksanaan</td>
+                <td class="col-md-9">{{getPelaksanaan(data.pelaksanaan)}}</td>
+            </tr>
+            <tr>
+                <td class="col-md-2 text-right">Pagu Anggaran</td>
+                <td class="col-md-9">Rp{{convertToRupiah(data.pagu_anggaran)}}</td>
+            </tr>
+            <tr>
+                <td class="col-md-2 text-right">Pelaksanaan</td>
+                <td class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-2">Tahun 1</div>
+                        <div class="col-md-8">Rp{{convertToRupiah(data.tahun_1)}}</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-2 text-right"></td>
+                <td class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-2">Tahun 2</div>
+                        <div class="col-md-8">Rp{{convertToRupiah(data.tahun_2)}}</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-2 text-right"></td>
+                <td class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-2">Tahun 3</div>
+                        <div class="col-md-8">Rp{{convertToRupiah(data.tahun_3)}}</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-2 text-right"></td>
+                <td class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-2">Tahun 4</div>
+                        <div class="col-md-8">Rp{{convertToRupiah(data.tahun_4)}}</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-2 text-right"></td>
+                <td class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-2">Tahun 5</div>
+                        <div class="col-md-8">Rp{{convertToRupiah(data.tahun_5)}}</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-2 text-right"></td>
+                <td class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-2">Tahun 6</div>
+                        <div class="col-md-8">Rp{{convertToRupiah(data.tahun_6)}}</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-2 text-right">Status</td>
+                <td class="col-md-9"><span class="label label-{{key.class}}">{{key.key}}</span></td>
+            </tr>
+            <tr ng-if="data.is_finish != 0">
+                <td class="col-md-2 text-right">Pada</td>
+                <td class="col-md-9">{{data.finished_at}}</td>
+            </tr>
+            <tr ng-if="data.is_finish == 2 && data.keterangan_revisi != ''">
+                <td class="col-md-2 text-right">Alasan</td>
+                <td class="col-md-9">{{data.keterangan_revisi}}</td>
+            </tr>
+            <tr ng-if="data.is_finish == 4 && data.keterangan_reject != ''">
+                <td class="col-md-2 text-right">Alasan</td>
+                <td class="col-md-9">{{data.keterangan_reject}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--end list data-->
+
+<!--list data-->
+<div class="panel panel-default">
+    <div class="panel-heading font-bold">Data Lokasi</div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="col-md-2">Lokasi</th>
+                <th class="col-md-2">Pelaksana</th>
+                <th class="col-md-4">Sasaran</th>
+                <th class="col-md-1">Volume</th>
+                <th class="col-md-1">Satuan</th>
+                <th class="col-md-2">Harga Satuan</th>
+
+            </tr>
+            </thead>
+
+            <tbody ng-repeat="k in lokasi">
+            <tr>
+                <td>{{k.lokasi}}</td>
+                <td>{{k.pejabat.nama}}</td>
+                <td>
+                    {{k.sasaran_manfaat_laki}} orang laki-laki, {{k.sasaran_manfaat_wanita}} orang perempuan
+                    dan {{k.sasaran_manfaat_artm}} {{k.sasaran_satuan}} rumah tangga miskin
+                </td>
+                <td>{{k.volume1}} <span ng-if="k.volume2 != ''">* {{k.volume2}}</span> <span
+                        ng-if="k.volume3 != ''">* {{k.volume3}}</span></td>
+                <td>{{k.satuan1}} <span ng-if="k.satuan2 != ''">* {{k.satuan2}}</span> <span
+                        ng-if="k.satuan3 != ''">* {{k.satuan3}}</span></td>
+                <td>Rp{{convertToRupiah(k.harga_satuan)}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <footer class="panel-footer">
+        <div class="row">
+            <div class="col-sm-4 text-center-xs">
+                <small class="text-muted inline m-t-sm m-b-sm">showing {{from}}-{{to}} of
+                    {{total}} items
+                </small>
+            </div>
+            <div class="col-sm-8 text-right text-center-xs">
+                <ul class="pagination m-t-none m-b-none">
+                    <li tooltip="Halaman Pertama">
+                        <button class="btn btn-default" type="button" ng-click='firstPage()'
+                                ng-disabled='current_page == 1 || disUtama.btnPagging'><i
+                                class="fa fa-angle-double-left"></i></button>
+                    </li>
+                    <li tooltip="Halaman Sebelumnya">
+                        <button class="btn btn-default" type="button" ng-click='previousPage()'
+                                ng-disabled='current_page <= 1 || disUtama.btnPagging'><i
+                                class="fa fa-angle-left"></i></button>
+                    </li>
+                    <li tooltip="Halaman Selanjutnya">
+                        <button class="btn btn-default" type="button" ng-click='nextPage()'
+                                ng-disabled='main.page >= last_page || disUtama.btnPagging'><i
+                                class="fa fa-angle-right"></i></button>
+                    </li>
+                    <li tooltip="Halaman Terakhir">
+                        <button class="btn btn-default" type="button" ng-click='lastPage()'
+                                ng-disabled='main.page >= last_page || disUtama.btnPagging'><i
+                                class="fa fa-angle-double-right"></i></button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</div>
+<!--end list data-->
+</div>
+<script type="text/ng-template" id="modTolak.html">
+    <div ng-include="'tpl/modal_tolak.html'"></div>
+</script>
+<script type="text/ng-template" id="modRevisi.html">
+    <div ng-include="'tpl/modal_revisi.html'"></div>
+</script>

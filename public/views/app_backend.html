@@ -1,0 +1,33 @@
+<!-- navbar -->
+<div data-ng-include=" 'views/includes/header.html' " class="app-header navbar"></div>
+<!-- / navbar -->
+
+<!-- menu -->
+<div data-ng-include=" 'views/includes/aside.html' " class="app-aside hidden-xs {{app.settings.asideColor}}"></div>
+<!-- / menu -->
+
+<!-- content -->
+<div class="app-content">
+    <div ui-butterbar></div>
+    <a href class="off-screen-toggle hide" ui-toggle-class="off-screen" data-target=".app-aside"></a>
+
+    <div class="app-content-body fade-in-up" ui-view></div>
+</div>
+<!-- /content -->
+
+<!-- footer -->
+<div class="app-footer wrapper b-t bg-light">
+        <span class="pull-right text-center-xs">{{app.footer}}
+            <a href ui-scroll="app" class="m-l-sm text-muted"><i class="fa fa-long-arrow-up"></i></a>
+        </span>
+    <span class="text-center-xs">&copy; {{app.copy}}</span>
+</div>
+<!-- / footer -->
+
+<div data-ng-include=" 'views/includes/settings.html' " class="settings panel panel-default"></div>
+<script type="text/ng-template" id="modDelete.html">
+    <div ng-include="'tpl/modal_delete.html'"></div>
+</script>
+<script type="text/ng-template" id="modVerifikasi.html">
+    <div ng-include="'tpl/modal_verifikasi.html'"></div>
+</script>

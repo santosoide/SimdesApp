@@ -1,0 +1,349 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h1 class="m-n font-thin h3">Pemerintah Desa</h1>
+</div>
+<div class="wrapper-md" ng-controller="OrganisasiCtrl">
+<!--Alert-->
+<div role="alert" class="alert alert-{{aClass}} alert-dismissable {{formHidden.alert}}" type="success">
+    <button ng-click="closeMe()" class="close" type="button">
+        <span aria-hidden="true">×</span>
+        <span class="sr-only">Close</span>
+    </button>
+    <span ng-repeat="(key, value) in aMsg"><p class="m-b-xxs">{{value}}</p></span>
+</div>
+<!--End of alert-->
+<!--list data-->
+<div class="panel panel-default {{formHidden.list}}">
+    <div class="panel-heading font-bold">Tampil Data</div>
+    <div class="row wrapper">
+        <div class="col-sm-8 m-b-xs">
+            <span tooltip="Tambah Data">
+                <button ng-click="add()" class="btn btn-sm btn-default" ng-disabled="disUtama.btnAdd">
+                    <i class="glyphicon glyphicon-plus-sign"></i></button>
+                </span>
+            <span tooltip="Refresh data">
+                <button class="btn btn-sm btn-default" ng-click="refreshData()" ng-disabled=disUtama.btnRefresh>
+                    <i class="glyphicon glyphicon-refresh"></i>
+                </button>
+            </span>
+        </div>
+        <div class="col-sm-4">
+            <div class="input-group pull-right">
+                <input type="text" class="input-sm form-control" placeholder="Search" ng-model="main.term"
+                       ng-disabled="disUtama.txtCari">
+                <span class="input-group-btn" tooltip="Cari Data">
+                    <button class="btn btn-sm btn-default" type="button" ng-click="cari()"
+                            ng-disabled="disUtama.btnCari">Cari
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="col-sm-3 col-md-3 col-lg-3">Desa</th>
+                <th class="col-sm-3 col-md-3 col-lg-3">Email</th>
+                <th class="col-sm-3 col-md-3 col-lg-4">Alamat</th>
+                <th class="col-sm-3 col-md-3 col-lg-2">Aksi</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="org in organisasi">
+                <td>{{org.desa}}</td>
+                <td>{{org.email}}</td>
+                <td>{{org.alamat}}</td>
+                <td>
+                    <a ui-sref="app.backoffice.detil_pemerintah_desa({ organisasi_id:org._id, desa:org.desa})"
+                       tooltip="Lihat Detil"
+                       class="btn btn-sm btn-info"
+                       ng-disabled="disAksi.btnDetail" ng-click="detil(org._id)"><i
+                            class="glyphicon glyphicon-list"></i></a>
+                    <button tooltip="Edit" class="btn btn-sm btn-info"
+                            ng-click="edit(org._id)" ng-disabled="disAksi.btnEdit"><i
+                            class="glyphicon glyphicon-edit"></i>
+                    </button>
+                    <button tooltip="Hapus" class="btn btn-sm btn-danger" ng-click="hapus(org._id)"
+                            ng-disabled="disAksi.btnDetail"><i
+                            class="glyphicon glyphicon-trash"></i>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <footer class="panel-footer">
+        <div class="row">
+            <div class="col-sm-4 text-center-xs">
+                <small class="text-muted inline m-t-sm m-b-sm">showing {{from}}-{{to}} of
+                    {{total}} items
+                </small>
+            </div>
+            <div class="col-sm-8 text-right text-center-xs">
+                <ul class="pagination m-t-none m-b-none">
+                    <li tooltip="Halaman Pertama">
+                        <button class="btn btn-default" type="button" ng-click='firstPage()'
+                                ng-disabled='current_page == 1 || disUtama.btnPagging'><i
+                                class="fa fa-angle-double-left"></i></button>
+                    </li>
+                    <li tooltip="Halaman Sebelumnya">
+                        <button class="btn btn-default" type="button" ng-click='previousPage()'
+                                ng-disabled='current_page <= 1 || disUtama.btnPagging'><i
+                                class="fa fa-angle-left"></i></button>
+                    </li>
+                    <li tooltip="Halaman Selanjutnya">
+                        <button class="btn btn-default" type="button" ng-click='nextPage()'
+                                ng-disabled='main.page >= last_page || disUtama.btnPagging'><i
+                                class="fa fa-angle-right"></i></button>
+                    </li>
+                    <li tooltip="Halaman Terakhir">
+                        <button class="btn btn-default" type="button" ng-click='lastPage()'
+                                ng-disabled='main.page >= last_page || disUtama.btnPagging'><i
+                                class="fa fa-angle-double-right"></i></button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</div>
+<!--end list data-->
+<!--form add-->
+<div class="panel panel-default {{formHidden.add}}">
+    <div class="panel-heading font-bold">Form Tambah</div>
+    <div class="panel-body">
+        <form class="bs-example form-horizontal" name="addForm">
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Instansi</label>
+
+                <div class="col-lg-4">
+                    <!--<input type="text" class="form-control" placeholder="Nama Instansi" ng-model="inputData.nama"-->
+                    <!--focus-me="getFocus" required>-->
+                    <select class="form-control" ng-model="inputData.cbInstansi"
+                            ng-options="o.nama for o in objInstansi">
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Kode Desa</label>
+
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" placeholder="Kode desa" ng-model="inputData.kode_desa"
+                           required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Desa</label>
+
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" placeholder="desa" ng-model="inputData.desa"
+                           required>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Alamat</label>
+
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" placeholder="Alamat" ng-model="inputData.alamat"
+                           required>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Nomer Telepon</label>
+
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" placeholder="Nomer telepon"
+                           ng-model="inputData.no_telp" required>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Nomer Fax</label>
+
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" placeholder="Nomer Fax" ng-model="inputData.no_fax"
+                            >
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Kecamatan</label>
+
+                <div class="col-lg-4">
+                    <select class="form-control" ng-model="inputData.cbkecamatan"
+                            ng-options="o.kec for o in objKecamatan">
+                    </select>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Kabupaten</label>
+
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" placeholder="Kabupaten" ng-model="inputData.kab"
+                           required>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Provinsi</label>
+
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" placeholder="Provinsi" ng-model="inputData.prov"
+                           required>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Email</label>
+
+                <div class="col-lg-4">
+                    <input type="email" class="form-control" placeholder="Email" ng-model="inputData.email"
+                           required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-4">
+                    <span tooltip="Simpan Data">
+                        <button type="button" class="btn btn-sm btn-info" ng-disabled="addForm.$invalid || btnEksekusi"
+                                ng-click="submitData(0)">
+                            Simpan
+                        </button>
+                    </span>
+                    <span tooltip="Simpan Data dan Kembali">
+                        <button type="button" class="btn btn-sm btn-info" ng-disabled="addForm.$invalid || btnEksekusi"
+                                ng-click="submitData(1)">
+                            Simpan & Kembali
+                        </button>
+                    </span>
+                    <button type="reset" class="btn btn-sm btn-default" tooltip="Reset" ng-disabled="btnEksekusi">
+                        Reset
+                    </button>
+                    <span tooltip="Kembali">
+                        <button type="button" class="btn btn-sm btn-default" ng-click="back()"
+                                ng-disabled="btnEksekusi">
+                            Kembali
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--end form add-->
+<!--form edit-->
+<div class="panel panel-default {{formHidden.edit}}">
+    <div class="panel-heading font-bold">Form Edit</div>
+    <div class="panel-body">
+        <form class="bs-example form-horizontal" name="editForm">
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Instansi</label>
+
+                <div class="col-lg-4">
+                    <select class="form-control" ng-model="inputData.cbInstansi"
+                            ng-options="o.nama for o in objInstansi">
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Kode Desa</label>
+
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" placeholder="Kode desa" ng-model="inputData.kode_desa"
+                           required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Desa</label>
+
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" placeholder="desa" ng-model="inputData.desa"
+                           required>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Alamat</label>
+
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" placeholder="Alamat" ng-model="inputData.alamat"
+                           required>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Nomer Telepon</label>
+
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" placeholder="Nomer telepon"
+                           ng-model="inputData.no_telp" required>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Nomer Fax</label>
+
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" placeholder="Nomer Fax" ng-model="inputData.no_fax"
+                            >
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Kecamatan</label>
+
+                <div class="col-lg-4">
+                    <!--<input type="text" class="form-control" placeholder="Kecamatan" ng-model="inputData.kec"-->
+                    <!--required>-->
+                    <select class="form-control" ng-model="inputData.cbkecamatan"
+                            ng-options="o.kec for o in objKecamatan">
+                    </select>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Kabupaten</label>
+
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" placeholder="Kabupaten" ng-model="inputData.kab"
+                           required>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Provinsi</label>
+
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" placeholder="Provinsi" ng-model="inputData.prov"
+                           required>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Email</label>
+
+                <div class="col-lg-4">
+                    <input type="email" class="form-control" placeholder="Email" ng-model="inputData.email"
+                           required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-4">
+                    <span tooltip="Update Data">
+                        <button type="button" class="btn btn-sm btn-info" ng-disabled="editForm.$invalid || btnEksekusi"
+                                ng-click="updateData()">
+                            Update
+                        </button>
+                    </span>
+                    <span tooltip="Batal Edit">
+                        <button ng-click="back()" type="button" class="btn btn-sm btn-default"
+                                ng-disabled="btnEksekusi">
+                            Batal
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--end form edit-->
+</div>

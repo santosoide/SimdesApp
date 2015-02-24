@@ -1,0 +1,199 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h1 class="m-n font-thin h3">Referensi Masalah</h1>
+</div>
+<div class="wrapper-md" ng-controller="ReferensiMasalahCtrl">
+    <!--Alert-->
+    <div role="alert" class="alert alert-{{alertset.class}} alert-dismissable {{formHidden.alert}}"
+         close="closeAlert($index)" type="success">
+
+        <button ng-click="close()" class="close" type="button" ng-show="closeable">
+            <span aria-hidden="true">×</span>
+            <span class="sr-only">Close</span>
+        </button>
+        <span ng-repeat="m in msg"><p class="m-b-xxs">{{m}}</p></span>
+        <span><p class="m-b-xxs">{{success}}</p></span>
+        <!--<span><p class="m-b-xxs">{{csrf}}</p></span>-->
+    </div>
+    <!--End of alert-->
+    <!--list data-->
+    <div class="panel panel-default {{formHidden.list}}">
+        <div class="panel-heading font-bold">Tampil Data</div>
+        <div class="row wrapper">
+            <div class="col-sm-8 m-b-xs">
+            <span tooltip="Tambah Data">
+                <button ng-click="add()" class="btn btn-sm btn-default" ng-disabled="disUtama.btnAdd">
+                    <i class="glyphicon glyphicon-plus-sign"></i></button>
+                </span>
+            <span tooltip="Refresh data">
+                <button class="btn btn-sm btn-default" ng-click="refreshData()" ng-disabled=disUtama.btnRefresh>
+                    <i class="glyphicon glyphicon-refresh"></i>
+                </button>
+            </span>
+            </div>
+            <div class="col-sm-4">
+                <div class="input-group pull-right">
+                    <input type="text" class="input-sm form-control" placeholder="Search" ng-model="main.term"
+                           ng-disabled="disUtama.txtCari">
+                <span class="input-group-btn" tooltip="Cari Data">
+                    <button class="btn btn-sm btn-default" type="button" ng-click="cari()"
+                            ng-disabled="disUtama.btnCari">Cari
+                    </button>
+                </span>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th class="col-lg-4">Bidang</th>
+                    <th class="col-lg-6">Masalah</th>
+                    <th class="col-lg-2">Aksi</th>
+                </tr>
+                </thead>
+
+                <tbody ng-repeat="k in referensimasalah">
+                <tr>
+                    <td>{{k.bidang.bidang}}</td>
+                    <td>{{k.masalah}}</td>
+                    <td>
+                        <button tooltip="Edit" class="btn btn-sm btn-info"
+                                ng-click="edit(k._id)" ng-disabled="disAksi.btnDetail"><i
+                                class="glyphicon glyphicon-edit"></i>
+                        </button>
+                        <button tooltip="Hapus" class="btn btn-sm btn-danger" confirmed-click="hapus(k._id)"
+                                ng-confirm-click="Apakah Anda yakin ingin menghapus?" ng-disabled="disAksi.btnDetail"><i
+                                class="glyphicon glyphicon-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <footer class="panel-footer">
+            <div class="row">
+                <div class="col-sm-4 text-center-xs">
+                    <small class="text-muted inline m-t-sm m-b-sm">showing {{from}}-{{to}} of
+                        {{total}} items
+                    </small>
+                </div>
+                <div class="col-sm-8 text-right text-center-xs">
+                    <ul class="pagination m-t-none m-b-none">
+                        <li tooltip="Halaman Pertama">
+                            <button class="btn btn-default" type="button" ng-click='firstPage()'
+                                    ng-disabled='current_page == 1 || disUtama.btnPagging'><i
+                                    class="fa fa-angle-double-left"></i></button>
+                        </li>
+                        <li tooltip="Halaman Sebelumnya">
+                            <button class="btn btn-default" type="button" ng-click='previousPage()'
+                                    ng-disabled='current_page <= 1 || disUtama.btnPagging'><i
+                                    class="fa fa-angle-left"></i></button>
+                        </li>
+                        <li tooltip="Halaman Selanjutnya">
+                            <button class="btn btn-default" type="button" ng-click='nextPage()'
+                                    ng-disabled='main.page >= last_page || disUtama.btnPagging'><i
+                                    class="fa fa-angle-right"></i></button>
+                        </li>
+                        <li tooltip="Halaman Terakhir">
+                            <button class="btn btn-default" type="button" ng-click='lastPage()'
+                                    ng-disabled='main.page >= last_page || disUtama.btnPagging'><i
+                                    class="fa fa-angle-double-right"></i></button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <!--end list data-->
+    <!--form add-->
+    <div class="panel panel-default {{formHidden.add}}">
+        <div class="panel-heading font-bold">Form Tambah</div>
+        <div class="panel-body">
+            <form class="bs-example form-horizontal" name="addForm">
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Bidang</label>
+
+                    <div class="col-lg-4">
+                        <select class="form-control" ng-model="inputData.bidang"
+                                ng-options="o as o.bidang for o in objBidang" ng-change="setbidang()" required>
+                        </select>
+                        <input type="hidden" ng-model="inputData.bidang_id" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Masalah</label>
+
+                    <div class="col-lg-4">
+                        <textarea class="form-control" placeholder="Referensi Masalah" ng-model="inputData.masalah"
+                                  required></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-offset-2 col-lg-4">
+                    <span tooltip="Simpan Data">
+                        <button type="submit" class="btn btn-sm btn-info" ng-disabled="addForm.$invalid || btnEksekusi"
+                                ng-click="submitData(0)">
+                            Simpan
+                        </button>
+                    </span>
+                    <span tooltip="Simpan Data dan Kembali">
+                        <button type="submit" class="btn btn-sm btn-info" ng-disabled="addForm.$invalid || btnEksekusi"
+                                ng-click="submitData(1)">
+                            Simpan & Kembali
+                        </button>
+                    </span>
+                    <span tooltip="Reset">
+                        <button type="reset" class="btn btn-sm btn-default" ng-disabled="btnEksekusi">
+                            Reset
+                        </button>
+                    </span>
+                    <span tooltip="Kembali">
+                        <button type="button" ng-disabled="btnEksekusi" class="btn btn-sm btn-default"
+                                ng-click="back()">
+                            Kembali
+                        </button>
+                    </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--end form add-->
+    <!--form edit-->
+    <div class="panel panel-default {{formHidden.edit}}">
+        <div class="panel-heading font-bold">Form Edit</div>
+        <div class="panel-body">
+            <form class="bs-example form-horizontal" name="editForm" ng-submit="updateData(editForm.$valid)">
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Bidang</label>
+
+                    <div class="col-lg-4">
+                        <select class="form-control" ng-model="inputData.bidang"
+                                ng-options="o as o.bidang for o in objBidang" ng-change="setbidang()" required>
+                        </select>
+                        <input type="hidden" ng-model="inputData.bidang_id" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Masalah</label>
+
+                    <div class="col-lg-4">
+                        <textarea class="form-control" placeholder="Referensi Masalah" ng-model="inputData.masalah"
+                                  required></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-offset-2 col-lg-4">
+                        <button type="submit" class="btn btn-sm btn-info" ng-disabled="editForm.$invalid || btnEksekusi"
+                                tooltip="Simpan Data">Simpan
+                        </button>
+                        <button type="button" ng-disabled="btnEksekusi"
+                                class="btn btn-sm btn-default" tooltip="Kembali" ng-click="back()">Kembali
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--end form edit-->
+</div>

@@ -1,0 +1,108 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h1 class="m-n font-thin h3">Pendapatan</h1>
+</div>
+<div class="wrapper-md" ng-controller="DPAPendapatanCtrl">
+    <!--Alert-->
+    <div role="alert" class="alert alert-{{alertset.class}} alert-dismissable {{formHidden.alert}}" type="success">
+        <button ng-click="closeMe()" class="close" type="button">
+            <span aria-hidden="true">×</span>
+            <span class="sr-only">Close</span>
+        </button>
+        <span ng-repeat="(key, value) in alertset.msg"><p class="m-b-xxs">{{value}}</p></span>
+    </div>
+    <!--End of alert-->
+    <!--list data-->
+    <div class="panel panel-default">
+        <div class="panel-heading font-bold">Tampil Data</div>
+        <div class="row wrapper">
+            <div class="col-sm-8 m-b-xs">
+            <span tooltip="Refresh data">
+                <button class="btn btn-sm btn-default" ng-click="refreshData()" ng-disabled=disUtama.btnRefresh>
+                    <i class="glyphicon glyphicon-refresh"></i>
+                </button>
+            </span>
+            </div>
+            <div class="col-sm-4">
+                <div class="input-group pull-right">
+                    <input type="text" class="input-sm form-control" placeholder="Search" ng-model="main.term"
+                           ng-disabled="disUtama.txtCari">
+                <span class="input-group-btn" tooltip="Cari Data">
+                    <button class="btn btn-sm btn-default" type="button" ng-click="cari()"
+                            ng-disabled="disUtama.btnCari">Cari
+                    </button>
+                </span>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th class="col-lg-2">Desa</th>
+                    <th class="col-lg-1">Tahun</th>
+                    <th class="col-lg-2">Pendapatan</th>
+                    <th class="col-lg-1">Volume</th>
+                    <th class="col-lg-1">Satuan</th>
+                    <th class="text-right col-lg-2">Harga Satuan (Rp)</th>
+                    <th class="text-right col-lg-2">Jumlah (Rp)</th>
+                    <th class="text-right col-lg-1">Aksi</th>
+                </tr>
+                </thead>
+
+                <tbody ng-repeat="k in dpa_pendapatan">
+                <tr>
+                    <td>{{k.organisasi.desa}}</td>
+                    <td>{{k.tahun}}</td>
+                    <td>{{k.pendapatan}}</td>
+                    <td><span>{{k.volume1}}</span><span ng-if="k.volume2 != ''">/{{k.volume2}}</span><span
+                            ng-if="k.volume3 != ''">/{{k.volume3}}</span></td>
+                    <td><span>{{k.satuan1}}</span><span ng-if="k.satuan2 != ''">/{{k.satuan2}}</span><span
+                            ng-if="k.satuan3 != ''">/{{k.satuan3}}</span></td>
+                    <td class="text-right">{{convertToRupiah(k.satuan_harga)}}</td>
+                    <td class="text-right">{{convertToRupiah(k.jumlah)}}</td>
+                    <td class="text-right">
+                        <button tooltip="Verifikasi" class="btn btn-sm btn-info"
+                                ng-click="verifikasi(k._id)" ng-disabled="disAksi.btnVerifikasi">
+                            <i class="fa fa-check"></i>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <footer class="panel-footer">
+            <div class="row">
+                <div class="col-sm-4 text-center-xs">
+                    <small class="text-muted inline m-t-sm m-b-sm">showing {{from}}-{{to}} of
+                        {{total}} items
+                    </small>
+                </div>
+                <div class="col-sm-8 text-right text-center-xs">
+                    <ul class="pagination m-t-none m-b-none">
+                        <li tooltip="Halaman Pertama">
+                            <button class="btn btn-default" type="button" ng-click='firstPage()'
+                                    ng-disabled='current_page == 1 || disUtama.btnPagging'><i
+                                    class="fa fa-angle-double-left"></i></button>
+                        </li>
+                        <li tooltip="Halaman Sebelumnya">
+                            <button class="btn btn-default" type="button" ng-click='previousPage()'
+                                    ng-disabled='current_page <= 1 || disUtama.btnPagging'><i
+                                    class="fa fa-angle-left"></i></button>
+                        </li>
+                        <li tooltip="Halaman Selanjutnya">
+                            <button class="btn btn-default" type="button" ng-click='nextPage()'
+                                    ng-disabled='main.page >= last_page || disUtama.btnPagging'><i
+                                    class="fa fa-angle-right"></i></button>
+                        </li>
+                        <li tooltip="Halaman Terakhir">
+                            <button class="btn btn-default" type="button" ng-click='lastPage()'
+                                    ng-disabled='main.page >= last_page || disUtama.btnPagging'><i
+                                    class="fa fa-angle-double-right"></i></button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <!--end list data-->
+</div>

@@ -1,0 +1,268 @@
+<ul class="nav">
+    <!--Dashboard-->
+    <li ng-class="{active:$state.includes('app.dashboard')}">
+        <a ui-sref="app.dashboard">
+            <i class="glyphicon glyphicon-stats"></i>
+            <span translate="aside.nav.DASHBOARD">Dashboard</span>
+        </a>
+    </li>
+
+    <!--Perangkat-->
+    <li ng-class="{active:$state.includes('app.backoffice')}">
+        <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+            <i class="glyphicon glyphicon-list"></i>
+            <span translate="aside.nav.components.perangkat.perangkat"></span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="app.backoffice.pemerintah_desa">
+                    <span translate="aside.nav.components.perangkat.pemerintah_desa"></span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.backoffice.pengguna_desa">
+                    <span translate="aside.nav.components.perangkat.pengguna_desa"></span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <!--APBDes-->
+    <li ng-class="{active:$state.includes('app.apbdes')}">
+        <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+            <i class="fa fa-dollar"></i>
+            <span translate="aside.nav.components.apbdes.apbdes"></span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="app.apbdes.akun">
+                    <span translate="aside.nav.components.apbdes.akun"></span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.apbdes.kelompok">
+                    <span translate="aside.nav.components.apbdes.kelompok"></span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.apbdes.jenis">
+                    <span translate="aside.nav.components.apbdes.jenis"></span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.apbdes.obyek">
+                    <span translate="aside.nav.components.apbdes.obyek"></span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <!--Kewenangan-->
+    <li ng-class="{active:$state.includes('app.kewenangan')}">
+        <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+            <i class="icon icon-login"></i>
+            <span translate="aside.nav.components.kewenangan.kewenangan"></span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="app.kewenangan.kewenangan">
+                    <span translate="aside.nav.components.kewenangan.kewenangan"></span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.kewenangan.bidang">
+                    <span translate="aside.nav.components.kewenangan.bidang"></span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.kewenangan.program">
+                    <span translate="aside.nav.components.kewenangan.program"></span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.kewenangan.kegiatan">
+                    <span translate="aside.nav.components.kewenangan.kegiatan"></span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="line dk"></li>
+    <!--Dokumen Belum Verifikasi-->
+    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+        <span translate="aside.nav.components.verifikasi.verifikasi" class="ng-scope"></span>
+    </li>
+    <!--RPJM Desa-->
+    <li ng-class="{active:$state.includes('app.verifikasi')}">
+        <a ui-sref="app.verifikasi.rpjmdes_program">
+            <i class="fa fa-gears"></i>
+            <span translate="aside.nav.components.verifikasi.rpjmdes_program"></span>
+        </a>
+    </li>
+    <!--DPA Desa-->
+    <li ng-class="{active:$state.includes('app.dpa')}">
+        <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+            <i class="fa fa-file-text-o"></i>
+            <span translate="aside.nav.components.verifikasi.dpa"></span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <!--Pendapatan-->
+            <li ui-sref-active="active">
+                <a ui-sref="app.dpa.pendapatan">
+                    <span translate="aside.nav.components.verifikasi.dpa.pendapatan"></span>
+                </a>
+            </li>
+            <!--Belanja-->
+            <li ui-sref-active="active">
+                <a ui-sref="app.dpa.belanja">
+                    <span translate="aside.nav.components.verifikasi.dpa.belanja"></span>
+                </a>
+            </li>
+            <!--Pembiayaan-->
+            <li ui-sref-active="active">
+                <a ui-sref="app.dpa.pembiayaan">
+                    <span translate="aside.nav.components.verifikasi.dpa.pembiayaan"></span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="line dk"></li>
+    <!--Dokumen SUdah verifikasi-->
+    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+        <span translate="aside.nav.components.verifikasi.verifikasi_selesai" class="ng-scope"></span>
+    </li>
+    <!--RPJM Desa-->
+    <li ng-class="{active:$state.includes('app.verifikasi_selesai')}">
+        <a ui-sref="app.verifikasi_selesai.rpjmdes_program">
+            <i class="fa fa-gears"></i>
+            <span translate="aside.nav.components.verifikasi.rpjmdes_program"></span>
+        </a>
+    </li>
+    <!--DPA Desa-->
+    <li ng-class="{active:$state.includes('app.dpa_selesai')}">
+        <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+            <i class="fa fa-file-text-o"></i>
+            <span translate="aside.nav.components.verifikasi.dpa"></span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <!--Pendapatan-->
+            <li ui-sref-active="active">
+                <a ui-sref="app.dpa_selesai.pendapatan">
+                    <span translate="aside.nav.components.verifikasi.dpa.pendapatan"></span>
+                </a>
+            </li>
+            <!--Belanja-->
+            <li ui-sref-active="active">
+                <a ui-sref="app.dpa_selesai.belanja">
+                    <span translate="aside.nav.components.verifikasi.dpa.belanja"></span>
+                </a>
+            </li>
+            <!--Pembiayaan-->
+            <li ui-sref-active="active">
+                <a ui-sref="app.dpa_selesai.pembiayaan">
+                    <span translate="aside.nav.components.verifikasi.dpa.pembiayaan"></span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="line dk"></li>
+    <!--Referensi-->
+    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+        <span translate="aside.nav.components.master.master"></span>
+    </li>
+    <!--Referensi-->
+    <li ng-class="{active:$state.includes('app.master')}">
+        <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+            <i class="fa fa-database"></i>
+            <span translate="aside.nav.components.master.master"></span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <!--Kecamatan-->
+            <li ui-sref-active="active">
+                <a ui-sref="app.master.kecamatan">
+                    <span translate="aside.nav.components.master.kecamatan"></span>
+                </a>
+            </li>
+            <!--User-->
+            <li ui-sref-active="active">
+                <a ui-sref="app.master.user">
+                    <span translate="aside.nav.components.pengaturan.USER"></span>
+                </a>
+            </li>
+            <!--Sumber Dana-->
+            <li ui-sref-active="active">
+                <a ui-sref="app.master.sumber_dana">
+                    <span translate="aside.nav.components.perangkat.sumber_dana"></span>
+                </a>
+            </li>
+            <!--Satuan Harga-->
+            <li ui-sref-active="active">
+                <a ui-sref="app.master.satuan_harga">
+                    <span translate="aside.nav.components.perangkat.satuan_harga"></span>
+                </a>
+            </li>
+            <!--Alokasi Dana-->
+            <li ui-sref-active="active">
+                <a ui-sref="app.master.dana_desa">
+                    <span translate="aside.nav.components.perangkat.dana_desa"></span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li ng-class="{active:$state.includes('app.profil')}">
+        <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+            <i class="icon icon-settings"></i>
+            <span translate="aside.nav.components.profil.profil"></span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <!--Info-->
+            <li ui-sref-active="active">
+                <a ui-sref="app.profil.info">
+                    <span translate="aside.nav.components.profil.info"></span>
+                </a>
+            </li>
+            <!--Avatar-->
+            <li ui-sref-active="active">
+                <a ui-sref="app.profil.avatar">
+                    <span translate="aside.nav.components.profil.avatar"></span>
+                </a>
+            </li>
+            <!--Password-->
+            <li ui-sref-active="active">
+                <a ui-sref="app.profil.password">
+                    <span translate="aside.nav.components.profil.password"></span>
+                </a>
+            </li>
+        </ul>
+    </li>
+</ul>

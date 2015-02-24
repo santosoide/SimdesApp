@@ -1,0 +1,308 @@
+<ul class="nav">
+    <li>
+        <a ui-sref="desa.dashboard">
+            <i class="glyphicon glyphicon-stats"></i>
+            <span translate="aside.nav.DASHBOARD">Dashboard</span>
+        </a>
+    </li>
+    <li class="line dk"></li>
+    <!--Perencanaan Pembangunan-->
+    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+        <span translate="aside.nav.components.rpjmdes.perencanaan" class="ng-scope"></span>
+    </li>
+
+    <!--RPJM Desa-->
+    <li ng-class="{active:$state.includes('desa.rpjmdes')}">
+        <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+            <i class="fa fa-gears"></i>
+            <span translate="aside.nav.components.rpjmdes.rpjmdes"></span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="desa.rpjmdes.visi">
+                    <span translate="aside.nav.components.rpjmdes.visi"></span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="desa.rpjmdes.misi">
+                    <span translate="aside.nav.components.rpjmdes.misi"></span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="desa.rpjmdes.program">
+                    <span translate="aside.nav.components.rpjmdes.program"></span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <!--RKP Desa-->
+    <li>
+        <a ui-sref="desa.rkpdes">
+            <i class="fa fa-recycle"></i>
+            <span translate="aside.nav.components.rkpdes"></span>
+        </a>
+    </li>
+
+    <!--Penganggaran-->
+    <li ng-class="{active:$state.includes('desa.penganggaran')}">
+        <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+            <i class="fa fa-dollar"></i>
+            <span translate="aside.nav.components.penganggaran.penganggaran"></span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="desa.penganggaran.pendapatan">
+                    <span translate="aside.nav.components.penganggaran.pendapatan"></span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="desa.penganggaran.belanja">
+                    <span translate="aside.nav.components.penganggaran.belanja"></span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="desa.penganggaran.pembiayaan">
+                    <span translate="aside.nav.components.penganggaran.pembiayaan"></span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+
+    <li class="line dk"></li>
+    <!--Dokumen-->
+    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+        <span translate="aside.nav.components.dokumen.dokumen" class="ng-scope"></span>
+    </li>
+
+    <!--RKA Desa-->
+    <li ng-class="{active:$state.includes('desa.rka')}">
+        <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+            <i class="icon icon-doc"></i>
+            <span translate="aside.nav.components.dokumen.rka"></span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="desa.rka.pendapatan">
+                    <span translate="aside.nav.components.dokumen.pendapatan"></span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="desa.rka.belanja">
+                    <span translate="aside.nav.components.dokumen.belanja"></span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="desa.rka.pembiayaan">
+                    <span translate="aside.nav.components.dokumen.pembiayaan"></span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <!--DPA Desa-->
+    <li ng-class="{active:$state.includes('desa.dpa')}">
+        <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+            <i class="fa fa-file-text-o"></i>
+            <span translate="aside.nav.components.dokumen.dpa"></span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="desa.dpa.pendapatan">
+                    <span translate="aside.nav.components.dokumen.pendapatan"></span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="desa.dpa.belanja">
+                    <span translate="aside.nav.components.dokumen.belanja"></span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="desa.dpa.pembiayaan">
+                    <span translate="aside.nav.components.dokumen.pembiayaan"></span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+
+    <li class="line dk"></li>
+    <!--Penatausahaan-->
+    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+        <span translate="aside.nav.components.usaha.usaha" class="ng-scope"></span>
+    </li>
+
+    <!--Penerimaan-->
+    <li ng-class="{active:$state.includes('desa.terima')}">
+        <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+            <i class="fa fa-download"></i>
+            <span translate="aside.nav.components.usaha.terima"></span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="desa.terima.transaksi">
+                    <span translate="aside.nav.components.usaha.transaksi"></span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="desa.terima.mutasi">
+                    <span translate="aside.nav.components.usaha.mutasi"></span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="desa.terima.bukti">
+                    <span translate="aside.nav.components.usaha.bukti"></span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <!--Pengeluaran-->
+    <li ng-class="{active:$state.includes('desa.keluar')}">
+        <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+            <i class="fa fa-upload"></i>
+            <span translate="aside.nav.components.usaha.keluar"></span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="desa.keluar.transaksi">
+                    <span translate="aside.nav.components.usaha.transaksi"></span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="desa.keluar.mutasi">
+                    <span translate="aside.nav.components.usaha.mutasi"></span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="desa.keluar.bukti">
+                    <span translate="aside.nav.components.usaha.bukti"></span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+
+    <li class="line dk"></li>
+    <!--Rek.-APBDesa-->
+    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+        <span translate="aside.nav.components.struktur.struktur" class="ng-scope"></span>
+    </li>
+
+    <!--Apbdesa-->
+    <li ng-class="{active:$state.includes('desa.apbdes')}">
+        <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+            <i class="fa fa-dollar"></i>
+            <span translate="aside.nav.components.struktur.apbdes.apbdes"></span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="desa.apbdes.obyek">
+                    <span translate="aside.nav.components.struktur.apbdes.obyek"></span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <!--Kewenangan-->
+    <li ng-class="{active:$state.includes('desa.kewenangan')}">
+        <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+            <i class="icon icon-login"></i>
+            <span translate="aside.nav.components.struktur.kewenangan.kewenangan"></span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="desa.kewenangan.program">
+                    <span translate="aside.nav.components.struktur.kewenangan.program"></span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="desa.kewenangan.kegiatan">
+                    <span translate="aside.nav.components.struktur.kewenangan.kegiatan"></span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <!--Alokasi Dana-->
+    <li>
+        <a ui-sref="desa.dana">
+            <i class="fa fa-money"></i>
+            <span translate="aside.nav.components.struktur.dana">Dashboard</span>
+        </a>
+    </li>
+
+
+    <li class="line dk"></li>
+    <!--Pengaturan-->
+    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+        <span translate="aside.nav.components.tambahan.pengaturan" class="ng-scope"></span>
+    </li>
+
+    <!--Tambahan-->
+    <li ng-class="{active:$state.includes('desa.pengaturan')}">
+        <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+            <i class="icon icon-settings"></i>
+            <span translate="aside.nav.components.tambahan.pengaturan"></span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="desa.pengaturan.data_umum_desa">
+                    <span translate="aside.nav.components.tambahan.data_umum_desa"></span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="desa.pengaturan.password">
+                    <span translate="aside.nav.components.tambahan.password"></span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="desa.pengaturan.pengguna">
+                    <span translate="aside.nav.components.tambahan.pengguna"></span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="desa.pengaturan.pejabat_desa">
+                    <span translate="aside.nav.components.tambahan.pejabat_desa"></span>
+                </a>
+            </li>
+        </ul>
+    </li>
+</ul>
