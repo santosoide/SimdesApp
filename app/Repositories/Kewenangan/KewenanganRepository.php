@@ -138,10 +138,14 @@ class KewenanganRepository extends AbstractRepository {
         try {
             $kewenangan = $this->findById($id);
 
-            if ($kewenangan){
+            if ($kewenangan) {
+                $result = $this->cekForDelete($kewenangan->_id);
+                if (count($result) > 0) {
+                    return $this->relationDeleteResponse();
+                }
+
                 $kewenangan->delete();
 
-                // Return result success
                 return $this->successDeleteResponse();
             }
 
@@ -151,5 +155,19 @@ class KewenanganRepository extends AbstractRepository {
             \Log::error('KewenanganRepository destroy action something wrong -' . $ex);
             return $this->errorDeleteResponse();
         }
+    }
+
+    /**
+     * check bidang before delete
+     *
+     * @todo check
+     *
+     * @param $kewenangan_id
+     *
+     * @return mixed
+     */
+    public function cekForDelete($kewenangan_id)
+    {
+        return $this->bidang->findIsExists($kewenangan_id);
     }
 }

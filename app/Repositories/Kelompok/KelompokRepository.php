@@ -140,10 +140,13 @@ class KelompokRepository extends AbstractRepository {
         try {
             $kelompok = $this->findById($id);
 
-            if ($kelompok){
-                $kelompok->delete();
+            if ($kelompok) {
+                $result = $this->cekForDelete($kelompok->_id);
+                if (count($result) > 0) {
+                    return $this->relationDeleteResponse();
+                }
 
-                // Return result success
+                $kelompok->delete();
                 return $this->successDeleteResponse();
             }
 
@@ -177,6 +180,28 @@ class KelompokRepository extends AbstractRepository {
     {
         $data = $this->findById($id);
         return $data->kode_rekening;
+    }
+
+    /**
+     * check jenis before delete
+     *
+     * @param $kelompok_id
+     * @return mixed
+     */
+    public function cekForDelete($kelompok_id)
+    {
+        return $this->jenis->findIsExists($kelompok_id);
+    }
+
+    /**
+     * @param $akun_id
+     * @return mixed
+     */
+    public function findIsExists($akun_id)
+    {
+        return $this->model
+            ->where('akun_id', '=', $akun_id)
+            ->get();
     }
 
 }

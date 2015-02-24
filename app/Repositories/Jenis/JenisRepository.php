@@ -143,10 +143,13 @@ class JenisRepository extends AbstractRepository
         try {
             $jenis = $this->findById($id);
 
-            if ($jenis){
-                $jenis->delete();
+            if ($jenis) {
+                $result = $this->cekForDelete($jenis->_id);
+                if (count($result) > 0) {
+                    return $this->relationDeleteResponse();
+                }
 
-                // Return result success
+                $jenis->delete();
                 return $this->successDeleteResponse();
             }
 
@@ -183,4 +186,25 @@ class JenisRepository extends AbstractRepository
         return $data->kode_rekening;
     }
 
+    /**
+     * check jenis before delete
+     *
+     * @param $jenis_id
+     * @return mixed
+     */
+    public function cekForDelete($jenis_id)
+    {
+        return $this->obyek->findIsExists($jenis_id);
+    }
+
+    /**
+     * @param $kelompok_id
+     * @return mixed
+     */
+    public function findIsExists($kelompok_id)
+    {
+        return $this->model
+            ->where('kelompok_id', '=', $kelompok_id)
+            ->get();
+    }
 }

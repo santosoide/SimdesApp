@@ -168,4 +168,16 @@ class BidangRepository extends AbstractRepository
     {
         return $this->program->findIsExists($bidang_id);
     }
+
+    /**
+     * @param $kewenangan_id
+     *
+     * @return mixed
+     */
+    public function findIsExists($kewenangan_id)
+    {
+        return $this->model
+            ->where('kewenangan_id', '=', $kewenangan_id)
+            ->get();
+    }
 }

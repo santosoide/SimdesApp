@@ -139,9 +139,12 @@ class AkunRepository extends AbstractRepository {
             $akun = $this->findById($id);
 
             if ($akun) {
-                $akun->delete();
+                $result = $this->cekForDelete($akun->_id);
+                if (count($result) > 0) {
+                    return $this->relationDeleteResponse();
+                }
 
-                // Return result success
+                $akun->delete();
                 return $this->successDeleteResponse();
             }
 
@@ -151,6 +154,17 @@ class AkunRepository extends AbstractRepository {
             \Log::error('AkunRepository destroy action something wrong -' . $ex);
             return $this->errorDeleteResponse();
         }
+    }
+
+    /**
+     * check kelompok before delete
+     *
+     * @param $akun_id
+     * @return mixed
+     */
+    public function cekForDelete($akun_id)
+    {
+        return $this->kelompok->findIsExists($akun_id);
     }
 
 }

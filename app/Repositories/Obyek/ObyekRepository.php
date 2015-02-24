@@ -2,10 +2,16 @@
 
 use SimdesApp\Models\Obyek;
 use SimdesApp\Repositories\AbstractRepository;
+use SimdesApp\Repositories\Jenis\JenisRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
 class ObyekRepository extends AbstractRepository
 {
+
+    /**
+     * @var ObyekRepository
+     */
+    protected $jenis;
 
     /**
      * @var LaraCacheInterface
@@ -14,11 +20,13 @@ class ObyekRepository extends AbstractRepository
 
     /**
      * @param Obyek $obyek
+     * @param JenisRepository $jenis
      * @param LaraCacheInterface $cache
      */
-    public function __construct(Obyek $obyek, LaraCacheInterface $cache)
+    public function __construct(Obyek $obyek, JenisRepository $jenis, LaraCacheInterface $cache)
     {
         $this->model = $obyek;
+        $this->jenis = $jenis;
         $this->cache = $cache;
     }
 
@@ -135,10 +143,14 @@ class ObyekRepository extends AbstractRepository
         try {
             $obyek = $this->findById($id);
 
-            if ($obyek){
+            if ($obyek) {
+                $result = $this->cekForDelete($obyek->_id);
+                if (count($result) > 0) {
+                    return $this->relationDeleteResponse();
+                }
+
                 $obyek->delete();
 
-                // Return result success
                 return $this->successDeleteResponse();
             }
 
@@ -172,5 +184,28 @@ class ObyekRepository extends AbstractRepository
     {
         $data = $this->findById($id);
         return $data->kode_rekening;
+    }
+
+    /**
+     * @param $jenis_id
+     *
+     * @return mixed
+     */
+    public function findIsExists($jenis_id)
+    {
+        return $this->model
+            ->where('jenis_id', '=', $jenis_id)
+            ->get();
+    }
+
+    /**
+     * check jenis before delete
+     *
+     * @param $kelompok_id
+     * @return mixed
+     */
+    public function cekForDelete($kelompok_id)
+    {
+        return $this->jenis->findIsExists($kelompok_id);
     }
 }
