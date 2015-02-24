@@ -94,7 +94,6 @@ class OrganisasiRepository extends AbstractRepository
             $organisasi->kode_kab = $data['kode_kab'];
             $organisasi->prov = e($data['prov']);
             $organisasi->kode_prov = $data['kode_prov'];
-            $organisasi->user_id = e($data['user_id']);
             $organisasi->is_active = $data['is_active'];
 
             $organisasi->save();
@@ -146,7 +145,6 @@ class OrganisasiRepository extends AbstractRepository
             $organisasi->kode_kab = $data['kode_kab'];
             $organisasi->prov = e($data['prov']);
             $organisasi->kode_prov = $data['kode_prov'];
-            $organisasi->user_id = e($data['user_id']);
             $organisasi->is_active = $data['is_active'];
 
             $organisasi->save();
