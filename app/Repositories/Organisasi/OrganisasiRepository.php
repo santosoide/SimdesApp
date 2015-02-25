@@ -224,4 +224,14 @@ class OrganisasiRepository extends AbstractRepository
             ->where('kec_id', '=', $kec_id)
             ->get();
     }
+
+    /**
+     * Get the list of Organisasi using by Ajax Dropdown
+     *
+     * @return mixed
+     */
+    public function getList()
+    {
+        return $this->model->get(['_id', 'desa']);
+    }
 }

@@ -151,4 +151,8 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'api/v1/auth'], function () {
     Route::post('post-login', 'AuthController@postLogin');
 });
 
+Route::group(['namespace' => 'Api\V1\Ajax', 'prefix' => 'api/v1'], function () {
+    Route::get('get-list-organisasi', 'AjaxOrganisasiController@getList');
+});
+
 Route::get('get-token', 'TokenController@index');
