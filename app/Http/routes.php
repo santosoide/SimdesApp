@@ -163,6 +163,10 @@ Route::group(['namespace' => 'Api\V1\Ajax', 'prefix' => 'api/v1'], function () {
 
     //Sumber Dana
     Route::get('get-list-sumber-dana', 'AjaxSumberDanaController@getList');
+
+    //Transaksi
+    Route::get('get-list-pendapatan', 'AjaxTransaksiController@getListPendapatan');
+    Route::get('get-list-belanja', 'AjaxTransaksiController@getListBelanja');
 });
 
 Route::get('get-token', 'TokenController@index');

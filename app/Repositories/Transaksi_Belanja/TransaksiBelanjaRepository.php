@@ -185,4 +185,26 @@ class TransaksiBelanjaRepository extends AbstractRepository
         }
     }
 
+    /**
+     * @param $organisasi_id
+     *
+     * @return mixed
+     */
+    public function getListBelanjaIsFinish($organisasi_id)
+    {
+        return \DB::table('belanja')
+            ->where(function ($query) use ($organisasi_id) {
+                $query->where('organisasi_id', '=', $organisasi_id)
+                    ->where('is_finish', '=', 1)
+                    ->whereNull('deleted_at');
+            })
+            ->orderBy('kode_rekening', 'asc')
+            ->get(
+                [
+                    '_id',
+                    'kode_rekening',
+                    'belanja',
+                ]);
+    }
+
 }

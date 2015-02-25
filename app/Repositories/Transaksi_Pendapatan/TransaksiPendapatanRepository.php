@@ -170,4 +170,25 @@ class TransaksiPendapatanRepository extends AbstractRepository {
         }
     }
 
+    /**
+     * @param $organisasi_id
+     *
+     * @return mixed
+     */
+    public function getListPendapatanIsFinish($organisasi_id)
+    {
+        return \DB::table('pendapatan')
+            ->where(function ($query) use ($organisasi_id) {
+                $query->where('organisasi_id', '=', $organisasi_id)
+                    ->where('is_finish', '=', 1)
+                    ->whereNull('deleted_at');
+            })
+            ->orderBy('kode_rekening', 'asc')
+            ->get(
+                [
+                    '_id',
+                    'kode_rekening',
+                    'pendapatan',
+                ]);
+    }
 }
