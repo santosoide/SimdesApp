@@ -232,6 +232,25 @@ class OrganisasiRepository extends AbstractRepository
      */
     public function getList()
     {
-        return $this->model->get(['_id', 'desa']);
+        // set key
+        $key = 'organisasi-list';
+
+        // set section
+        $section = 'organisasi';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $organisasi = $this->model
+            ->get(['_id', 'desa'])
+            ->toArray();
+
+        // store to cache
+        $this->cache->put($section, $key, $organisasi, 3600);
+
+        return $organisasi;
     }
 }

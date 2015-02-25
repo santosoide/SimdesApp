@@ -154,4 +154,36 @@ class RpjmdesRepository extends AbstractRepository
     {
         return $this->misi->findIsExists($rpjmdes_id);
     }
+
+    /**
+     * Ajax dropdown visi
+     *
+     * @param $organisasi_id
+     *
+     * @return mixed
+     */
+    public function getListByOrganisasi($organisasi_id)
+    {
+        // set key
+        $key = 'rpjmdes-list' . $organisasi_id;
+
+        // set section
+        $section = 'rpjmdes';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $visi = $this->model
+            ->where('organisasi_id', '=', $organisasi_id)
+            ->get(['_id', 'visi'])
+            ->toArray();
+
+        // store to cache
+        $this->cache->put($section, $key, $visi, 3600);
+
+        return $visi;
+    }
 }

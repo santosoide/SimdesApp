@@ -37,4 +37,36 @@ abstract class Controller extends BaseController
 
         return \Auth::user()->level;
     }
+
+    /**
+     * Get Organisasi_id from the session
+     *
+     * @return mixed
+     */
+    public function getOrganisasiId()
+    {
+        //get organisasi id from session
+        $organisasi_id = \Session::get('organisasi_id');
+        if ($organisasi_id) {
+            return $organisasi_id;
+        } else {
+            return 'anda sudah logout, silahkan login kembali';
+        }
+    }
+
+    /**
+     * Get the User_id from the session
+     *
+     * @return mixed
+     */
+    public function getUserId()
+    {
+        //get user id from session
+        $user_id = \Session::get('user_id');
+        if ($user_id) {
+            return $user_id;
+        } else {
+            return 'anda sudah logout, silahkan login kembali';
+        }
+    }
 }

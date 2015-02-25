@@ -152,7 +152,11 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'api/v1/auth'], function () {
 });
 
 Route::group(['namespace' => 'Api\V1\Ajax', 'prefix' => 'api/v1'], function () {
+    // Organiasasi
     Route::get('get-list-organisasi', 'AjaxOrganisasiController@getList');
+
+    //Rpjmdes
+    Route::get('get-list-visi', 'AjaxRpjmdesController@getListByOrganisasi');
 });
 
 Route::get('get-token', 'TokenController@index');
