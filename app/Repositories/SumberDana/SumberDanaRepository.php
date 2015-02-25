@@ -11,6 +11,10 @@ class SumberDanaRepository extends AbstractRepository {
      */
     protected $cache;
 
+    /**
+     * @param SumberDana $sumberDana
+     * @param LaraCacheInterface $cache
+     */
     public function __construct(SumberDana $sumberDana, LaraCacheInterface $cache)
     {
         $this->model = $sumberDana;
@@ -136,4 +140,32 @@ class SumberDanaRepository extends AbstractRepository {
         }
     }
 
+    /**
+     * Get list sumber dana for ajax
+     *
+     * @return mixed
+     */
+    public function getList()
+    {
+        // set key
+        $key = 'sumber-dana-list';
+
+        // set section
+        $section = 'sumber-dana';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $sumberdana = $this->model
+            ->get(['_id', 'sumber_dana'])
+            ->toArray();
+
+        // store to cache
+        $this->cache->put($section, $key, $sumberdana, 3600);
+
+        return $sumberdana;
+    }
 }

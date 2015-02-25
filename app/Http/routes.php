@@ -160,6 +160,9 @@ Route::group(['namespace' => 'Api\V1\Ajax', 'prefix' => 'api/v1'], function () {
 
     //Standar Satuan Harga
     Route::get('get-list-standar-satuan-harga', 'AjaxStandarSatuanHargaController@getList');
+
+    //Sumber Dana
+    Route::get('get-list-sumber-dana', 'AjaxSumberDanaController@getList');
 });
 
 Route::get('get-token', 'TokenController@index');
