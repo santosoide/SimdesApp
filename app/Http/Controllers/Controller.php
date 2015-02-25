@@ -22,4 +22,19 @@ abstract class Controller extends BaseController
         return Input::get($input);
     }
 
+    /**
+     * Get the Level from the session
+     *
+     * @return mixed
+     */
+    public function getLevel()
+    {
+        try {
+            \Auth::user()->level;
+        } catch (Exception $ex) {
+            return 'anda sudah logout, silahkan login kembali';
+        }
+
+        return \Auth::user()->level;
+    }
 }

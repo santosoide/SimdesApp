@@ -146,4 +146,9 @@ Route::group(['namespace' => 'Api\V1\LokasiProgram', 'prefix' => 'api/v1'], func
     Route::resource('lokasi-program', 'LokasiProgramController');
 });
 
+Route::group(['namespace' => 'Auth', 'prefix' => 'api/v1/auth'], function () {
+    // Post login
+    Route::post('post-login', 'AuthController@postLogin');
+});
+
 Route::get('get-token', 'TokenController@index');
