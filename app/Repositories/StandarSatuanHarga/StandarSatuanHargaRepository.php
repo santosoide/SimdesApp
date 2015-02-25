@@ -143,4 +143,33 @@ class StandarSatuanHargaRepository extends AbstractRepository {
             return $this->errorDeleteResponse();
         }
     }
+
+    /**
+     * Get Akun list using by Ajax Dropdown
+     *
+     * @return mixed
+     */
+    public function getList()
+    {
+        // set key
+        $key = 'standar-satuan-harga-list';
+
+        // set section
+        $section = 'standar-satuan-harga';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $standarsatuanharga = $this->model
+            ->get(['_id', 'barang', 'satuan', 'harga'])
+            ->toArray();
+
+        // store to cache
+        $this->cache->put($section, $key, $standarsatuanharga, 3600);
+
+        return $standarsatuanharga;
+    }
 }

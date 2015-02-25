@@ -157,6 +157,9 @@ Route::group(['namespace' => 'Api\V1\Ajax', 'prefix' => 'api/v1'], function () {
 
     //Rpjmdes
     Route::get('get-list-visi', 'AjaxRpjmdesController@getListByOrganisasi');
+
+    //Standar Satuan Harga
+    Route::get('get-list-standar-satuan-harga', 'AjaxStandarSatuanHargaController@getList');
 });
 
 Route::get('get-token', 'TokenController@index');

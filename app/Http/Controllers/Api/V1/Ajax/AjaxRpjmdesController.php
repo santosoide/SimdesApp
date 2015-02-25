@@ -5,6 +5,7 @@ use SimdesApp\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use SimdesApp\Repositories\RPJMDES\RpjmdesRepository;
+use SimdesApp\Repositories\RPJMDES_Program\RpjmdesProgramRepository;
 
 class AjaxRpjmdesController extends Controller
 {
@@ -14,7 +15,8 @@ class AjaxRpjmdesController extends Controller
      * @param RpjmdesRepository $rpjmdes
      * @return mixed
      */
-    public function getListByOrganisasi(RpjmdesRepository $rpjmdes){
+    public function getListByOrganisasi(RpjmdesRepository $rpjmdes)
+    {
         return $rpjmdes->getListByOrganisasi($this->getOrganisasiId());
     }
 }
