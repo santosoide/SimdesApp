@@ -174,4 +174,33 @@ class KecamatanRepository extends AbstractRepository
     {
         return $this->organisasi->getByKecamatan($kec_id);
     }
+
+    /**
+     * Dropdown ajax
+     *
+     * @return mixed
+     */
+    public function getList()
+    {
+        // set key
+        $key = 'kecamatan-list';
+
+        // set section
+        $section = 'kecamatan';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $kecamatan = $this->model
+            ->get(['_id', 'kode_kec', 'kec'])
+            ->toArray();
+
+        // store to cache
+        $this->cache->put($section, $key, $kecamatan, 3600);
+
+        return $kecamatan;
+    }
 }

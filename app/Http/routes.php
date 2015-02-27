@@ -155,6 +155,8 @@ Route::group(['namespace' => 'Api\V1\Ajax', 'prefix' => 'api/v1'], function () {
     // Akun
     Route::get('get-list-akun', 'AjaxAkunController@getList');
 
+    Route::get('get-list-kecamatan', 'AjaxKecamatanController@getList');
+
     // Organisasi
     Route::get('get-list-organisasi', 'AjaxOrganisasiController@getList');
 

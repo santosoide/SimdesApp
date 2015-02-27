@@ -4,11 +4,9 @@ use SimdesApp\Http\Requests;
 use SimdesApp\Http\Controllers\Controller;
 use SimdesApp\Repositories\Akun\AkunRepository;
 
-class AjaxAkunController extends Controller {
-
+class AjaxAkunController extends Controller
+{
     /**
-     * Get Akun list using by Ajax Dropdown
-     *
      * @param AkunRepository $akun
      * @return mixed
      */
