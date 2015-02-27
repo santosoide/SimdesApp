@@ -67,13 +67,28 @@ class AuthController extends Controller
 //
 //            $level = $this->getLevel();
 //            if ($level >= 200) {
-//                return $this->redirectURLTo('/');
+//                //return $this->redirectURLTo('/');
+//                return [
+//                    'success' => true,
+//                    'message' => [
+//                        'msg' => 'Backoffice',
+//                    ]];
 //            }
-//            return $this->redirectURLTo('front');
+//            //return $this->redirectURLTo('front');
+//            return [
+//                'success' => true,
+//                'message' => [
+//                    'msg' => 'Frontoffice',
+//                ]];
 //        }
 //
 //        // send error login
-//        return $this->redirectBack(['login_errors' => true]);
+//        //return $this->redirectBack(['login_errors' => true]);
+//        return [
+//            'success' => false,
+//            'message' => [
+//                'msg' => 'Error',
+//            ]];
 //    }
 
     public function postLogin()

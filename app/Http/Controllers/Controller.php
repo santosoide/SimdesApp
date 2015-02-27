@@ -23,6 +23,17 @@ abstract class Controller extends BaseController
     }
 
     /**
+     * Get input only for login post
+     *
+     * @param array $input
+     * @return mixed
+     */
+    protected function inputOnly($input = [])
+    {
+        return Input::only($input);
+    }
+
+    /**
      * Get the Level from the session
      *
      * @return mixed
