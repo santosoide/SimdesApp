@@ -167,4 +167,33 @@ class AkunRepository extends AbstractRepository {
         return $this->kelompok->findIsExists($akun_id);
     }
 
+    /**
+     * Get the list of Organisasi using by Ajax Dropdown
+     *
+     * @return mixed
+     */
+    public function getList()
+    {
+        // set key
+        $key = 'akun-list';
+
+        // set section
+        $section = 'akun';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $akun = $this->model
+            ->get(['_id', 'kode_rekening'])
+            ->toArray();
+
+        // store to cache
+        $this->cache->put($section, $key, $akun, 3600);
+
+        return $akun;
+    }
+
 }
