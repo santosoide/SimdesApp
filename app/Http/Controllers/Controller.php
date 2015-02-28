@@ -80,4 +80,36 @@ abstract class Controller extends BaseController
             return 'anda sudah logout, silahkan login kembali';
         }
     }
+
+//    /**
+//     * Get Kewenangan_id from the session
+//     *
+//     * @return mixed
+//     */
+//    public function getProgramId()
+//    {
+//        //get program id from session
+//        $program_id = \Session::get('program_id');
+//        if ($program_id) {
+//            return $program_id;
+//        } else {
+//            return 'anda sudah logout, silahkan login kembali';
+//        }
+//    }
+//
+//    /**
+//     * Get Bidang_id from the session
+//     *
+//     * @return mixed
+//     */
+//    public function getBidangId()
+//    {
+//        //get bidang id from session
+//        $bidang_id = \Session::get('bidang_id');
+//        if ($bidang_id) {
+//            return $bidang_id;
+//        } else {
+//            return 'anda sudah logout, silahkan login kembali';
+//        }
+//    }
 }

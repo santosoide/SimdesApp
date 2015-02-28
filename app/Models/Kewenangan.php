@@ -1,5 +1,6 @@
 <?php namespace SimdesApp\Models;
 
+use Illuminate\Database\Eloquent\Model;
 
 class Kewenangan extends Model {
 

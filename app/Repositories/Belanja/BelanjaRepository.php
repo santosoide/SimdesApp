@@ -246,4 +246,34 @@ class BelanjaRepository extends AbstractRepository
             return $this->kelompok->getKodeRekening($kelompok_id);
         }
     }
+
+    /**
+     * get jumlah dpa
+     *
+     * @return mixed
+     */
+    public function getCountDpa()
+    {
+        // set key
+        $key = 'belanja-count-dpa';
+
+        // set section
+        $section = 'belanja';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $belanja = $this->model
+            ->where('is_dpa', '=', 1)
+            ->where('is_finish', '=', 0)
+            ->count();
+
+        // store to cache
+        $this->cache->put($section, $key, $belanja, 10);
+
+        return $belanja;
+    }
 }

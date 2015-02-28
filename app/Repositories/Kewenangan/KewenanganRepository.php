@@ -170,4 +170,33 @@ class KewenanganRepository extends AbstractRepository {
     {
         return $this->bidang->findIsExists($kewenangan_id);
     }
+
+    /**
+     * Get the list of Organisasi using by Ajax Dropdown
+     *
+     * @return mixed
+     */
+    public function getList()
+    {
+        // set key
+        $key = 'kewenangan-list';
+
+        // set section
+        $section = 'kewenangan';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $kewenangan = $this->model
+            ->get(['_id', 'kode_rekening', 'kewenangan'])
+            ->toArray();
+
+        // store to cache
+        $this->cache->put($section, $key, $kewenangan, 3600);
+
+        return $kewenangan;
+    }
 }

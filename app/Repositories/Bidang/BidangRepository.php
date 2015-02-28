@@ -180,4 +180,65 @@ class BidangRepository extends AbstractRepository
             ->where('kewenangan_id', '=', $kewenangan_id)
             ->get();
     }
+
+    /**
+     * Get the list of Kewenangan using by Ajax Dropdown
+     *
+     * @param $kewenangan_id
+     *
+     * @return mixed
+     */
+    public function getListByKewenangan($kewenangan_id)
+    {
+        // set key
+        $key = 'bidang-get-list-' . $kewenangan_id;
+
+        // set section
+        $section = 'bidang';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $bidang = $this->model
+            ->where('kewenangan_id', $kewenangan_id)
+            ->get(['_id', 'kode_rekening', 'bidang'])
+            ->toArray();
+
+        // store to cache
+        $this->cache->put($section, $key, $bidang, 10);
+
+        return $bidang;
+    }
+
+    /**
+     * Get the list of Bidang using by Ajax Dropdown
+     *
+     * @return mixed
+     */
+    public function getList()
+    {
+        // set key
+        $key = 'bidang-list';
+
+        // set section
+        $section = 'bidang';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $bidang = $this->model
+            ->get(['_id', 'kode_rekening', 'bidang'])
+            ->toArray();
+
+        // store to cache
+        $this->cache->put($section, $key, $bidang, 3600);
+
+        return $bidang;
+    }
 }

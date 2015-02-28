@@ -161,4 +161,36 @@ class DanaDesaRepository extends AbstractRepository {
         }
     }
 
+    /**
+     * Get the list of Dana Desa using by Ajax Dropdown
+     *
+     * @param $organisasi_id
+     *
+     * @return mixed
+     */
+    public function getListByOrganisasi($organisasi_id)
+    {
+        // set key
+        $key = 'dana-desa-tersedia' . $organisasi_id;
+
+        // set section
+        $section = 'dana-desa';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $danaDesa = $this->model
+            ->where('organisasi_id', '=', $organisasi_id)
+            ->paginate(10)
+            ->toArray();
+
+        // store to cache
+        $this->cache->put($section, $key, $danaDesa, 10);
+
+        return $danaDesa;
+    }
+
 }

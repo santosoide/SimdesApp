@@ -242,4 +242,35 @@ class PendapatanRepository extends AbstractRepository
             return $this->kelompok->getKodeRekening($kelompok_id);
         }
     }
+
+    /**
+     * Get count DPA is finish = 0
+     *
+     * @return mixed
+     */
+    public function getCountDpa()
+    {
+        return 100;
+//        // set key
+//        $key = 'pendapatan-count-dpa';
+//
+//        // set section
+//        $section = 'pendapatan';
+//
+//        // has section and key
+//        if ($this->cache->has($section, $key)) {
+//            return $this->cache->get($section, $key);
+//        }
+//
+//        // query to database
+//        $pendapatan = $this->model
+//            ->where('is_dpa', '=', 1)
+//            ->where('is_finish', '=', 0)
+//            ->count();
+//
+//        // store to cache
+//        $this->cache->put($section, $key, $pendapatan, 10);
+//
+//        return $pendapatan;
+    }
 }

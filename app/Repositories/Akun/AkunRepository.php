@@ -168,7 +168,7 @@ class AkunRepository extends AbstractRepository {
     }
 
     /**
-     * Get the list of Organisasi using by Ajax Dropdown
+     * Get the list of Akun using by Ajax Dropdown
      *
      * @return mixed
      */

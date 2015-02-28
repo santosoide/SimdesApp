@@ -155,6 +155,29 @@ Route::group(['namespace' => 'Api\V1\Ajax', 'prefix' => 'api/v1'], function () {
     // Akun
     Route::get('get-list-akun', 'AjaxAkunController@getList');
 
+    // Dana desa
+    Route::get('get-list-dana-desa-tersedia', 'AjaxDanaDesaController@getListDanaDesa');
+
+    // Dropdown ajax kewenangan
+    Route::get('get-list-kewenangan', 'AjaxKewenanganController@getListKewenangan');
+
+    // Dropdown ajax kewenangan bidang
+    Route::get('get-list-bidang/{kewenangan_id}', 'AjaxKewenanganController@getListBidang');
+
+    // Dropdown ajax kewenangan bidang no parameter
+    Route::get('list-bidang', 'AjaxKewenanganController@ListBidang');
+
+    // Dropdown ajax kewenangan kegiatan
+    Route::get('get-list-kegiatan/{program_id}', 'AjaxKewenanganController@getListKegiatan');
+
+    // Dropdown ajax kewenangan program
+    Route::get('get-list-program/{bidang_id}', 'AjaxKewenanganController@getListProgram');
+
+    // Dropdown ajax kewenangan program accessing by desa
+    Route::get('get-list-program-desa/{bidang_id}', 'AjaxKewenanganController@getListProgramDesa');
+
+
+    // Kecamatan
     Route::get('get-list-kecamatan', 'AjaxKecamatanController@getList');
 
     // Organisasi
@@ -172,6 +195,18 @@ Route::group(['namespace' => 'Api\V1\Ajax', 'prefix' => 'api/v1'], function () {
     //Transaksi
     Route::get('get-list-pendapatan', 'AjaxTransaksiController@getListPendapatan');
     Route::get('get-list-belanja', 'AjaxTransaksiController@getListBelanja');
+
 });
+
+Route::group(['namespace' => 'Api\V1\Ajax', 'prefix' => 'api/v1/backoffice/dashboard'], function () {
+    Route::get('get-jumlah-dokumen', 'AjaxDashboardController@getJumlah');
+});
+
+//Route::group(['namespace' => 'Api\V1\Ajax', 'prefix' => 'api/v1/backoffice/dashboard'], function () {
+//    // Get jumlah Program DPA (Pendapatan, Belanja dan Pembiayaan)
+//    Route::get('get-jumlah-dokumen', 'AjaxDashboardController@getJumlah');
+//
+//// Route::get('get-jumlah-dokumen-frontoffice', 'AjaxDashboardController@getJumlahFrontOffice');
+//    });
 
 Route::get('get-token', 'TokenController@index');
