@@ -12,7 +12,7 @@ class CreateTableKecamatan extends Migration {
     public function up()
     {
         Schema::create('kecamatan', function ($table) {
-            $table->engine = 'InnoDB';
+            $table->engine = 'MyISAM';
             $table->increments('_id');
             $table->string('kode_kec');
             $table->string('kec');

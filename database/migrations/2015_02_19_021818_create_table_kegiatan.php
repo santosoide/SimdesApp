@@ -12,7 +12,7 @@ class CreateTableKegiatan extends Migration {
     public function up()
     {
         Schema::create('kegiatan', function ($table) {
-            $table->engine = 'InnoDB';
+            $table->engine = 'MyISAM';
 
             $table->increments('_id');
             $table->string('kode_rekening');

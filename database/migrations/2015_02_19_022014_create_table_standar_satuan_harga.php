@@ -12,7 +12,7 @@ class CreateTableStandarSatuanHarga extends Migration {
     public function up()
     {
         Schema::create('standar_satuan_harga', function ($table) {
-            $table->engine = 'InnoDB';
+            $table->engine = 'MyISAM';
 
             $table->increments('_id');
 

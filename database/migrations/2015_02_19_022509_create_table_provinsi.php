@@ -12,7 +12,7 @@ class CreateTableProvinsi extends Migration {
     public function up()
     {
         Schema::create('provinsi', function ($table) {
-            $table->engine = 'InnoDB';
+            $table->engine = 'MyISAM';
             $table->increments('_id');
             $table->string('kode_prov');
             $table->string('prov');

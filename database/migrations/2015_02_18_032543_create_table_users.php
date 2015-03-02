@@ -14,7 +14,7 @@ class CreateTableUsers extends Migration
     {
         // create table users
         Schema::create('users', function ($table) {
-            $table->engine = 'InnoDB';
+            $table->engine = 'MyISAM';
 
             // generate from model event
             $table->string('_id', 50);

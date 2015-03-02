@@ -1,8 +1,7 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
-
-class CreateTableBidang extends Migration {
+class CreateTableBidang extends Migration
+{
 
     /**
      * Run the migrations.
@@ -12,13 +11,11 @@ class CreateTableBidang extends Migration {
     public function up()
     {
         Schema::create('bidang', function ($table) {
-            $table->engine = 'InnoDB';
-
+            $table->engine = 'MyISAM';
             $table->increments('_id');
             $table->string('kode_rekening')->unique();
             $table->integer('kewenangan_id');
             $table->string('bidang');
-
             // Code behind
             $table->string('user_creator')->nullable()->default(null);
             $table->string('user_updater')->nullable()->default(null);
