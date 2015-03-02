@@ -1,0 +1,27 @@
+<div class="modal-header">
+    <h3 class="modal-title">Konfirmasi Revisi</h3>
+</div>
+<form class="form-horizontal" name="formTolak">
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="col-lg-2 control-label">Program</label>
+
+            <div class="col-lg-10">
+                <p class="form-control-static">{{rpjmdes_program}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-2 control-label">Alasan</label>
+
+            <div class="col-lg-10">
+                <textarea class="form-control" ng-model="param.keterangan_revisi" placeholder="(Opsional)"
+                          style="overflow:scroll;height:200px;max-height:200px">
+                </textarea>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-default" ng-click="cancel()" ng-disabled="process">Batal</button>
+        <button type="submit" class="btn btn-info" ng-click="ok()" ng-disabled="process">Lanjutkan</button>
+    </div>
+</form>

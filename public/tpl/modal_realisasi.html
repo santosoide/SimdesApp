@@ -1,0 +1,167 @@
+<div class="modal-header top-modal">
+    <h3 class="modal-title">Realisasi Anggaran</h3>
+</div>
+
+<div class="modal-body">
+    <!--Alert-->
+    <div role="alert" class="alert alert-{{alertset.class}} alert-dismissable {{showalert}}" type="success">
+        <button ng-click="closeMe()" class="close" type="button">
+            <span aria-hidden="true">×</span>
+            <span class="sr-only">Close</span>
+        </button>
+        <span ng-repeat="(key, value) in alertset.msg"><p class="m-b-xxs">{{value}}</p></span>
+    </div>
+    <!--End of alert-->
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form class="bs-example form-horizontal" name="addForm">
+
+                <!--Jumlah-->
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Pagu {{jenismenu}}</label>
+
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" ng-model="jumlah" placeholder="Jumlah" readonly="true"  pattern="[0-9]+([\.,][0-9]+)*">
+                    </div>
+                </div>
+
+                <!--Januari-->
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Januari</label>
+
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" ng-model="inputData.januari" placeholder="Januari" required>
+                    </div>
+                </div>
+
+                <!--Februari-->
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Februari</label>
+
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" ng-model="inputData.februari" placeholder="Februari" required>
+                    </div>
+                </div>
+
+                <!--Maret-->
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Maret</label>
+
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" ng-model="inputData.maret" placeholder="Maret" required>
+                    </div>
+                </div>
+
+                <!--April-->
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">April</label>
+
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" ng-model="inputData.april" placeholder="April" required>
+                    </div>
+                </div>
+
+                <!--Mei-->
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Mei</label>
+
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" ng-model="inputData.mei" placeholder="Mei" required>
+                    </div>
+                </div>
+
+                <!--Juni-->
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Juni</label>
+
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" ng-model="inputData.juni" placeholder="Juni" required>
+                    </div>
+                </div>
+
+                <!--Juli-->
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Juli</label>
+
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" ng-model="inputData.juli" placeholder="Juli" required>
+                    </div>
+                </div>
+
+                <!--Agustus-->
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Agustus</label>
+
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" ng-model="inputData.agustus" placeholder="Agustus" required>
+                    </div>
+                </div>
+
+                <!--September-->
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">September</label>
+
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" ng-model="inputData.september" placeholder="September" required>
+                    </div>
+                </div>
+
+                <!--Oktober-->
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Oktober</label>
+
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" ng-model="inputData.oktober" placeholder="Oktober" required>
+                    </div>
+                </div>
+
+                <!--November-->
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">November</label>
+
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" ng-model="inputData.november" placeholder="November" required>
+                    </div>
+                </div>
+
+                <!--Desember-->
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Desember</label>
+
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" ng-model="inputData.desember" placeholder="Desember" required>
+                    </div>
+                </div>
+
+                <!--Sisa-->
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Sisa</label>
+
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" ng-model="nsisa" placeholder="Sisa" readonly="true">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-offset-3 col-lg-9">
+                    <span tooltip="Simpan Data">
+                        <button type="submit" class="btn btn-sm btn-info" ng-disabled="addForm.$invalid || btnEksekusi"
+                                ng-click="submitData()">
+                            Simpan
+                        </button>
+                    </span>
+                    <span tooltip="Bagi Rata">
+                        <button type="button" class="btn btn-sm btn-default" ng-click="rata()" ng-disabled="btnEksekusi">
+                            Bagi Rata
+                        </button>
+                    </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" ng-click="cancel()">Tutup</button>
+    <!--<button class="btn btn-info" ng-click="ok()">Simpan</button>-->
+</div>

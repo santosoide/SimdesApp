@@ -1,0 +1,122 @@
+{
+    "aside": {
+        "nav": {
+            "TITLE": "SIPKDes - Lombok Tengah",
+            "DASHBOARD": "Dashboard",
+            "CALENDAR": "Calendar",
+            "EMAIL": "Email",
+            "WIDGETS": "Widgets",
+            "components": {
+                "COMPONENTS": "Components",
+                "perangkat": {
+                    "perangkat": "Perangkat",
+                    "pemerintah_desa": "Pemerintah Desa",
+                    "pengguna_desa": "Pengguna Desa",
+                    "sumber_dana": "Sumber Dana",
+                    "satuan_harga": "Satuan Harga",
+                    "dana_desa": "Alokasi Dana"
+                },
+                "apbdes": {
+                    "apbdes": "Rek.-APBDesa",
+                    "akun": "Akun",
+                    "kelompok": "Kelompok",
+                    "jenis": "Jenis",
+                    "obyek": "Obyek"
+                },
+                "rpjmdes": {
+                    "perencanaan": "Perencanaan Pembangunan",
+                    "rpjmdes": "RPJM Desa",
+                    "visi": "Visi",
+                    "misi": "Misi",
+                    "potensi": "Potensi",
+                    "program": "Program"
+                },
+                "rkpdes": "RKP Desa",
+                "penganggaran": {
+                    "penganggaran": "R-APBDesa",
+                    "pendapatan": "Pendapatan",
+                    "belanja": "Belanja",
+                    "pembiayaan": "Pembiayaan"
+                },
+                "dokumen": {
+                    "dokumen": "Dokumen Rincian",
+                    "rka": "R-APBDesa",
+                    "dpa": "DRK-APBDesa",
+                    "penganggaran": "R-APBDesa",
+                    "pendapatan": "Pendapatan",
+                    "belanja": "Belanja",
+                    "pembiayaan": "Pembiayaan"
+                },
+                "usaha": {
+                    "usaha": "Penatausahaan",
+                    "terima": "Penerimaan",
+                    "keluar": "Pengeluaran",
+                    "transaksi": "Transaksi",
+                    "mutasi": "Mutasi Kas Bank",
+                    "bukti": "Bukti Transaksi"
+                },
+                "struktur": {
+                    "struktur": "Rek.-APBDesa",
+                    "apbdes": {
+                        "apbdes": "APBDesa",
+                        "obyek": "Obyek"
+                    },
+                    "kewenangan": {
+                        "kewenangan": "Kewenangan",
+                        "program": "Sub Bidang",
+                        "kegiatan": "Kegiatan"
+                    },
+                    "dana": "Alokasi Dana"
+                },
+                "tambahan": {
+                    "tambahan": "Tambahan",
+                    "pengaturan": "Pengaturan",
+                    "data_umum_desa": "Data Umum Desa",
+                    "password": "Password",
+                    "pengguna": "Pengguna",
+                    "pejabat_desa": "Pengelola Keuangan"
+                },
+                "kewenangan": {
+                    "kewenangan": "Kewenangan",
+                    "fungsi": "Fungsi",
+                    "bidang": "Bidang",
+                    "program": "Sub Bidang",
+                    "kegiatan": "Kegiatan"
+                },
+                "verifikasi": {
+                    "verifikasi": "Dokumen Proses Verifikasi",
+                    "verifikasi_selesai": "Dokumen Final",
+                    "rpjmdes_program": "RPJM Desa",
+                    "rkpdes_program": "RKP Desa Program",
+                    "rka": {
+                        "rka": "R-APBDesa",
+                        "pendapatan": "Pendapatan",
+                        "belanja": "Belanja",
+                        "pembiayaan": "Pembiayaan"
+                    },
+                    "dpa": {
+                        "dpa": "DRK-APBDesa",
+                        "pendapatan": "Pendapatan",
+                        "belanja": "Belanja",
+                        "pembiayaan": "Pembiayaan"
+                    }
+                },
+                "master": {
+                    "master": "Referensi",
+                    "kecamatan": "Kecamatan",
+                    "desa": "Desa"
+                },
+                "pengaturan": {
+                    "PENGATURAN": "Pengaturan",
+                    "USER": "User Administrator"
+                },
+                "profil": {
+                    "profil": "Pengaturan",
+                    "info": "Ganti Info",
+                    "avatar": "Ganti Avatar",
+                    "password": "Ganti Password"
+                }
+            }
+        }
+    }
+}

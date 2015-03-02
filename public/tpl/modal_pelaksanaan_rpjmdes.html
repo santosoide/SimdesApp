@@ -1,0 +1,85 @@
+<div class="modal-header">
+    <h3 class="modal-title">Pelaksanaan</h3>
+</div>
+<form class="form-horizontal" name="formPelaksanaan">
+    <div class="modal-body">
+        <img ng-show="isAjaxLoading" src="../../img/loader.gif" alt="Loading data" class="img-responsive center-block"/>
+        <!--Alert-->
+        <div role="alert" class="alert alert-{{alertset.class}} alert-dismissable {{showalert}}">
+            <button ng-click="closeMe()" class="close" type="button">
+                <span aria-hidden="true">×</span>
+                <span class="sr-only">Close</span>
+            </button>
+            <span ng-repeat="(key, value) in alertset.msg"><p class="m-b-xxs">{{value}}</p></span>
+        </div>
+        <div class="panel panel-default" ng-show="isAjaxLoaded">
+            <div class="panel-body">
+                <!--Pagu Anggaran-->
+                <div class="form-group">
+                    <label class="col-lg-4 control-label">Pagu Anggaran</label>
+
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" ng-model="detail.pagu_anggaran" readonly>
+                    </div>
+                </div>
+
+                <!--Anggaran-->
+                <div class="form-group">
+                    <label class="col-lg-4 control-label">Anggaran</label>
+
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" ng-model="inputData.tahun_1"
+                                       placeholder="Tahun 1" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" ng-model="inputData.tahun_2"
+                                       placeholder="Tahun 2" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-4 control-label"></label>
+
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" ng-model="inputData.tahun_3"
+                                       placeholder="Tahun 3" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" ng-model="inputData.tahun_4"
+                                       placeholder="Tahun 4" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-4 control-label"></label>
+
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" ng-model="inputData.tahun_5"
+                                       placeholder="Tahun 5" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" ng-model="inputData.tahun_6"
+                                       placeholder="Tahun 6" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="cancel()" ng-disabled="process">Batal</button>
+        <button type="button" class="btn btn-info" ng-click="rata()" ng-disabled="process">Hitung Rata</button>
+        <button type="submit" ng-disabled="formPelaksanaan.$invalid || process" class="btn btn-info" ng-click="submitData()"
+                ng-disabled="process">Simpan
+        </button>
+    </div>
+</form>

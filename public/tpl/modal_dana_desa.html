@@ -1,0 +1,97 @@
+<div class="modal-header">
+    <h3 class="modal-title">Pilih Alokasi Dana</h3>
+</div>
+<div class="modal-body">
+    <!--list data-->
+    <div class="panel panel-default">
+        <div class="row wrapper">
+            <div class="col-sm-8 m-b-xs">
+            <span tooltip="Refresh data">
+                <button class="btn btn-sm btn-default" ng-click="refreshData()" ng-disabled=disUtama.btnRefresh>
+                    <i class="glyphicon glyphicon-refresh"></i>
+                </button>
+            </span>
+            </div>
+            <div class="col-sm-4">
+                <div class="input-group pull-right">
+                    <input type="text" class="input-sm form-control" placeholder="Search" ng-model="main.term"
+                           ng-disabled="disUtama.txtCari">
+                <span class="input-group-btn" tooltip="Cari Data">
+                    <button class="btn btn-sm btn-default" type="button" ng-click="cari()"
+                            ng-disabled="disUtama.btnCari">Cari
+                    </button>
+                </span>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th class="col-md-4">Sumber Dana</th>
+                    <th class="text-right col-md-2">Jumlah (Rp)</th>
+                    <th class="text-right col-md-2">Terpakai (Rp)</th>
+                    <th class="text-right col-md-2">Sisa (Rp)</th>
+                    <th class="col-md-2">Aksi</th>
+                </tr>
+                </thead>
+
+                <tbody ng-repeat="a in dana_desa">
+                <tr>
+                    <td>{{a.sumberdana.sumber_dana}}</td>
+                    <td class="text-right">{{ convertToRupiah(a.jumlah)}}</td>
+                    <td class="text-right">{{ convertToRupiah(a.anggaran_terpakai)}}</td>
+                    <td class="text-right">{{ convertToRupiah(a.sisa_anggaran)}}</td>
+                    <td>
+                        <button ng-if="selected._id != a._id" tooltip="Pilih Alokasi Dana" class="btn btn-sm btn-info" ng-click="pilih(a)"
+                                ng-disabled="disAksi.btnDetail"><i
+                                class="icon icon-check"></i>
+                        </button>
+                        <button ng-if="selected._id == a._id" tooltip="Pilih Alokasi Dana" class="btn btn-sm btn-success" ng-click="pilih(a)"
+                                ng-disabled="disAksi.btnDetail"><i
+                                class="icon icon-check"></i>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <footer class="panel-footer">
+            <div class="row">
+                <div class="col-sm-4 text-center-xs">
+                    <small class="text-muted inline m-t-sm m-b-sm">showing {{from}}-{{to}} of
+                        {{total}} items
+                    </small>
+                </div>
+                <div class="col-sm-8 text-right text-center-xs">
+                    <ul class="pagination m-t-none m-b-none">
+                        <li tooltip="Halaman Pertama">
+                            <button class="btn btn-default" type="button" ng-click='firstPage()'
+                                    ng-disabled='current_page == 1 || disUtama.btnPagging'><i
+                                    class="fa fa-angle-double-left"></i></button>
+                        </li>
+                        <li tooltip="Halaman Sebelumnya">
+                            <button class="btn btn-default" type="button" ng-click='previousPage()'
+                                    ng-disabled='current_page <= 1 || disUtama.btnPagging'><i
+                                    class="fa fa-angle-left"></i></button>
+                        </li>
+                        <li tooltip="Halaman Selanjutnya">
+                            <button class="btn btn-default" type="button" ng-click='nextPage()'
+                                    ng-disabled='main.page >= last_page || disUtama.btnPagging'><i
+                                    class="fa fa-angle-right"></i></button>
+                        </li>
+                        <li tooltip="Halaman Terakhir">
+                            <button class="btn btn-default" type="button" ng-click='lastPage()'
+                                    ng-disabled='main.page >= last_page || disUtama.btnPagging'><i
+                                    class="fa fa-angle-double-right"></i></button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" ng-click="cancel()">Batal</button>
+    <button class="btn btn-info" ng-click="ok()" ng-disabled="btnPilih">Pilih</button>
+</div>

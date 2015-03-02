@@ -1,0 +1,34 @@
+<div class="modal-header">
+    <h3 class="modal-title">Konfirmasi Perubahan</h3>
+</div>
+<form class="form-horizontal" name="formTolak">
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="col-lg-2 control-label">Kegiatan</label>
+
+            <div class="col-lg-10">
+                <p class="form-control-static">{{detil.program.kegiatan.kegiatan}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-2 control-label">Lokasi</label>
+
+            <div class="col-lg-10">
+                <p class="form-control-static">{{detil.lokasi.lokasi}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-2 control-label">Keterangan</label>
+
+            <div class="col-lg-8">
+                <select class="form-control" ng-model="inputData.cbketerangan"
+                        ng-options="o as o.nama for o in objPerubahan" required>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-default" ng-click="cancel()" ng-disabled="process">Batal</button>
+        <button type="submit" class="btn btn-info" ng-click="ok()" ng-disabled="process">Lanjutkan</button>
+    </div>
+</form>
