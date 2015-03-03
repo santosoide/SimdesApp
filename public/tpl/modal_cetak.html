@@ -1,0 +1,47 @@
+<div class="modal-header">
+    <h3 class="modal-title" ng-if="menu == 'rka'">Cetak Dokumen RKA</h3>
+    <h3 class="modal-title" ng-if="menu == 'dpa'">Cetak Dokumen DPA</h3>
+</div>
+<div class="modal-body">
+    <div class="table-responsive">
+        <table class="table">
+            <tbody>
+            <tr>
+                <td class="col-lg-10">Ringkasan Anggaran dan Belanja Desa</td>
+                <td class="col-lg-2"><a tooltip="Cetak Lembar 1" class="btn btn-sm btn-default" target="_blank"
+                                        href="api/v1/pdf/cetak-{{menu}}-formulir-1">
+                    <i class="glyphicon glyphicon-print"></i></a></td>
+            </tr>
+            <tr>
+                <td class="col-lg-10" ng-if="menu == 'rka'">Rincian Anggaran Pendapatan Desa</td>
+                <td class="col-lg-10" ng-if="menu == 'dpa'">Rincian Dokumen Pelaksanaan Anggaran Pendapatan Desa</td>
+                <td class="col-lg-2"><a tooltip="Cetak Lembar 2" class="btn btn-sm btn-default" target="_blank"
+                                        href="api/v1/pdf/cetak-{{menu}}-formulir-2">
+                    <i class="glyphicon glyphicon-print"></i></a></td>
+            </tr>
+            <tr>
+                <td class="col-lg-10" ng-if="menu == 'rka'">Rincian Anggaran Belanja Tidak Langsung Desa</td>
+                <td class="col-lg-10" ng-if="menu == 'dpa'">Rincian Dokumen Pelaksanaan Anggaran Belanja Tidak Langsung Desa</td>
+                <td class="col-lg-2"><a tooltip="Cetak Lembar 3" class="btn btn-sm btn-default" target="_blank"
+                                        href="api/v1/pdf/cetak-{{menu}}-formulir-3">
+                    <i class="glyphicon glyphicon-print"></i></a></td>
+            </tr>
+            <tr>
+                <td class="col-lg-10">Rincian Anggaran Belanja Langsung per Program Kegiatan Desa</td>
+                <td class="col-lg-2"><a tooltip="Cetak Lembar 4" class="btn btn-sm btn-default" target="_blank"
+                                        href="api/v1/pdf/cetak-{{menu}}-formulir-4">
+                    <i class="glyphicon glyphicon-print"></i></a></td>
+            </tr>
+            <tr>
+                <td class="col-lg-10">Rekapitulasi Anggaran Belanja Langsung Berdasarkan Program dan Kegiatan</td>
+                <td class="col-lg-2"><a tooltip="Cetak Lembar 5" class="btn btn-sm btn-default" target="_blank"
+                                        href="api/v1/pdf/cetak-{{menu}}-formulir-5">
+                    <i class="glyphicon glyphicon-print"></i></a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" ng-click="cancel()">Tutup</button>
+</div>

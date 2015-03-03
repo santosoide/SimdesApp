@@ -4,7 +4,6 @@ use Illuminate\Foundation\Bus\DispatchesCommands;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Support\Facades\Input;
-
 abstract class Controller extends BaseController
 {
 
@@ -26,6 +25,7 @@ abstract class Controller extends BaseController
      * Get input only for login post
      *
      * @param array $input
+     *
      * @return mixed
      */
     protected function inputOnly($input = [])
@@ -81,35 +81,27 @@ abstract class Controller extends BaseController
         }
     }
 
-//    /**
-//     * Get Kewenangan_id from the session
-//     *
-//     * @return mixed
-//     */
-//    public function getProgramId()
-//    {
-//        //get program id from session
-//        $program_id = \Session::get('program_id');
-//        if ($program_id) {
-//            return $program_id;
-//        } else {
-//            return 'anda sudah logout, silahkan login kembali';
-//        }
-//    }
-//
-//    /**
-//     * Get Bidang_id from the session
-//     *
-//     * @return mixed
-//     */
-//    public function getBidangId()
-//    {
-//        //get bidang id from session
-//        $bidang_id = \Session::get('bidang_id');
-//        if ($bidang_id) {
-//            return $bidang_id;
-//        } else {
-//            return 'anda sudah logout, silahkan login kembali';
-//        }
-//    }
+    /**
+     * Redirect Back for validation non Ajax post
+     *
+     * @param array $data
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function redirectBack($data = [])
+    {
+        return \Redirect::back()->withInput()->with($data);
+    }
+
+    /**
+     * Redirect to URL
+     *
+     * @param $url
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function redirectURLTo($url)
+    {
+        return \Redirect::to($url);
+    }
 }

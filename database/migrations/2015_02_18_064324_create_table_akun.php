@@ -13,7 +13,7 @@ class CreateTableAkun extends Migration
     public function up()
     {
         Schema::create('akun', function ($table) {
-            $table->engine = 'InnoDB';
+            $table->engine = 'MyISAM';
 
             $table->increments('_id');
 

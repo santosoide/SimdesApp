@@ -12,7 +12,7 @@ class CreateTableProgram extends Migration {
     public function up()
     {
         Schema::create('program', function ($table) {
-            $table->engine = 'InnoDB';
+            $table->engine = 'MyISAM';
 
             $table->increments('_id');
             $table->string('kode_rekening');

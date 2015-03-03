@@ -12,7 +12,7 @@ class CreateTableKelompok extends Migration {
     public function up()
     {
         Schema::create('kelompok', function ($table) {
-            $table->engine = 'InnoDB';
+            $table->engine = 'MyISAM';
 
             $table->increments('_id');
             $table->string('kode_rekening')->unique();

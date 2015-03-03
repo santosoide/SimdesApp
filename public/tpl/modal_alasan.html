@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <h3 class="modal-title">Keterangan</h3>
+</div>
+<div class="modal-body">
+    <img ng-show="isAjaxLoading" src="../../img/loader.gif" alt="Loading data" class="img-responsive center-block"/>
+
+    <div ng-show="isAjaxLoaded">
+        <table class="table table-responsive table-striped">
+            <tbody>
+            <tr>
+                <td class="col-md-3 text-right">Program</td>
+                <td class="col-md-9">{{detil.kegiatan.program.program}}</td>
+            </tr>
+            <tr>
+                <td class="col-md-3 text-right">Status</td>
+                <td class="col-md-9"><span class="label label-{{key.class}}">{{key.key}}</span></td>
+            </tr>
+            <tr>
+                <td class="col-md-3 text-right">Pada</td>
+                <td class="col-md-9">{{detil.finished_at}}</td>
+            </tr>
+            <tr>
+                <td class="col-md-3 text-right">Alasan</td>
+                <td class="col-md-9">{{key.keterangan}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" ng-click="ok()">Tutup</button>
+</div>

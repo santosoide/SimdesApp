@@ -1,0 +1,48 @@
+<!-- first -->
+<ul class="nav">
+    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+        <span translate="aside.nav.HEADER">Navigation</span>
+    </li>
+    <li>
+        <a ui-sref="app.dashboard">
+            <i class="glyphicon glyphicon-stats icon text-primary-dker"></i>
+            <span class="font-bold" translate="aside.nav.DASHBOARD">Dashboard</span>
+        </a>
+    </li>
+    <li class="line dk"></li>
+
+    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+        <span>Master Data</span>
+    </li>
+
+    <li ng-class="{active:$state.includes('app.backoffice')}">
+        <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+            <i class="glyphicon glyphicon-list"></i>
+            <span translate="aside.nav.components.master.MASTER">Organisasi</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li class="nav-sub-header">
+                <a href>
+                    <span translate="aside.nav.components.master.ORGANISASI">Organisasi</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.backoffice.organisasi">
+                    <span translate="aside.nav.components.master.ORGANISASI">Organisasi</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.backoffice.user">
+                    <span translate="aside.nav.components.master.USER">Organisasi</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+
+</ul>
+<!-- / third -->

@@ -12,7 +12,7 @@ class CreateTableKabupaten extends Migration {
     public function up()
     {
         Schema::create('kabupaten', function ($table) {
-            $table->engine = 'InnoDB';
+            $table->engine = 'MyISAM';
             $table->increments('_id');
             $table->integer('prov_id');
             $table->string('kode_kab');

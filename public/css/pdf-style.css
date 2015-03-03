@@ -1,0 +1,236 @@
+/* laporan.css*/
+body {
+    width: 710px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: Arial !important;
+}
+
+.landscape {
+    width: 1024px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: Arial !important;
+}
+
+.portrait {
+    width: 710px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: Arial !important;
+}
+
+h1 {
+    font-size: 18px;
+}
+
+h2 {
+    font-size: 16px;
+}
+
+h3 {
+    font-size: 14px;
+}
+
+h4 {
+    font-size: 12px;
+}
+
+h5 {
+    font-size: 11px;
+}
+
+h6 {
+    font-size: 10px;
+}
+
+table.table-list {
+    table-layout: inherit;
+    font-family: Arial;
+    width: 100%;
+    border-width: 1px;
+    border-color: #000000;
+    border-collapse: collapse;
+}
+
+table.table-list th {
+    border-width: 1px;
+    border-style: solid;
+    font-size: 12px;
+    text-align: center;
+    font-weight: bold;
+}
+
+table.table-list td {
+    font-size: 12px;
+    border-width: 1px;
+    padding: 4px;
+    /*line-height :12px;*/
+    border-style: solid;
+    border-color: #000000;
+}
+
+table.no-border-left-right td {
+
+
+}
+
+table.table-jurnal {
+    border-bottom: 1px solid #000000;
+    border-collapse: collapse;
+}
+
+table.table-jurnal tr {
+    border-top: 1px solid #000000;
+}
+
+table.table-jurnal th {
+    background-color: #c7c6c6;
+    line-height: 25px;
+    font-size: 14px;
+    text-align: left;
+    padding-left: 5px;
+    font-weight: bold;
+    border-bottom: 1px solid #000000;
+    border-top: 1px solid #000000;
+    border-right: 0px;
+}
+
+table.table-jurnal td {
+    font-size: 12px;
+    padding: 8px;
+
+}
+
+table.table-jurnal tr.hidden {
+    font-size: 12px;
+    padding: 8px;
+    border-bottom: 0px;
+    border-top: 0px;
+}
+
+table.table-laporankeluar {
+    width: 30%;
+    float: right;
+    border-width: 0;
+    border-collapse: collapse;
+}
+
+table.table-laporankeluar td {
+    font-size: 12px;
+    border-width: 0;
+    padding: 8px;
+}
+
+.col-md-12 {
+    width: 100%
+}
+
+.col-md-11 {
+    width: 91.66666666666666%
+}
+
+.col-md-10 {
+    width: 83.33333333333334%
+}
+
+.col-md-9 {
+    width: 75%
+}
+
+.col-md-8 {
+    width: 66.66666666666666%
+}
+
+.col-md-7 {
+    width: 58.333333333333336%
+}
+
+.col-md-6 {
+    width: 50%
+}
+
+.col-md-5 {
+    width: 41.66666666666667%
+}
+
+.col-md-4 {
+    width: 33.33333333333333%
+}
+
+.col-md-3 {
+    width: 25%
+}
+
+.col-md-2 {
+    width: 16.666666666666664%
+}
+
+.col-md-1 {
+    width: 8.333333333333332%
+}
+
+.text-center {
+    text-align: center;
+}
+
+span.number {
+    margin-right: 60px;
+    margin-left: 40px;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-ttd-left {
+    padding-top: 20px;
+    text-align: center;
+    float: left;
+    padding-left: 120px;
+    font-family: Arial;
+    font-size: 11pt;
+    position: absolute;
+}
+
+.text-ttd-right {
+    font-size: 10pt;
+    text-align: center;
+    padding-top: 20px;
+    font-family: Arial;
+    font-size: 11pt;
+    position: relative;
+    right: 0;
+    margin-left: 500px;
+}
+
+.text-left {
+    text-align: left;
+}
+
+td.no-border-right{
+    border-right: 1px solid #FFFFFF !important;
+}
+
+td.no-border-bottom{
+    border-bottom-color: #ffffff;
+    border-bottom: 1px solid #FFFFFF !important;
+}
+
+.row:before, .row:after {
+    display: table;
+    content: " "
+}
+
+.row:after {
+    clear: both
+}
+
+.row:before, .row:after {
+    display: table;
+    content: " "
+}
+
+.row:after {
+    clear: both
+}

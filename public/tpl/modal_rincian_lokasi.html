@@ -1,0 +1,70 @@
+<div class="modal-header">
+    <h3 class="modal-title">Rincian</h3>
+</div>
+<div class="modal-body">
+    <img ng-show="isAjaxLoading" src="../../img/loader.gif" alt="Loading data" class="img-responsive center-block"/>
+
+    <div ng-show="isAjaxLoaded">
+        <table class="table table-responsive table-striped">
+            <tbody>
+            <tr>
+                <td class="col-md-3 text-right">Program</td>
+                <td class="col-md-9">{{data.program.kegiatan.program.program}}</td>
+            </tr>
+            <tr>
+                <td class="col-md-3 text-right">Kegiatan</td>
+                <td class="col-md-9">{{data.program.kegiatan.kegiatan}}</td>
+            </tr>
+            <tr>
+                <td class="col-md-3 text-right">Pelaksana</td>
+                <td class="col-md-9">{{data.pejabat.nama}}</td>
+            </tr>
+            <tr>
+                <td class="col-md-3 text-right">Lokasi</td>
+                <td class="col-md-9">{{data.lokasi}}</td>
+            </tr>
+            <tr>
+                <td class="col-md-3 text-right">Sasaran</td>
+                <td class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-5">1. Laki-laki</div>
+                        <div class="col-md-7">{{data.sasaran_manfaat_laki}} Orang</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">2. Perempuan</div>
+                        <div class="col-md-7">{{data.sasaran_manfaat_wanita}} Orang</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">3. Rumah tangga miskin</div>
+                        <div class="col-md-7">{{data.sasaran_manfaat_artm}} {{data.sasaran_satuan}}</div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr ng-if="data.volume1 != ''">
+                <td class="col-md-3 text-right">Volume 1</td>
+                <td class="col-md-9">{{data.volume1}} {{data.satuan1}}</td>
+            </tr>
+            <tr ng-if="data.volume2 != ''">
+                <td class="col-md-3 text-right">Volume 2</td>
+                <td class="col-md-9">{{data.volume2}} {{data.satuan2}}</td>
+            </tr>
+            <tr ng-if="data.volume3 != ''">
+                <td class="col-md-3 text-right">Volume 3</td>
+                <td class="col-md-9">{{data.volume3}} {{data.satuan3}}</td>
+            </tr>
+            <tr>
+                <td class="col-md-3 text-right">Harga satuan</td>
+                <td class="col-md-9">{{data.harga_satuan}}</td>
+            </tr>
+            <tr>
+                <td class="col-md-3 text-right">Anggaran</td>
+                <td class="col-md-9">{{data.anggaran}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" ng-click="ok()">Tutup</button>
+</div>

@@ -1,0 +1,90 @@
+<div class="modal-header">
+    <h3 class="modal-title">Rincian</h3>
+</div>
+<div class="modal-body">
+    <img ng-show="isAjaxLoading" src="../../img/loader.gif" alt="Loading data" class="img-responsive center-block"/>
+
+    <div ng-show="isAjaxLoaded">
+        <table class="table table-responsive table-striped">
+            <tbody>
+            <tr>
+                <td class="col-md-3 text-right">Program</td>
+                <td class="col-md-9">{{detil.kegiatan.program.program}}</td>
+            </tr>
+            <tr>
+                <td class="col-md-3 text-right">Kegiatan</td>
+                <td class="col-md-9">{{detil.kegiatan.kegiatan}}</td>
+            </tr>
+            <tr>
+                <td class="col-md-3 text-right">Sumber Dana</td>
+                <td class="col-md-9">{{detil.sumber_dana.sumber_dana}}</td>
+            </tr>
+            <tr>
+                <td class="col-md-3 text-right">Jenis Pelaksanaan</td>
+                <td class="col-md-9">{{getPelaksanaan(detil.pelaksanaan)}}</td>
+            </tr>
+            <tr>
+                <td class="col-md-3 text-right">Pagu Anggaran</td>
+                <td class="col-md-9">Rp{{convertToRupiah(detil.pagu_anggaran)}}</td>
+            </tr>
+            <tr>
+                <td class="col-md-3 text-right">Pelaksanaan</td>
+                <td class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-3">Tahun 1</div>
+                        <div class="col-md-8">Rp{{convertToRupiah(detil.tahun_1)}}</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-3 text-right"></td>
+                <td class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-3">Tahun 2</div>
+                        <div class="col-md-8">Rp{{convertToRupiah(detil.tahun_2)}}</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-3 text-right"></td>
+                <td class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-3">Tahun 3</div>
+                        <div class="col-md-8">Rp{{convertToRupiah(detil.tahun_3)}}</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-3 text-right"></td>
+                <td class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-3">Tahun 4</div>
+                        <div class="col-md-8">Rp{{convertToRupiah(detil.tahun_4)}}</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-3 text-right"></td>
+                <td class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-3">Tahun 5</div>
+                        <div class="col-md-8">Rp{{convertToRupiah(detil.tahun_5)}}</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-3 text-right"></td>
+                <td class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-3">Tahun 6</div>
+                        <div class="col-md-8">Rp{{convertToRupiah(detil.tahun_6)}}</div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" ng-click="ok()">Tutup</button>
+</div>

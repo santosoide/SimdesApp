@@ -26,8 +26,8 @@ class CreateTableRpjmdes extends Migration {
             $table->timestamps();
             $table->primary('_id');
             $table->index(['_id']);
-            $table->foreign('user_id')->references('_id')->on('users');
-            $table->foreign('organisasi_id')->references('_id')->on('organisasi');
+//            $table->foreign('user_id')->references('_id')->on('users');
+//            $table->foreign('organisasi_id')->references('_id')->on('organisasi');
             $table->softDeletes();
         });
     }
