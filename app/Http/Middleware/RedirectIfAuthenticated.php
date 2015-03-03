@@ -37,10 +37,10 @@ class RedirectIfAuthenticated
         if ($this->auth->check()) {
             $level = \Auth::user()->level;
             if ($level >= 200) {
-                return new RedirectResponse(url('/'));
+                return redirect('/');
             }
 
-            return new RedirectResponse(url('/front'));
+            return redirect('/front');
         }
 
         return $next($request);
