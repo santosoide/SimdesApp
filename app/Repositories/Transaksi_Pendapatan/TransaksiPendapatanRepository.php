@@ -191,4 +191,28 @@ class TransaksiPendapatanRepository extends AbstractRepository {
                     'pendapatan',
                 ]);
     }
+
+    public function getCountByDesa($organisasi_id)
+    {
+        // set key
+        $key = 'transaksi-pendapatan-get-count-by-desa' . $organisasi_id;
+
+        // set section
+        $section = 'transaksi-pendapatan';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $pendapatan = $this->model
+            ->where('organisasi_id', '=', $organisasi_id)
+            ->count();
+
+        // store to cache
+        $this->cache->put($section, $key, $pendapatan, 10);
+
+        return $pendapatan;
+    }
 }

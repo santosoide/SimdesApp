@@ -172,7 +172,7 @@ class AkunRepository extends AbstractRepository {
      *
      * @return mixed
      */
-    public function getList()
+    public function getListAkun()
     {
         // set key
         $key = 'akun-list';
@@ -187,7 +187,7 @@ class AkunRepository extends AbstractRepository {
 
         // query to database
         $akun = $this->model
-            ->get(['_id', 'kode_rekening'])
+            ->get(['_id', 'akun', 'kode_rekening'])
             ->toArray();
 
         // store to cache

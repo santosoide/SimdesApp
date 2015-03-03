@@ -153,7 +153,19 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'api/v1/auth'], function () {
 
 Route::group(['namespace' => 'Api\V1\Ajax', 'prefix' => 'api/v1'], function () {
     // Akun
-    Route::get('get-list-akun', 'AjaxAkunController@getList');
+    Route::get('get-list-akun', 'AjaxAkunController@getListAkun');
+
+    // dropdown ajax kelompok list
+    Route::get('get-list-kelompok/{akun_id}', 'AjaxAkunController@getListKelompok');
+
+    // dropdown ajax jenis list
+    Route::get('get-list-jenis/{kelompok_id}', 'AjaxAkunController@getListJenis');
+
+    // dropdown ajax obyek list accessing by backoffice
+    Route::get('get-list-obyek/{jenis_id}', 'AjaxAkunController@getListObyek');
+
+    // dropdown ajax obyek list accessing by desa
+    Route::get('get-list-obyek-desa/{jenis_id}', 'AjaxAkunController@getListObyekDesa');
 
     // Dana desa
     Route::get('get-list-dana-desa-tersedia', 'AjaxDanaDesaController@getListDanaDesa');
@@ -199,14 +211,10 @@ Route::group(['namespace' => 'Api\V1\Ajax', 'prefix' => 'api/v1'], function () {
 });
 
 Route::group(['namespace' => 'Api\V1\Ajax', 'prefix' => 'api/v1/backoffice/dashboard'], function () {
+    // Get jumlah Program DPA (Pendapatan, Belanja dan Pembiayaan
     Route::get('get-jumlah-dokumen', 'AjaxDashboardController@getJumlah');
-});
 
-//Route::group(['namespace' => 'Api\V1\Ajax', 'prefix' => 'api/v1/backoffice/dashboard'], function () {
-//    // Get jumlah Program DPA (Pendapatan, Belanja dan Pembiayaan)
-//    Route::get('get-jumlah-dokumen', 'AjaxDashboardController@getJumlah');
-//
-//// Route::get('get-jumlah-dokumen-frontoffice', 'AjaxDashboardController@getJumlahFrontOffice');
-//    });
+    Route::get('get-jumlah-dokumen-frontoffice', 'AjaxDashboardController@getJumlahFrontOffice');
+});
 
 Route::get('get-token', 'TokenController@index');

@@ -250,27 +250,121 @@ class PendapatanRepository extends AbstractRepository
      */
     public function getCountDpa()
     {
-        return 100;
-//        // set key
-//        $key = 'pendapatan-count-dpa';
-//
-//        // set section
-//        $section = 'pendapatan';
-//
-//        // has section and key
-//        if ($this->cache->has($section, $key)) {
-//            return $this->cache->get($section, $key);
-//        }
-//
-//        // query to database
-//        $pendapatan = $this->model
-//            ->where('is_dpa', '=', 1)
-//            ->where('is_finish', '=', 0)
-//            ->count();
-//
-//        // store to cache
-//        $this->cache->put($section, $key, $pendapatan, 10);
-//
-//        return $pendapatan;
+        // set key
+        $key = 'pendapatan-count-dpa';
+
+        // set section
+        $section = 'pendapatan';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $pendapatan = $this->model
+            ->where('is_dpa', '=', 1)
+            ->where('is_finish', '=', 0)
+            ->count();
+
+        // store to cache
+        $this->cache->put($section, $key, $pendapatan, 10);
+
+        return $pendapatan;
+    }
+
+    /**
+     * get jumlah desa
+     *
+     * @param $organisasi_id
+     *
+     * @return mixed
+     */
+    public function getCountByDesa($organisasi_id)
+    {
+        // set key
+        $key = 'pendapatan-get-count-by-desa' . $organisasi_id;
+
+        // set section
+        $section = 'pendapatan';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $pendapatan = $this->model
+            ->where('organisasi_id', '=', $organisasi_id)
+            ->count();
+
+        // store to cache
+        $this->cache->put($section, $key, $pendapatan, 10);
+
+        return $pendapatan;
+    }
+
+    /**
+     * get jumlah rka by desa
+     *
+     * @param $organisasi_id
+     *
+     * @return mixed
+     */
+    public function getCountRkaByDesa($organisasi_id)
+    {
+        // set key
+        $key = 'pendapatan-get-count-rka-by-desa' . $organisasi_id;
+
+        // set section
+        $section = 'pendapatan';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $pendapatan = $this->model
+            ->where('organisasi_id', '=', $organisasi_id)
+            ->where('is_rka', '=', 1)
+            ->count();
+
+        // store to cache
+        $this->cache->put($section, $key, $pendapatan, 10);
+
+        return $pendapatan;
+    }
+
+    /**
+     * get jumlah dpa by desa
+     *
+     * @param $organisasi_id
+     *
+     * @return mixed
+     */
+    public function getCountDpaByDesa($organisasi_id)
+    {
+        // set key
+        $key = 'pendapatan-get-count-dpa-by-desa' . $organisasi_id;
+
+        // set section
+        $section = 'pendapatan';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $pendapatan = $this->model
+            ->where('organisasi_id', '=', $organisasi_id)
+            ->where('is_dpa', '=', 1)
+            ->count();
+
+        // store to cache
+        $this->cache->put($section, $key, $pendapatan, 10);
+
+        return $pendapatan;
     }
 }
