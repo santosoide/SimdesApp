@@ -208,4 +208,72 @@ class ObyekRepository extends AbstractRepository
     {
         return $this->jenis->findIsExists($kelompok_id);
     }
+
+    /**
+     * Get Obyek list using by Ajax Dropdown Accessing by Global User
+     *
+     * @param $jenis_id
+     *
+     * @return mixed
+     */
+    public function getListObyek($jenis_id)
+    {
+        // set key
+        $key = 'obyek-list' . $jenis_id;
+
+        // set section
+        $section = 'obyek';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $obyek = $this->model
+            ->where('jenis_id', '=', $jenis_id)
+            ->get(['_id', 'kode_rekening', 'jenis_id', 'obyek'])
+            ->toArray();
+
+        // store to cache
+        $this->cache->put($section, $key, $obyek, 3600);
+
+        return $obyek;
+    }
+
+    /**
+     * Get Obyek list using by Ajax Dropdown Accessing by Global Desa
+     *
+     * @param $jenis_id
+     * @param $organisasi_id
+     *
+     * @return mixed
+     */
+    public function getListObyekDesa($jenis_id, $organisasi_id)
+    {
+        // set key
+        $key = 'obyek-list-desa' . $jenis_id . $organisasi_id;
+
+        // set section
+        $section = 'obyek';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $obyek = $this->model
+            ->where('jenis_id', '=', $jenis_id)
+            ->where('organisasi_id', $organisasi_id)
+            ->orWhere('organisasi_id', null)
+            ->get(['_id', 'kode_rekening', 'jenis_id', 'obyek'])
+            ->toArray();
+
+        // store to cache
+        $this->cache->put($section, $key, $obyek, 3600);
+
+        return $obyek;
+    }
+
 }

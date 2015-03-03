@@ -207,4 +207,35 @@ class JenisRepository extends AbstractRepository
             ->where('kelompok_id', '=', $kelompok_id)
             ->get();
     }
+
+    /**
+     * Get Jenis list using by Ajax Dropdown
+     *
+     * @param $kelompok_id
+     * @return mixed
+     */
+    public function getListJenis($kelompok_id)
+    {
+        // set key
+        $key = 'jenis-list'. $kelompok_id;
+
+        // set section
+        $section = 'jenis';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $jenis = $this->model
+            ->where('kelompok_id', '=', $kelompok_id)
+            ->get(['_id', 'jenis', 'kode_rekening', 'status'])
+            ->toArray();
+
+        // store to cache
+        $this->cache->put($section, $key, $jenis, 3600);
+
+        return $jenis;
+    }
 }

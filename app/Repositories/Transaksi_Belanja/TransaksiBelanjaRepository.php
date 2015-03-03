@@ -207,4 +207,32 @@ class TransaksiBelanjaRepository extends AbstractRepository
                 ]);
     }
 
+    /**
+     * @param $organisasi_id
+     * @return mixed
+     */
+    public function getCountByDesa($organisasi_id)
+    {
+        // set key
+        $key = 'transaksi-belanja-get-count-by-desa ' . $organisasi_id;
+
+        // set section
+        $section = 'transaksi-belanja';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $belanja = $this->model
+            ->where('organisasi_id', '=', $organisasi_id)
+            ->count();
+
+        // store to cache
+        $this->cache->put($section, $key, $belanja, 10);
+
+        return $belanja;
+    }
+
 }

@@ -276,4 +276,99 @@ class BelanjaRepository extends AbstractRepository
 
         return $belanja;
     }
+
+    /**
+     * get jumlah desa
+     *
+     * @param $organisasi_id
+     *
+     * @return mixed
+     */
+    public function getCountByDesa($organisasi_id)
+    {
+        // set key
+        $key = 'belanja-get-count-by-desa' . $organisasi_id;
+
+        // set section
+        $section = 'belanja';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $belanja = $this->model
+            ->where('organisasi_id', '=', $organisasi_id)
+            ->count();
+
+        // store to cache
+        $this->cache->put($section, $key, $belanja, 10);
+
+        return $belanja;
+    }
+
+    /**
+     * get jumlah rka by desa
+     *
+     * @param $organisasi_id
+     *
+     * @return mixed
+     */
+    public function getCountRkaByDesa($organisasi_id)
+    {
+        // set key
+        $key = 'belanja-get-count-rka-by-desa' . $organisasi_id;
+
+        // set section
+        $section = 'belanja';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $belanja = $this->model
+            ->where('organisasi_id', '=', $organisasi_id)
+            ->where('is_rka', '=', 1)
+            ->count();
+
+        // store to cache
+        $this->cache->put($section, $key, $belanja, 10);
+
+        return $belanja;
+    }
+
+    /**
+     * get jumlah dpa by desa
+     *
+     * @param $organisasi_id
+     *
+     * @return mixed
+     */
+    public function getCountDpaByDesa($organisasi_id)
+    {
+        // set key
+        $key = 'belanja-get-count-dpa-by-desa' . $organisasi_id;
+
+        // set section
+        $section = 'belanja';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $belanja = $this->model
+            ->where('organisasi_id', '=', $organisasi_id)
+            ->where('is_dpa', '=', 1)
+            ->count();
+
+        // store to cache
+        $this->cache->put($section, $key, $belanja, 10);
+
+        return $belanja;
+    }
 }

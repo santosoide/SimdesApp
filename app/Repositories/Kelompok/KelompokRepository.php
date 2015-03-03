@@ -204,4 +204,35 @@ class KelompokRepository extends AbstractRepository {
             ->get();
     }
 
+    /**
+     * Get Kelompok list using by Ajax Dropdown
+     *
+     * @param $akun_id
+     * @return mixed
+     */
+    public function getListKelompok($akun_id)
+    {
+        // set key
+        $key = 'kelompok-list'.$akun_id;
+
+        // set section
+        $section = 'kelompok';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $kelompok = $this->model
+            ->where('akun_id', '=', $akun_id)
+            ->get(['_id', 'kode_rekening', 'kelompok'])
+            ->toArray();
+
+        // store to cache
+        $this->cache->put($section, $key, $kelompok, 3600);
+
+        return $kelompok;
+    }
+
 }

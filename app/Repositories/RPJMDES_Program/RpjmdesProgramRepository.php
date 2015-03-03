@@ -141,4 +141,36 @@ class RpjmdesProgramRepository extends AbstractRepository {
             return $this->errorDeleteResponse();
         }
     }
+
+    /**
+     * get jumlah desa
+     *
+     * @param $organisasi_id
+     *
+     * @return mixed
+     */
+    public function getCountByDesa($organisasi_id)
+    {
+        // set key
+        $key = 'rpjmdes-program-count-by-desa' . $organisasi_id;
+
+        // set section
+        $section = 'rpjmdes-program';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $rpjmdesProgram = $this->model
+            ->where('organisasi_id', '=', $organisasi_id)
+            ->count();
+
+        // store to cache
+        $this->cache->put($section, $key, $rpjmdesProgram, 10);
+
+        return $rpjmdesProgram;
+    }
+
 }

@@ -149,4 +149,35 @@ class RkpdesRepository extends AbstractRepository {
             return $this->errorDeleteResponse();
         }
     }
+
+    /**
+     * get jumlah desa
+     *
+     * @param $organisasi_id
+     *
+     * @return mixed
+     */
+    public function getCountByDesa($organisasi_id)
+    {
+        // set key
+        $key = 'rkpdes-get-count-by-desa' . $organisasi_id;
+
+        // set section
+        $section = 'rkpdes';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $rkpdes = $this->model
+            ->where('organisasi_id', '=', $organisasi_id)
+            ->count();
+
+        // store to cache
+        $this->cache->put($section, $key, $rkpdes, 10);
+
+        return $rkpdes;
+    }
 }
