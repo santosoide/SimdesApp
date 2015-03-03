@@ -68,4 +68,27 @@ class PejabatDesaController extends Controller {
     {
         return $program->destroy($id);
     }
+
+    /**
+     * Get the list pejabat desa by organisasi_id using on detil organisasi
+     *
+     * @param PejabatDesaRepository $pejabatDesa
+     * @param $organisasi_id
+     * @return mixed
+     */
+    public function listPejabatDesa(PejabatDesaRepository $pejabatDesa, $organisasi_id)
+    {
+        return $pejabatDesa->listByOrganisasiId($organisasi_id);
+    }
+
+    /**
+     * Get the list pejabat desa by organisasi_id using on rpjmdes_program
+     *
+     * @param PejabatDesaRepository $pejabatDesa
+     * @return mixed
+     */
+    public function getListPejabatDesa(PejabatDesaRepository $pejabatDesa)
+    {
+        return $pejabatDesa->getListByOrganisasiId($this->getOrganisasiId());
+    }
 }

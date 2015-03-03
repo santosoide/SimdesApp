@@ -86,39 +86,25 @@ Route::group(['namespace' => 'Api\V1\RPJMDES_Misi', 'prefix' => 'api/v1'], funct
     Route::resource('rpjmdes-misi', 'RpjmdesMisiController');
 });
 
+#Handle Namespace Standar Satuan Harga
 Route::group(['namespace' => 'Api\V1\StandarSatuanHarga', 'prefix' => 'api/v1'], function () {
     // Standar Satuan Harga resource
     Route::resource('standar-satuan-harga', 'StandarSatuanHargaController');
+
+    // Get list satuan harga using on modal accessing by frontoffice
+    Route::get('get-modal-standar-satuan-harga', 'StandarSatuanHargaController@getListSatuanHarga');
 });
 
-Route::group(['namespace' => 'Api\V1\SumberDana', 'prefix' => 'api/v1'], function () {
-    // Sumber Dana resource
-    Route::resource('sumber-dana', 'SumberDanaController');
-});
-
-Route::group(['namespace' => 'Api\V1\RKPDES', 'prefix' => 'api/v1'], function () {
-    // Rkpdes resource
-    Route::resource('rkpdes', 'RkpdesController');
-});
-
+#Handle Namespace Pejabat Desa
 Route::group(['namespace' => 'Api\V1\PejabatDesa', 'prefix' => 'api/v1'], function () {
     // Rkpdes resource
     Route::resource('pejabat-desa', 'PejabatDesaController');
-});
 
-Route::group(['namespace' => 'Api\V1\Pendapatan', 'prefix' => 'api/v1'], function () {
-    // Pendapatan resource
-    Route::resource('pendapatan', 'PendapatanController');
-});
+    // using by detil organisasi
+    Route::get('list-pejabat-desa/{organisasi_id}', 'PejabatDesaController@listPejabatDesa');
 
-Route::group(['namespace' => 'Api\V1\Pembiayaan', 'prefix' => 'api/v1'], function () {
-    // Pembiayaan resource
-    Route::resource('pembiayaan', 'PembiayaanController');
-});
-
-Route::group(['namespace' => 'Api\V1\Belanja', 'prefix' => 'api/v1'], function () {
-    // Belanja resource
-    Route::resource('belanja', 'BelanjaController');
+    // using rpjmdes_program and rkpdes_program
+    Route::get('get-list-pejabat-desa', 'PejabatDesaController@getListPejabatDesa');
 });
 
 Route::group(['namespace' => 'Api\V1\Transaksi_Pendapatan', 'prefix' => 'api/v1'], function () {
@@ -126,14 +112,75 @@ Route::group(['namespace' => 'Api\V1\Transaksi_Pendapatan', 'prefix' => 'api/v1'
     Route::resource('transaksi-pendapatan', 'TransaksiPendapatanController');
 });
 
-Route::group(['namespace' => 'Api\V1\Transaksi_Belanja', 'prefix' => 'api/v1'], function () {
-    // Transaksi Belanja resource
-    Route::resource('transaksi-belanja', 'TransaksiBelanjaController');
+Route::group(['namespace' => 'Api\V1\SumberDana', 'prefix' => 'api/v1'], function () {
+    // Sumber Dana resource
+    Route::resource('sumber-dana', 'SumberDanaController');
 });
 
+#Handle Namespace Transaksi Pendapatan
+Route::group(['namespace' => 'Api\V1\Pendapatan', 'prefix' => 'api/v1'], function () {
+    // Pendapatan resource
+    Route::resource('pendapatan', 'PendapatanController');
+
+    //get by organisasi id
+    Route::get('get-transaksi-pendapatan-desa/{organisasi_id}', 'PendapatanController@getTransaksiPendapatanByDesa');
+
+    Route::get('get-chart-by-organisasi-id', 'PendapatanController@getChartByOrganisasiId');
+    Route::get('get-chart', 'PendapatanController@getChart');
+});
+
+#Handle Namespace Transaksi Belanja
+Route::group(['namespace' => 'Api\V1\Belanja', 'prefix' => 'api/v1'], function () {
+    // Belanja resource
+    Route::resource('belanja', 'BelanjaController');
+
+    //get by organisasi id
+    Route::get('get-transaksi-belanja-desa/{organisasi_id}', 'BelanjaController@getTransaksiBelanjaByDesa');
+
+    Route::get('get-chart-by-organisasi-id', 'BelanjaController@getChartByOrganisasiId');
+    Route::get('get-chart', 'BelanjaController@getChart');
+});
+
+#Handle Namespace RKPDES
+Route::group(['namespace' => 'Api\V1\RKPDES', 'prefix' => 'api/v1'], function () {
+    // Rkpdes resource
+    Route::resource('rkpdes', 'RkpdesController');
+    Route::get('get-rkpdes/{program_rpjmdes_id}', 'RkpdesController@getByProgram');
+
+    //Dropdown ajax RKPDes
+    Route::get('get-list-rkpdes', 'RkpdesController@getListRkpdes');
+
+    // get by organisasi id
+    Route::get('get-rkpdes-desa/{organisasi_id}', 'RkpdesController@getRkpdesByDesa');
+
+    Route::get('find-by-rpjmdes-program/{rpjmdes_program_id}', 'RkpdesController@findByRpjmdesProgram');
+});
+
+#Handle Namespace dana desa
 Route::group(['namespace' => 'Api\V1\DanaDesa', 'prefix' => 'api/v1'], function () {
     // Dana Desa resource
     Route::resource('dana-desa', 'DanaDesaController');
+
+    // resource dana desa input by frontoffice
+    Route::resource('dana-desa-by-desa', 'DanaDesaByDesaController');
+
+    // get list dana desa accessing by Backoffice
+    Route::get('list-dana-desa/{organisasi_id}', 'DanaDesaController@getDanaDesa');
+
+    // get list dana desa accessing by frontoffice
+    Route::get('list-dana-desa-tersedia', 'DanaDesaController@getDanaDesaTersedia');
+
+});
+
+
+Route::group(['namespace' => 'Api\V1\Pembiayaan', 'prefix' => 'api/v1'], function () {
+    // Pembiayaan resource
+    Route::resource('pembiayaan', 'PembiayaanController');
+});
+
+Route::group(['namespace' => 'Api\V1\Transaksi_Belanja', 'prefix' => 'api/v1'], function () {
+    // Transaksi Belanja resource
+    Route::resource('transaksi-belanja', 'TransaksiBelanjaController');
 });
 
 Route::group(['namespace' => 'Api\V1\Kecamatan', 'prefix' => 'api/v1'], function () {

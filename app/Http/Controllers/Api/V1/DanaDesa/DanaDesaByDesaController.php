@@ -6,8 +6,7 @@ use SimdesApp\Http\Requests\DanaDesa\DanaDesaCreateForm;
 use SimdesApp\Http\Requests\DanaDesa\DanaDesaEditForm;
 use SimdesApp\Repositories\DanaDesa\DanaDesaRepository;
 
-class DanaDesaController extends Controller
-{
+class DanaDesaByDesaController extends Controller {
 
     /**
      * Find dana desa
@@ -17,7 +16,7 @@ class DanaDesaController extends Controller
      */
     public function index(DanaDesaRepository $danaDesa)
     {
-        return $danaDesa->find($this->input('page'), $limit = 10, $this->input('term'));
+        return $danaDesa->find($this->input('page'), $limit = 10, $this->input('term'), $this->input('organisasi_id'));
     }
 
     /**
@@ -67,29 +66,5 @@ class DanaDesaController extends Controller
     public function destroy($id, DanaDesaRepository $danaDesa)
     {
         return $danaDesa->destroy($id);
-    }
-
-    /**
-     * Get list dana desa using in detil organisasi
-     *
-     * @param DanaDesaRepository $danaDesa
-     * @param $organisasi_id
-     *
-     * @return mixed
-     */
-    public function getDanaDesa(DanaDesaRepository $danaDesa, $organisasi_id)
-    {
-        return $danaDesa->listByOrganisasiId($organisasi_id);
-    }
-
-    /**
-     * Get list dana desa using by frontoffice
-     *
-     * @param DanaDesaRepository $danaDesa
-     * @return mixed
-     */
-    public function getDanaDesaTersedia(DanaDesaRepository $danaDesa)
-    {
-        return $danaDesa->listByOrganisasiId($this->getOrganisasiId());
     }
 }

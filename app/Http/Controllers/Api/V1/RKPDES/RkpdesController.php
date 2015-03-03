@@ -68,4 +68,61 @@ class RkpdesController extends Controller {
     {
         return $program->destroy($id);
     }
+
+    /**
+     * Get the RKPDes by $program_rpjmdes_id
+     *
+     * @param RkpdesRepository $rkpdes
+     * @param $program_rpjmdes_id
+     * @return mixed
+     */
+    public function getByProgram(RkpdesRepository $rkpdes, $program_rpjmdes_id)
+    {
+        $term = $this->input('term');
+        $page = $this->input('page');
+
+        return $rkpdes->getByProgram($this->getOrganisasiId(), $program_rpjmdes_id, $page, $limit = 10, $term);
+    }
+
+    /**
+     * Get List RKPDes by organisasi_id using on Pendapatan
+     *
+     * @param RkpdesRepository $rkpdes
+     * @return mixed
+     */
+    public function getListRkpdes(RkpdesRepository $rkpdes)
+    {
+
+        return $rkpdes->getListRkpdes($this->getOrganisasiId());
+    }
+
+    /**
+     * get rkpdes by organisasi id
+     *
+     * @param RkpdesRepository $rkpdes
+     * @param $organisasi_id
+     * @return mixed
+     */
+    public function getRkpdesByDesa(RkpdesRepository $rkpdes, $organisasi_id)
+    {
+        $term = $this->input('term');
+        $page = $this->input('page');
+
+        return $rkpdes->getRkpdesByDesa($page, $limit = 10, $term, $organisasi_id);
+    }
+
+    /**
+     * find by rpjmdes program
+     *
+     * @param RkpdesRepository $rkpdes
+     * @param $rpjmdes_program_id
+     * @return mixed
+     */
+    public function findByRpjmdesProgram(RkpdesRepository $rkpdes, $rpjmdes_program_id)
+    {
+        $term = $this->input('term');
+        $page = $this->input('page');
+
+        return $rkpdes->findByRpjmdesProgram($page, $limit = 10, $term, $rpjmdes_program_id);
+    }
 }

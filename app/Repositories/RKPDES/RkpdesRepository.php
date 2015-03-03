@@ -180,4 +180,151 @@ class RkpdesRepository extends AbstractRepository {
 
         return $rkpdes;
     }
+
+    /**
+     * Get the RKPDes by program_rpjmdes_id
+     *
+     * @param      $organisasi_id
+     * @param      $program_rpjmdes_id
+     * @param int  $page
+     * @param int  $limit
+     * @param null $term
+     *
+     * @return mixed
+     */
+    public function getByProgram($organisasi_id, $program_rpjmdes_id, $page = 1, $limit = 10, $term = null)
+    {
+        // set key
+        $key = 'rkpdes-get-program' . $program_rpjmdes_id . $page . $limit . $term;
+
+        // set section
+        $section = 'rkpdes';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $rkpdes = $this->model
+            ->orderBy('created_at', 'asc')
+            ->where('organisasi_id', '=', $organisasi_id)
+            ->where('program_rpjmdes_id', '=', $program_rpjmdes_id)
+            ->FullTextSearch($term)
+            ->paginate($limit)
+            ->toArray();
+
+        // store to cache
+        $this->cache->put($section, $key, $rkpdes, 10);
+
+        return $rkpdes;
+    }
+
+    /**
+     * Get List RKPDes by organisasi_id using on Belanja
+     *      *
+     *
+     * @param $organisasi_id
+     *
+     * @return mixed
+     */
+    public function getListRkpdes($organisasi_id)
+    {
+        // set key
+        $key = 'rkpdes-get-list' . $organisasi_id;
+
+        // set section
+        $section = 'rkpdes';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $rkpdes = $this->model
+            ->where('organisasi_id', '=', $organisasi_id)
+            ->get(['_id', 'kegiatan_id'])
+            ->toArray();
+
+        // store to cache
+        $this->cache->put($section, $key, $rkpdes, 3600);
+
+        return $rkpdes;
+    }
+
+    /**
+     * get rkpdes by organisasi id
+     *
+     * @param int  $page
+     * @param int  $limit
+     * @param null $term
+     * @param      $organisasi_id
+     *
+     * @return mixed
+     */
+    public function getRkpdesByDesa($page = 1, $limit = 10, $term = null, $organisasi_id)
+    {
+        // set key
+        $key = 'rkpdes-get-desa' . $page . $limit . $term . $organisasi_id;
+
+        // set section
+        $section = 'rkpdes';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $rkpdes = $this->model
+            ->orderBy('created_at', 'asc')
+            ->where('organisasi_id', '=', $organisasi_id)
+            ->FullTextSearch($term)
+            ->paginate($limit)
+            ->toArray();
+
+        // store to cache
+        $this->cache->put($section, $key, $rkpdes, 10);
+
+        return $rkpdes;
+    }
+
+    /**
+     * find by rpjmdes program
+     *
+     * @param int  $page
+     * @param int  $limit
+     * @param null $term
+     * @param      $rpjmdes_program_id
+     *
+     * @return mixed
+     */
+    public function findByRpjmdesProgram($page = 1, $limit = 10, $term = null, $rpjmdes_program_id)
+    {
+        // set key
+        $key = 'rkpdes-find-by-rpjmdes-program' . $page . $limit . $term . $rpjmdes_program_id;
+
+        // set section
+        $section = 'rkpdes';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $rkpdes = $this->model
+            ->orderBy('created_at', 'asc')
+            ->where('program_rpjmdes_id', '=', $rpjmdes_program_id)
+            ->where('is_finish', '=', 2)
+            ->FullTextSearch($term)
+            ->paginate($limit)
+            ->toArray();
+
+        // store to cache
+        $this->cache->put($section, $key, $rkpdes, 10);
+
+        return $rkpdes;
+    }
 }

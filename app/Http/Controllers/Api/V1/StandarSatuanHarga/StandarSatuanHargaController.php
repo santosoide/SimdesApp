@@ -68,4 +68,20 @@ class StandarSatuanHargaController extends Controller {
     {
         return $program->destroy($id);
     }
+
+    /**
+     * Get list Satuan Harga Accessing by frontoffice
+     *
+     * @param StandarSatuanHargaRepository
+     * @param $standarSatuanHarga
+     * @return mixed
+     */
+    public function getListSatuanHarga(StandarSatuanHargaRepository $standarSatuanHarga)
+    {
+        $term = $this->input('term');
+        $page = $this->input('page');
+        //$per_page = $this->input('per_page');
+
+        return $standarSatuanHarga->getListSatuanHarga($page, $per_page = 5, $term);
+    }
 }

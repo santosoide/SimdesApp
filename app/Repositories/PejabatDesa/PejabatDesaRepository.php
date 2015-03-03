@@ -23,6 +23,7 @@ class PejabatDesaRepository extends AbstractRepository {
      * @param int $page
      * @param int $limit
      * @param null $term
+     * @param $organisasi_id
      * @return mixed
      */
     public function find($page = 1, $limit = 10, $term = null, $organisasi_id)
@@ -143,5 +144,68 @@ class PejabatDesaRepository extends AbstractRepository {
             return $this->errorDeleteResponse();
         }
     }
+
+    /**
+     * Get the list pejabat desa by organisasi_id using on detil organisasi
+     *
+     * @param $organisasi_id
+     * @return mixed
+     */
+    public function listByOrganisasiId($organisasi_id)
+    {
+        // set key
+        $key = 'pejabat-desa-list-organisasi' . $organisasi_id;
+
+        // set section
+        $section = 'pejabat-desa';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $pejabatdesa = $this->model
+            ->where('organisasi_id', '=', $organisasi_id)
+            ->paginate(10)
+            ->toArray();
+
+        // store to cache
+        $this->cache->put($section, $key, $pejabatdesa, 3600);
+
+        return $pejabatdesa;
+    }
+
+    /**
+     * Get the list pejabat desa by organisasi_id using on rpjmdes_program
+     *
+     * @param $organisasi_id
+     * @return mixed
+     */
+    public function getListByOrganisasiId($organisasi_id)
+    {
+        // set key
+        $key = 'pejabat-desa-get-organisasi' . $organisasi_id;
+
+        // set section
+        $section = 'pejabat-desa';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $pejabatdesa = $this->model
+            ->where('organisasi_id', '=', $organisasi_id)
+            ->get(['_id', 'nama', 'jabatan'])
+            ->toArray();
+
+        // store to cache
+        $this->cache->put($section, $key, $pejabatdesa, 3600);
+
+        return $pejabatdesa;
+    }
+
 
 }

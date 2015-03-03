@@ -172,4 +172,38 @@ class StandarSatuanHargaRepository extends AbstractRepository {
 
         return $standarsatuanharga;
     }
+    /**
+     * Get list Satuan Harga Accessing by frontoffice
+     *
+     * @param int  $page
+     * @param int  $per_page
+     * @param null $term
+     *
+     * @return mixed
+     */
+    public function getListSatuanHarga($page = 1, $per_page = 10, $term = null)
+    {
+        // set key
+        $key = 'standar-satuan-harga-list-satuan-harga' . $page . $per_page . $term;
+
+        // set section
+        $section = 'standar-satuan-harga';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $standarSatuanHarga = $this->model
+            ->orderBy('kode_rekening', 'asc')
+            ->where('barang', 'like', '%' . $term . '%')
+            ->paginate($per_page)
+            ->toArray();
+
+        // store to cache
+        $this->cache->put($section, $key, $standarSatuanHarga, 10);
+
+        return $standarSatuanHarga;
+    }
 }

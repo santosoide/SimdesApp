@@ -4,14 +4,15 @@ use SimdesApp\Models\DanaDesa;
 use SimdesApp\Repositories\AbstractRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
-class DanaDesaRepository extends AbstractRepository {
+class DanaDesaByDesaRepository extends AbstractRepository {
 
     /**
      * @var LaraCacheInterface
      */
     protected $cache;
 
-	/**
+    /**
+     * @param DanaDesa $danaDesa
      * @param LaraCacheInterface $cache
      */
     public function __construct(DanaDesa $danaDesa, LaraCacheInterface $cache)
@@ -26,12 +27,13 @@ class DanaDesaRepository extends AbstractRepository {
      * @param int $page
      * @param int $limit
      * @param null $term
+     * @param $organisasi_id
      * @return mixed
      */
-    public function find($page = 1, $limit = 10, $term = null)
+    public function find($page = 1, $limit = 10, $term = null, $organisasi_id)
     {
         // set key
-        $key = 'dana-desa-find-' . $page . $limit . $term;
+        $key = 'dana-desa-by-desa-find' . $page . $limit . $term . $organisasi_id;
 
         // set section
         $section = 'dana-desa';
@@ -43,6 +45,9 @@ class DanaDesaRepository extends AbstractRepository {
 
         // query to database
         $danaDesa = $this->model
+            ->orderBy('created_at', 'desc')
+            ->where('organisasi_id', '=', $organisasi_id)
+            ->orWhere('organisasi_id', null)
             ->paginate($limit)
             ->toArray();
 
@@ -161,67 +166,5 @@ class DanaDesaRepository extends AbstractRepository {
         }
     }
 
-    /**
-     * Get the list of Dana Desa using by Ajax Dropdown
-     *
-     * @param $organisasi_id
-     *
-     * @return mixed
-     */
-    public function getListByOrganisasi($organisasi_id)
-    {
-        // set key
-        $key = 'dana-desa-tersedia' . $organisasi_id;
 
-        // set section
-        $section = 'dana-desa';
-
-        // has section and key
-        if ($this->cache->has($section, $key)) {
-            return $this->cache->get($section, $key);
-        }
-
-        // query to database
-        $danaDesa = $this->model
-            ->where('organisasi_id', '=', $organisasi_id)
-            ->paginate(10)
-            ->toArray();
-
-        // store to cache
-        $this->cache->put($section, $key, $danaDesa, 10);
-
-        return $danaDesa;
-    }
-
-    /**
-     * Get list dana desa using in detil organisasi
-     *
-     * @param $organisasi_id
-     *
-     * @return mixed
-     */
-    public function listByOrganisasiId($organisasi_id)
-    {
-        // set key
-        $key = 'dana-desa-list' . $organisasi_id;
-
-        // set section
-        $section = 'dana-desa';
-
-        // has section and key
-        if ($this->cache->has($section, $key)) {
-            return $this->cache->get($section, $key);
-        }
-
-        // query to database
-        $danaDesa = $this->model
-            ->where('organisasi_id', '=', $organisasi_id)
-            ->paginate(10)
-            ->toArray();
-
-        // store to cache
-        $this->cache->put($section, $key, $danaDesa, 10);
-
-        return $danaDesa;
-    }
 }
