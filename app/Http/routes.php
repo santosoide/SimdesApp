@@ -199,14 +199,10 @@ Route::group(['namespace' => 'Api\V1\Ajax', 'prefix' => 'api/v1'], function () {
 });
 
 Route::group(['namespace' => 'Api\V1\Ajax', 'prefix' => 'api/v1/backoffice/dashboard'], function () {
+    // Get jumlah Program DPA (Pendapatan, Belanja dan Pembiayaan
     Route::get('get-jumlah-dokumen', 'AjaxDashboardController@getJumlah');
-});
 
-//Route::group(['namespace' => 'Api\V1\Ajax', 'prefix' => 'api/v1/backoffice/dashboard'], function () {
-//    // Get jumlah Program DPA (Pendapatan, Belanja dan Pembiayaan)
-//    Route::get('get-jumlah-dokumen', 'AjaxDashboardController@getJumlah');
-//
-//// Route::get('get-jumlah-dokumen-frontoffice', 'AjaxDashboardController@getJumlahFrontOffice');
-//    });
+    Route::get('get-jumlah-dokumen-frontoffice', 'AjaxDashboardController@getJumlahFrontOffice');
+});
 
 Route::get('get-token', 'TokenController@index');
