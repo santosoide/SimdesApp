@@ -252,4 +252,5 @@ Route::group(['namespace' => 'Api\V1\Ajax', 'prefix' => 'api/v1/backoffice/dashb
     Route::get('get-jumlah-dokumen-frontoffice', 'AjaxDashboardController@getJumlahFrontOffice');
 });
 
+
 Route::get('get-token', 'TokenController@index');
