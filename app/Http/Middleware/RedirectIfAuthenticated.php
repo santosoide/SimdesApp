@@ -2,7 +2,7 @@
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Http\RedirectResponse;
+
 class RedirectIfAuthenticated
 {
 
@@ -35,11 +35,14 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next)
     {
         if ($this->auth->check()) {
+            // get the level of user
             $level = \Auth::user()->level;
+            // if >= 200 = backoffice
             if ($level >= 200) {
                 return redirect('/');
             }
 
+            // if < 200 = frontoffice
             return redirect('/front');
         }
 
