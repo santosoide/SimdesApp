@@ -10,16 +10,24 @@ use SimdesApp\Repositories\RKPDES\RkpdesRepository;
 use SimdesApp\Repositories\RPJMDES_Program\RpjmdesProgramRepository;
 use SimdesApp\Repositories\Transaksi_Belanja\TransaksiBelanjaRepository;
 use SimdesApp\Repositories\Transaksi_Pendapatan\TransaksiPendapatanRepository;
-
-class AjaxDashboardController extends Controller {
+class AjaxDashboardController extends Controller
+{
     /**
-     * @param ProgramRepository $program
+     * @param ProgramRepository    $program
      * @param PendapatanRepository $pendapatan
-     * @param BelanjaRepository $belanja
+     * @param BelanjaRepository    $belanja
      * @param PembiayaanRepository $pembiayaan
+     *
      * @return array
      */
-    public function getJumlah(ProgramRepository $program, PendapatanRepository $pendapatan , BelanjaRepository $belanja, PembiayaanRepository $pembiayaan){
+    public function getJumlah
+    (
+        ProgramRepository $program,
+        PendapatanRepository $pendapatan,
+        BelanjaRepository $belanja,
+        PembiayaanRepository $pembiayaan
+    )
+    {
         $count_program = $program->getJumlahProgram();
         $count_dpa_pendapatan = $pendapatan->getCountDpa();
         $count_dpa_belanja = $belanja->getCountDpa();
@@ -36,16 +44,25 @@ class AjaxDashboardController extends Controller {
     /**
      * Get Jumlah Frontoffice
      *
-     * @param RpjmdesProgramRepository $program
-     * @param PendapatanRepository $pendapatan
-     * @param BelanjaRepository $belanja
-     * @param PembiayaanRepository $pembiayaan
-     * @param TransaksiBelanjaRepository $transaksi_belanja
+     * @param RpjmdesProgramRepository      $program
+     * @param PendapatanRepository          $pendapatan
+     * @param BelanjaRepository             $belanja
+     * @param PembiayaanRepository          $pembiayaan
+     * @param TransaksiBelanjaRepository    $transaksi_belanja
      * @param TransaksiPendapatanRepository $transaksi_pendapatan
-     * @param RkpdesRepository $rkpdes
+     * @param RkpdesRepository              $rkpdes
+     *
      * @return array
      */
-    public function getJumlahFrontOffice(RpjmdesProgramRepository $program, PendapatanRepository $pendapatan, BelanjaRepository $belanja, PembiayaanRepository $pembiayaan, TransaksiBelanjaRepository $transaksi_belanja, TransaksiPendapatanRepository $transaksi_pendapatan, RkpdesRepository $rkpdes)
+    public function getJumlahFrontOffice
+    (
+        RpjmdesProgramRepository $program,
+        PendapatanRepository $pendapatan,
+        BelanjaRepository $belanja,
+        PembiayaanRepository $pembiayaan,
+        TransaksiBelanjaRepository $transaksi_belanja,
+        TransaksiPendapatanRepository $transaksi_pendapatan,
+        RkpdesRepository $rkpdes)
     {
         $count_program = $program->getCountByDesa($this->getOrganisasiId());
         $count_pendapatan = $pendapatan->getCountByDesa($this->getOrganisasiId());
