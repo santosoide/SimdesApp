@@ -33,7 +33,12 @@ class AppServiceProvider extends ServiceProvider
         // bind Akun
         $this->app->bind(
             'SimdesApp\Repositories\Contracts\AkunInterface',
-            'SimdesApp\Repositories\AkunInterface'
+            'SimdesApp\Repositories\Akun\AkunRepository'
+        );
+        // bind Kelompok
+        $this->app->bind(
+            'SimdesApp\Repositories\Contracts\KelompokInterface',
+            'SimdesApp\Repositories\Kelompok\KelompokRepository'
         );
     }
 }
