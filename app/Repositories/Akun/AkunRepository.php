@@ -3,10 +3,12 @@ namespace SimdesApp\Repositories\Akun;
 
 use SimdesApp\Models\Akun;
 use SimdesApp\Repositories\AbstractRepository;
+use SimdesApp\Repositories\Contracts\AkunInterface;
 use SimdesApp\Repositories\Kelompok\KelompokRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
-class AkunRepository extends AbstractRepository {
+class AkunRepository extends AbstractRepository implements AkunInterface
+{
 
     /**
      * @var KelompokRepository
@@ -21,7 +23,7 @@ class AkunRepository extends AbstractRepository {
     /**
      * create instance interface
      *
-     * @param Akun $akun
+     * @param Akun               $akun
      * @param KelompokRepository $kelompok
      * @param LaraCacheInterface $cache
      */
@@ -35,31 +37,28 @@ class AkunRepository extends AbstractRepository {
     /**
      * Instant find or search with paging, limit, and query
      *
-     * @param int $page
-     * @param int $limit
+     * @param int  $page
+     * @param int  $limit
      * @param null $term
+     *
      * @return mixed
      */
     public function find($page = 1, $limit = 10, $term = null)
     {
         // Create Key for cache
         $key = 'akun-find-' . $page . $limit . $term;
-
         // Create Section
         $section = 'akun';
-
         // If cache is exist get data from cache
         if ($this->cache->has($section, $key)) {
             return $this->cache->get($section, $key);
         }
-
         // Search data
         $organisasi = $this->model
             ->orderBy('kode_rekening', 'asc')
             ->where('akun', 'like', '%' . $term . '%')
             ->paginate($limit)
             ->toArray();
-
         // Create cache
         $this->cache->put($section, $key, $organisasi, 10);
 
@@ -70,23 +69,22 @@ class AkunRepository extends AbstractRepository {
      * Create data
      *
      * @param array $data
+     *
      * @return mixed
      */
     public function create(array $data)
     {
         try {
             $akun = $this->getNew();
-
             $akun->kode_rekening = e($data['kode_rekening']);
             $akun->akun = e($data['akun']);
-
             $akun->save();
 
             //Return result success
             return $this->successInsertResponse();
-
         } catch (\Exception $ex) {
             \Log::error('AkunRepository create action something wrong -' . $ex);
+
             return $this->errorInsertResponse();
         }
     }
@@ -95,6 +93,7 @@ class AkunRepository extends AbstractRepository {
      * Show the Record
      *
      * @param $id
+     *
      * @return \Illuminate\Support\Collection|null|static
      */
     public function findById($id)
@@ -105,8 +104,9 @@ class AkunRepository extends AbstractRepository {
     /**
      * Update the record
      *
-     * @param $id
+     * @param       $id
      * @param array $data
+     *
      * @return mixed
      */
     public function update($id, array $data)
@@ -115,14 +115,14 @@ class AkunRepository extends AbstractRepository {
             $akun = $this->findById($id);
             $akun->kode_rekening = e($data['kode_rekening']);
             $akun->akun = e($data['akun']);
-
             $akun->save();
 
             /*Return result success*/
-            return $this->successUpdateResponse();
 
+            return $this->successUpdateResponse();
         } catch (\Exception $ex) {
             \Log::error('AkunRepository update action something wrong -' . $ex);
+
             return $this->errorUpdateResponse();
         }
     }
@@ -131,27 +131,27 @@ class AkunRepository extends AbstractRepository {
      * Destroy the record
      *
      * @param $id
+     *
      * @return mixed
      */
     public function destroy($id)
     {
         try {
             $akun = $this->findById($id);
-
             if ($akun) {
                 $result = $this->cekForDelete($akun->_id);
                 if (count($result) > 0) {
                     return $this->relationDeleteResponse();
                 }
-
                 $akun->delete();
+
                 return $this->successDeleteResponse();
             }
 
             return $this->emptyDeleteResponse();
-
         } catch (\Exception $ex) {
             \Log::error('AkunRepository destroy action something wrong -' . $ex);
+
             return $this->errorDeleteResponse();
         }
     }
@@ -160,6 +160,7 @@ class AkunRepository extends AbstractRepository {
      * check kelompok before delete
      *
      * @param $akun_id
+     *
      * @return mixed
      */
     public function cekForDelete($akun_id)
@@ -176,24 +177,19 @@ class AkunRepository extends AbstractRepository {
     {
         // set key
         $key = 'akun-list';
-
         // set section
         $section = 'akun';
-
         // has section and key
         if ($this->cache->has($section, $key)) {
             return $this->cache->get($section, $key);
         }
-
         // query to database
         $akun = $this->model
             ->get(['_id', 'akun', 'kode_rekening'])
             ->toArray();
-
         // store to cache
         $this->cache->put($section, $key, $akun, 3600);
 
         return $akun;
     }
-
 }
