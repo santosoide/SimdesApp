@@ -5,18 +5,24 @@ use SimdesApp\Repositories\AbstractRepository;
 use SimdesApp\Repositories\Organisasi\OrganisasiRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
-class TransaksiPendapatanRepository extends AbstractRepository {
+class TransaksiPendapatanRepository extends AbstractRepository
+{
 
     /**
      * @var LaraCacheInterface
      */
     protected $cache;
 
+    /**
+     * @var OrganisasiRepository
+     */
     protected $organisasi;
+
 
     /**
      * @param TransaksiPendapatan $transaksiPendapatan
      * @param LaraCacheInterface $cache
+     * @param OrganisasiRepository $organisasi
      */
     public function __construct(TransaksiPendapatan $transaksiPendapatan, LaraCacheInterface $cache, OrganisasiRepository $organisasi)
     {
@@ -192,6 +198,10 @@ class TransaksiPendapatanRepository extends AbstractRepository {
                 ]);
     }
 
+    /**
+     * @param $organisasi_id
+     * @return mixed
+     */
     public function getCountByDesa($organisasi_id)
     {
         // set key

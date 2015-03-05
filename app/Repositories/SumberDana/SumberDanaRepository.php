@@ -4,7 +4,8 @@ use SimdesApp\Models\SumberDana;
 use SimdesApp\Repositories\AbstractRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
-class SumberDanaRepository extends AbstractRepository {
+class SumberDanaRepository extends AbstractRepository
+{
 
     /**
      * @var LaraCacheInterface
@@ -125,7 +126,7 @@ class SumberDanaRepository extends AbstractRepository {
         try {
             $sumberDana = $this->findById($id);
 
-            if ($sumberDana){
+            if ($sumberDana) {
                 $sumberDana->delete();
 
                 // Return result success

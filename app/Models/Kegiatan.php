@@ -5,21 +5,36 @@ use Illuminate\Database\Eloquent\Model;
 class Kegiatan extends Model
 {
 
+    /**
+     * @var string
+     */
     protected $table = 'kegiatan';
 
+    /**
+     * @var array
+     */
     protected $with = [
         'program',
         'organisasi'
     ];
 
+    /**
+     * @var array
+     */
     protected $fillable = [
         'kode_rekening',
         'program_id',
         'kegiatan',
         'organisasi_id'
     ];
+    /**
+     * @var string
+     */
     protected $primaryKey = '_id';
 
+    /**
+     * @var array
+     */
     protected $hidden = [
         'created_at',
         'updated_at',
@@ -54,11 +69,17 @@ class Kegiatan extends Model
         });
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function program()
     {
         return $this->belongsTo('SimdesApp\Models\Program', 'program_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function organisasi()
     {
         return $this->belongsTo('SimdesApp\Models\Organisasi', 'organisasi_id');

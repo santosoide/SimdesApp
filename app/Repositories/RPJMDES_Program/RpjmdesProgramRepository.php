@@ -4,14 +4,19 @@ use SimdesApp\Models\RpjmdesProgram;
 use SimdesApp\Repositories\AbstractRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
-class RpjmdesProgramRepository extends AbstractRepository {
+class RpjmdesProgramRepository extends AbstractRepository
+{
 
     /**
      * @var LaraCacheInterface
      */
     protected $cache;
 
-    public function __construct(RpjmdesProgram $rpjmdesProgram ,LaraCacheInterface $cache)
+    /**
+     * @param RpjmdesProgram $rpjmdesProgram
+     * @param LaraCacheInterface $cache
+     */
+    public function __construct(RpjmdesProgram $rpjmdesProgram, LaraCacheInterface $cache)
     {
         $this->model = $rpjmdesProgram;
         $this->cache = $cache;
@@ -23,6 +28,7 @@ class RpjmdesProgramRepository extends AbstractRepository {
      * @param int $page
      * @param int $limit
      * @param null $term
+     * @param $organisasi_id
      * @return mixed
      */
     public function find($page = 1, $limit = 10, $term = null, $organisasi_id)
@@ -127,7 +133,7 @@ class RpjmdesProgramRepository extends AbstractRepository {
         try {
             $rpjmdesProgram = $this->findById($id);
 
-            if ($rpjmdesProgram){
+            if ($rpjmdesProgram) {
                 $rpjmdesProgram->delete();
 
                 // Return result success

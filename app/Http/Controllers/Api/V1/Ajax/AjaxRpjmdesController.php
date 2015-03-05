@@ -2,10 +2,7 @@
 
 use SimdesApp\Http\Requests;
 use SimdesApp\Http\Controllers\Controller;
-
-use Illuminate\Http\Request;
 use SimdesApp\Repositories\RPJMDES\RpjmdesRepository;
-use SimdesApp\Repositories\RPJMDES_Program\RpjmdesProgramRepository;
 
 class AjaxRpjmdesController extends Controller
 {

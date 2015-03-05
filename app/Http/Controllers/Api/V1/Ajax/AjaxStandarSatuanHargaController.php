@@ -2,8 +2,6 @@
 
 use SimdesApp\Http\Requests;
 use SimdesApp\Http\Controllers\Controller;
-
-use Illuminate\Http\Request;
 use SimdesApp\Repositories\StandarSatuanHarga\StandarSatuanHargaRepository;
 
 class AjaxStandarSatuanHargaController extends Controller

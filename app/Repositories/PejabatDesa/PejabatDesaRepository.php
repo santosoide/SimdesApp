@@ -4,13 +4,18 @@ use SimdesApp\Models\PejabatDesa;
 use SimdesApp\Repositories\AbstractRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
-class PejabatDesaRepository extends AbstractRepository {
+class PejabatDesaRepository extends AbstractRepository
+{
 
     /**
      * @var LaraCacheInterface
      */
     protected $cache;
 
+    /**
+     * @param PejabatDesa $pejabatDesa
+     * @param LaraCacheInterface $cache
+     */
     public function __construct(PejabatDesa $pejabatDesa, LaraCacheInterface $cache)
     {
         $this->model = $pejabatDesa;
@@ -29,7 +34,7 @@ class PejabatDesaRepository extends AbstractRepository {
     public function find($page = 1, $limit = 10, $term = null, $organisasi_id)
     {
         // Create Key for cache
-        $key = 'pejabat-desa-find-' . $page . $limit . $term. $organisasi_id;
+        $key = 'pejabat-desa-find-' . $page . $limit . $term . $organisasi_id;
 
         // Create Section
         $section = 'pejabat-desa';
@@ -130,7 +135,7 @@ class PejabatDesaRepository extends AbstractRepository {
         try {
             $pejabatDesa = $this->findById($id);
 
-            if ($pejabatDesa){
+            if ($pejabatDesa) {
                 $pejabatDesa->delete();
 
                 // Return result success
@@ -206,6 +211,4 @@ class PejabatDesaRepository extends AbstractRepository {
 
         return $pejabatdesa;
     }
-
-
 }

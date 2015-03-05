@@ -5,18 +5,33 @@ use Illuminate\Database\Eloquent\Model;
 
 class Kelompok extends Model {
 
+    /**
+     * @var string
+     */
     protected $table = 'kelompok';
 
+    /**
+     * @var string
+     */
     protected $with = 'akun';
 
+    /**
+     * @var array
+     */
     protected $fillable = [
         'kode_rekening',
         'akun_id',
         'kelompok'
     ];
 
+    /**
+     * @var string
+     */
     protected $primaryKey = '_id';
 
+    /**
+     * @var array
+     */
     protected $hidden = [
         'created_at',
         'updated_at',
@@ -51,6 +66,9 @@ class Kelompok extends Model {
         });
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function akun()
     {
         return $this->belongsTo('SimdesApp\Models\Akun', 'akun_id');

@@ -88,11 +88,17 @@ class PejabatDesa extends UuidModel
         });
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function organisasi()
     {
         return $this->belongsTo('SimdesApp\Models\Organisasi', 'organisasi_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function users()
     {
         return $this->belongsTo('SimdesApp\Models\User', 'user_id');

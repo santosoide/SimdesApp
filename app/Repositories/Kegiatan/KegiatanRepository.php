@@ -4,13 +4,18 @@ use SimdesApp\Models\Kegiatan;
 use SimdesApp\Repositories\AbstractRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
-class KegiatanRepository extends AbstractRepository {
+class KegiatanRepository extends AbstractRepository
+{
 
     /**
      * @var LaraCacheInterface
      */
     protected $cache;
 
+    /**
+     * @param Kegiatan $kegiatan
+     * @param LaraCacheInterface $cache
+     */
     public function __construct(Kegiatan $kegiatan, LaraCacheInterface $cache)
     {
         $this->model = $kegiatan;
@@ -130,7 +135,7 @@ class KegiatanRepository extends AbstractRepository {
         try {
             $kegiatan = $this->findById($id);
 
-            if ($kegiatan){
+            if ($kegiatan) {
                 $kegiatan->delete();
 
                 // Return result success

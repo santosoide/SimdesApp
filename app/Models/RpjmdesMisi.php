@@ -20,6 +20,9 @@ class RpjmdesMisi extends UuidModel {
      */
     protected $dates = ['deleted_at'];
 
+    /**
+     * @var array
+     */
     protected $with = [
         'rpjmdes'
     ];
@@ -81,6 +84,9 @@ class RpjmdesMisi extends UuidModel {
         });
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function rpjmdes()
     {
         return $this->belongsTo('SimdesApp\Models\Rpjmdes', 'rpjmdes_id');

@@ -22,23 +22,20 @@ class KelompokRepository extends AbstractRepository implements KelompokInterface
     /**
      * instance interface
      *
-     * @param Kelompok           $kelompok
-     * @param JenisRepository    $jenis
+     * @param Kelompok $kelompok
      * @param LaraCacheInterface $cache
      */
-    public function __construct(Kelompok $kelompok, /*JenisRepository $jenis,*/
-                                LaraCacheInterface $cache)
+    public function __construct(Kelompok $kelompok, LaraCacheInterface $cache)
     {
         $this->model = $kelompok;
-//        $this->jenis = $jenis;
         $this->cache = $cache;
     }
 
     /**
      * Instant find or search with paging, limit, and query
      *
-     * @param int  $page
-     * @param int  $limit
+     * @param int $page
+     * @param int $limit
      * @param null $term
      *
      * @return mixed

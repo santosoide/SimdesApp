@@ -92,21 +92,33 @@ class Rkpdes extends UuidModel
         });
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function users()
     {
         return $this->belongsTo('SimdesApp\Models\User', 'user_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function organisasi()
     {
         return $this->belongsTo('SimdesApp\Models\Organisasi', 'organisasi_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function rpjmdes_program()
     {
         return $this->belongsTo('SimdesApp\Models\RpjmdesProgram', 'rpjmdes_program_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function dana_desa()
     {
         return $this->belongsTo('SimdesApp\Models\DanaDesa', 'dana_desa_id');

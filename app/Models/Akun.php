@@ -4,15 +4,27 @@ use Illuminate\Database\Eloquent\Model;
 
 class Akun extends Model {
 
+    /**
+     * @var string
+     */
     protected $table = 'akun';
 
+    /**
+     * @var array
+     */
     protected $fillable = [
         'kode_rekening',
         'akun'
     ];
 
+    /**
+     * @var string
+     */
     protected $primaryKey = '_id';
 
+    /**
+     * @var array
+     */
     protected $hidden = [
         'created_at',
         'updated_at',
@@ -20,6 +32,9 @@ class Akun extends Model {
         'user_updater'
     ];
 
+    /**
+     *
+     */
     protected static function boot()
     {
         parent::boot();

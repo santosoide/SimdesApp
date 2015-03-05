@@ -5,13 +5,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Obyek extends Model {
 
+    /**
+     * @var string
+     */
     protected $table = 'obyek';
 
+    /**
+     * @var array
+     */
     protected $with = [
         'jenis',
         'organisasi'
     ];
 
+    /**
+     * @var array
+     */
     protected $fillable = [
         'kode_rekening',
         'jenis_id',
@@ -19,8 +28,14 @@ class Obyek extends Model {
         'organisasi_id'
     ];
 
+    /**
+     * @var string
+     */
     protected $primaryKey = '_id';
 
+    /**
+     * @var array
+     */
     protected $hidden = [
         'created_at',
         'updated_at',
@@ -55,11 +70,17 @@ class Obyek extends Model {
         });
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function jenis()
     {
         return $this->belongsTo('SimdesApp\Models\Jenis', 'jenis_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function organisasi()
     {
         return $this->belongsTo('SimdesApp\Models\Organisasi', 'organisasi_id');

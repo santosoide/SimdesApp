@@ -13,8 +13,16 @@ class RpjmdesRepository extends AbstractRepository
      */
     protected $cache;
 
+    /**
+     * @var RpjmdesMisiRepository
+     */
     protected $misi;
 
+    /**
+     * @param Rpjmdes $rpjmdes
+     * @param LaraCacheInterface $cache
+     * @param RpjmdesMisiRepository $misi
+     */
     public function __construct(Rpjmdes $rpjmdes, LaraCacheInterface $cache, RpjmdesMisiRepository $misi)
     {
         $this->model = $rpjmdes;

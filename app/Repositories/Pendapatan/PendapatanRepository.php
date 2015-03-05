@@ -15,14 +15,28 @@ class PendapatanRepository extends AbstractRepository
      */
     protected $cache;
 
+    /**
+     * @var ObyekRepository
+     */
     protected $obyek;
 
+    /**
+     * @var KelompokRepository
+     */
     protected $kelompok;
 
+    /**
+     * @var JenisRepository
+     */
     protected $jenis;
 
+
     /**
+     * @param Pendapatan $pendapatan
      * @param LaraCacheInterface $cache
+     * @param ObyekRepository $obyek
+     * @param JenisRepository $jenis
+     * @param KelompokRepository $kelompok
      */
     public function __construct(Pendapatan $pendapatan, LaraCacheInterface $cache, ObyekRepository $obyek, JenisRepository $jenis, KelompokRepository $kelompok)
     {
@@ -191,7 +205,7 @@ class PendapatanRepository extends AbstractRepository
         try {
             $pendapatan = $this->findById($id);
 
-            if ($pendapatan){
+            if ($pendapatan) {
                 $pendapatan->delete();
 
                 // Return result success
@@ -372,8 +386,8 @@ class PendapatanRepository extends AbstractRepository
     /**
      * get pendapatan by organisasi id
      *
-     * @param int  $page
-     * @param int  $limit
+     * @param int $page
+     * @param int $limit
      * @param null $term
      * @param      $organisasi_id
      * @return mixed
@@ -425,7 +439,7 @@ class PendapatanRepository extends AbstractRepository
     }
 
     /**
-     * find tangggal and jumlah with between tanggal
+     * find tanggal and jumlah with between tanggal
      *
      * @param $tanggal_awal
      * @param $tanggal_akhir

@@ -7,22 +7,35 @@ use SimdesApp\Repositories\Kelompok\KelompokRepository;
 use SimdesApp\Repositories\Obyek\ObyekRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
-class PembiayaanRepository extends AbstractRepository {
+class PembiayaanRepository extends AbstractRepository
+{
 
     /**
      * @var LaraCacheInterface
      */
     protected $cache;
 
+    /**
+     * @var ObyekRepository
+     */
     protected $obyek;
 
+    /**
+     * @var KelompokRepository
+     */
     protected $kelompok;
 
+    /**
+     * @var JenisRepository
+     */
     protected $jenis;
 
     /**
      * @param Pembiayaan $pembiayaan
      * @param LaraCacheInterface $cache
+     * @param ObyekRepository $obyek
+     * @param JenisRepository $jenis
+     * @param KelompokRepository $kelompok
      */
     public function __construct(Pembiayaan $pembiayaan, LaraCacheInterface $cache, ObyekRepository $obyek, JenisRepository $jenis, KelompokRepository $kelompok)
     {
@@ -39,6 +52,7 @@ class PembiayaanRepository extends AbstractRepository {
      * @param int $page
      * @param int $limit
      * @param null $term
+     * @param $organisasi_id
      * @return mixed
      */
     public function find($page = 1, $limit = 10, $term = null, $organisasi_id)
@@ -190,7 +204,7 @@ class PembiayaanRepository extends AbstractRepository {
         try {
             $pembiayaan = $this->findById($id);
 
-            if ($pembiayaan){
+            if ($pembiayaan) {
                 $pembiayaan->delete();
 
                 // Return result success

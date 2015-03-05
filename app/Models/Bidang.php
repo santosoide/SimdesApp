@@ -5,18 +5,33 @@ use Illuminate\Database\Eloquent\Model;
 
 class Bidang extends Model {
 
+    /**
+     * @var string
+     */
     protected $table = 'bidang';
 
+    /**
+     * @var string
+     */
     protected $with = 'kewenangan';
 
+    /**
+     * @var array
+     */
     protected $fillable = [
         'kode_rekening',
         'kewenangan_id',
         'bidang'
     ];
 
+    /**
+     * @var string
+     */
     protected $primaryKey = '_id';
 
+    /**
+     * @var array
+     */
     protected $hidden = [
         'created_at',
         'updated_at',
@@ -51,6 +66,9 @@ class Bidang extends Model {
         });
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function kewenangan()
     {
         return $this->belongsTo('SimdesApp\Models\Kewenangan', 'kewenangan_id');

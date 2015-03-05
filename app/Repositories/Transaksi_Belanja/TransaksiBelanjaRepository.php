@@ -13,8 +13,16 @@ class TransaksiBelanjaRepository extends AbstractRepository
      */
     protected $cache;
 
+    /**
+     * @var OrganisasiRepository
+     */
     protected $organisasi;
 
+    /**
+     * @param TransaksiBelanja $transaksiBelanja
+     * @param LaraCacheInterface $cache
+     * @param OrganisasiRepository $organisasi
+     */
     public function __construct(TransaksiBelanja $transaksiBelanja, LaraCacheInterface $cache, OrganisasiRepository $organisasi)
     {
         $this->model = $transaksiBelanja;

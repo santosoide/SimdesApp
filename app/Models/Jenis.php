@@ -4,10 +4,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Jenis extends Model {
 
+    /**
+     * @var string
+     */
     protected $table = 'jenis';
 
+    /**
+     * @var string
+     */
     protected $with = 'kelompok';
 
+    /**
+     * @var array
+     */
     protected $fillable = [
         'kode_rekening',
         'kelompok_id',
@@ -15,8 +24,14 @@ class Jenis extends Model {
         'status'
     ];
 
+    /**
+     * @var string
+     */
     protected $primaryKey = '_id';
 
+    /**
+     * @var array
+     */
     protected $hidden = [
         'created_at',
         'updated_at',
@@ -51,6 +66,9 @@ class Jenis extends Model {
         });
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function kelompok()
     {
         return $this->belongsTo('SimdesApp\Models\Kelompok', 'kelompok_id');

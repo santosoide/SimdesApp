@@ -11,6 +11,10 @@ class RkpdesRepository extends AbstractRepository {
      */
     protected $cache;
 
+    /**
+     * @param Rkpdes $rkpdes
+     * @param LaraCacheInterface $cache
+     */
     public function __construct(Rkpdes $rkpdes, LaraCacheInterface $cache)
     {
         $this->model = $rkpdes;

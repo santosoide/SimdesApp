@@ -2,8 +2,6 @@
 
 use SimdesApp\Http\Requests;
 use SimdesApp\Http\Controllers\Controller;
-
-use Illuminate\Http\Request;
 use SimdesApp\Repositories\Transaksi_Belanja\TransaksiBelanjaRepository;
 use SimdesApp\Repositories\Transaksi_Pendapatan\TransaksiPendapatanRepository;
 

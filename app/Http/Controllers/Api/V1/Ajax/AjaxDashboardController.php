@@ -10,6 +10,7 @@ use SimdesApp\Repositories\RKPDES\RkpdesRepository;
 use SimdesApp\Repositories\RPJMDES_Program\RpjmdesProgramRepository;
 use SimdesApp\Repositories\Transaksi_Belanja\TransaksiBelanjaRepository;
 use SimdesApp\Repositories\Transaksi_Pendapatan\TransaksiPendapatanRepository;
+
 class AjaxDashboardController extends Controller
 {
     /**

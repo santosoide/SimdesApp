@@ -4,14 +4,16 @@ use SimdesApp\Models\DanaDesa;
 use SimdesApp\Repositories\AbstractRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
-class DanaDesaRepository extends AbstractRepository {
+class DanaDesaRepository extends AbstractRepository
+{
 
     /**
      * @var LaraCacheInterface
      */
     protected $cache;
 
-	/**
+    /**
+     * @param DanaDesa $danaDesa
      * @param LaraCacheInterface $cache
      */
     public function __construct(DanaDesa $danaDesa, LaraCacheInterface $cache)
@@ -99,7 +101,7 @@ class DanaDesaRepository extends AbstractRepository {
     public function update($id, array $data)
     {
         try {
-            $danaDesa =  $this->findById($id);
+            $danaDesa = $this->findById($id);
 
             if ($danaDesa->whois_posting == 1) {
                 return $this->successResponseOk([

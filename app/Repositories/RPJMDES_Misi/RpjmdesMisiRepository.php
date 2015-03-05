@@ -4,13 +4,18 @@ use SimdesApp\Models\RpjmdesMisi;
 use SimdesApp\Repositories\AbstractRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
-class RpjmdesMisiRepository extends AbstractRepository {
+class RpjmdesMisiRepository extends AbstractRepository
+{
 
     /**
      * @var LaraCacheInterface
      */
     protected $cache;
 
+    /**
+     * @param RpjmdesMisi $rpjmdesMisi
+     * @param LaraCacheInterface $cache
+     */
     public function __construct(RpjmdesMisi $rpjmdesMisi, LaraCacheInterface $cache)
     {
         $this->model = $rpjmdesMisi;
@@ -23,12 +28,13 @@ class RpjmdesMisiRepository extends AbstractRepository {
      * @param int $page
      * @param int $limit
      * @param null $term
+     * @pram $organisasi_id
      * @return mixed
      */
     public function find($page = 1, $limit = 10, $term = null, $organisasi_id)
     {
         // Create Key for cache
-        $key = 'rpjmdes-misi-find-' . $page . $limit . $term. $organisasi_id;
+        $key = 'rpjmdes-misi-find-' . $page . $limit . $term . $organisasi_id;
 
         // Create Section
         $section = 'rpjmdes-misi';
@@ -125,7 +131,7 @@ class RpjmdesMisiRepository extends AbstractRepository {
         try {
             $rpjmdesMisi = $this->findById($id);
 
-            if ($rpjmdesMisi){
+            if ($rpjmdesMisi) {
                 $rpjmdesMisi->delete();
 
                 // Return result success

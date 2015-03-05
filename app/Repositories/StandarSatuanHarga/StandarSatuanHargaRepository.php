@@ -4,13 +4,18 @@ use SimdesApp\Models\StandarSatuanHarga;
 use SimdesApp\Repositories\AbstractRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
-class StandarSatuanHargaRepository extends AbstractRepository {
+class StandarSatuanHargaRepository extends AbstractRepository
+{
 
     /**
      * @var LaraCacheInterface
      */
     protected $cache;
 
+    /**
+     * @param StandarSatuanHarga $standarSatuanHarga
+     * @param LaraCacheInterface $cache
+     */
     public function __construct(StandarSatuanHarga $standarSatuanHarga, LaraCacheInterface $cache)
     {
         $this->model = $standarSatuanHarga;
@@ -129,7 +134,7 @@ class StandarSatuanHargaRepository extends AbstractRepository {
         try {
             $standarSatuanHarga = $this->findById($id);
 
-            if ($standarSatuanHarga){
+            if ($standarSatuanHarga) {
                 $standarSatuanHarga->delete();
 
                 // Return result success
@@ -172,11 +177,12 @@ class StandarSatuanHargaRepository extends AbstractRepository {
 
         return $standarsatuanharga;
     }
+
     /**
      * Get list Satuan Harga Accessing by frontoffice
      *
-     * @param int  $page
-     * @param int  $per_page
+     * @param int $page
+     * @param int $per_page
      * @param null $term
      *
      * @return mixed

@@ -14,10 +14,19 @@ class BelanjaRepository extends AbstractRepository
      */
     protected $cache;
 
+    /**
+     * @var ObyekRepository
+     */
     protected $obyek;
 
+    /**
+     * @var KelompokRepository
+     */
     protected $kelompok;
 
+    /**
+     * @var JenisRepository
+     */
     protected $jenis;
 
     /**

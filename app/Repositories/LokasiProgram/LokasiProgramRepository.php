@@ -4,19 +4,32 @@ use SimdesApp\Models\LokasiProgram;
 use SimdesApp\Repositories\AbstractRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
-class LokasiProgramRepository extends AbstractRepository {
+class LokasiProgramRepository extends AbstractRepository
+{
 
     /**
      * @var LaraCacheInterface
      */
     protected $cache;
 
+    /**
+     * @param LokasiProgram $lokasiProgram
+     * @param LaraCacheInterface $cache
+     */
     public function __construct(LokasiProgram $lokasiProgram, LaraCacheInterface $cache)
     {
         $this->model = $lokasiProgram;
         $this->cache = $cache;
     }
 
+    /**
+     * @param int $page
+     * @param int $limit
+     * @param null $term
+     * @param $organisasi_id
+     * @param $rpjmdes_program_id
+     * @return mixed
+     */
     public function find($page = 1, $limit = 10, $term = null, $organisasi_id, $rpjmdes_program_id)
     {
         // set key
