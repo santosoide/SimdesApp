@@ -1,17 +1,17 @@
-<?php
-namespace SimdesApp\Repositories;
-
+<?php namespace SimdesApp\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
 
 abstract class AbstractRepository
 {
     /**
-     * @var
+     * @var Model $model
      */
     protected $model;
 
     /**
+     * Create an Instance Object Model
+     *
      * @param Model $model
      */
     public function __construct(Model $model)
@@ -21,6 +21,7 @@ abstract class AbstractRepository
 
     /**
      * @param array $attributes
+     *
      * @return static
      */
     public function getNew(array $attributes = [])
@@ -30,6 +31,7 @@ abstract class AbstractRepository
 
     /**
      * @param array $response
+     *
      * @return mixed
      */
     public function successResponseOk(array $response = [])
@@ -141,4 +143,39 @@ abstract class AbstractRepository
         ]);
     }
 
+    /**
+     * @param $id
+     *
+     * @return \Illuminate\Support\Collection|null|static
+     * @throws RepositoryNotFoundException
+     */
+    public function findById($id)
+    {
+        $model = $this->model->find($id);
+        if (!$model) {
+            throw new RepositoryNotFoundException();
+        }
+
+        return $model;
+    }
+
+    /**
+     * @param $id
+     * @param $organisasi_id
+     *
+     * @return mixed
+     * @throws RepositoryNotFoundException
+     */
+    public function findByOrganisasiId($id, $organisasi_id)
+    {
+        $model = $this->model
+            ->where('_id', $id)
+            ->where('organisasi_id', $organisasi_id)
+            ->first();
+        if (!$model) {
+            throw new RepositoryNotFoundException();
+        }
+
+        return $model;
+    }
 }

@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
         'SimdesApp\Console\Commands\Inspire',
         'SimdesApp\Console\Commands\RepositoryCommand',
         'SimdesApp\Console\Commands\ModelCommand',
+        'SimdesApp\Console\Commands\FormRequestCommand',
     ];
 
     /**

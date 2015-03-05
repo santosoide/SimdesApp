@@ -3,74 +3,84 @@
 use SimdesApp\Http\Requests;
 use SimdesApp\Http\Controllers\Controller;
 use SimdesApp\Http\Controllers\Api\V1\Akun;
-use SimdesApp\Repositories\Akun\AkunRepository;
 use SimdesApp\Http\Requests\Akun\AkunCreateForm;
 use SimdesApp\Http\Requests\Akun\AkunEditForm;
+use SimdesApp\Repositories\Contracts\AkunInterface;
 
-class AkunController extends Controller {
+class AkunController extends Controller
+{
 
     /**
-     * Show akun
-     * URL = url/api/v1/backoffice/akun GET
-     *
-     * @param AkunRepository $akun
-     * @return mixed
+     * @var AkunInterface
      */
-    public function index(AkunRepository $akun)
+    protected $akun;
+
+    /**
+     * Create new AkunController Instance
+     *
+     * @param AkunInterface $akun
+     */
+    public function __construct(AkunInterface $akun)
     {
-        return $akun->find($this->input('page'), $limit = 10, $this->input('term'));
+        $this->akun = $akun;
     }
 
     /**
-     * Create akun
-     * URL = url/api/v1/backoffice/akun POST
+     * Find data using custom pagination
      *
-     * @param AkunCreateForm $request
-     * @param AkunRepository $akun
      * @return mixed
      */
-    public function store(AkunCreateForm $request, AkunRepository $akun)
+    public function index()
     {
-        return $akun->create($request->all());
+        return $this->akun->find($this->input('page'), $limit = 10, $this->input('term'));
+    }
+
+    /**
+     * Store a new record
+     *
+     * @param AkunCreateForm $request
+     *
+     * @return mixed
+     */
+    public function store(AkunCreateForm $request)
+    {
+        return $this->akun->create($request->all());
     }
 
     /**
      * Show detail akun
-     * URL = url/api/v1/backoffice/akun/1 GET
      *
-     * @param AkunRepository $akun
-     * @param $id
+     * @param  $id
+     *
      * @return \Illuminate\Support\Collection|null|static
      */
-    public function show(AkunRepository $akun, $id)
+    public function show($id)
     {
-        return $akun->findById($id);
+        return $this->akun->findById($id);
     }
 
     /**
-     * Update akun
-     * URL = url/api/v1/backoffice/akun/1 PUT
+     * Update the record
      *
-     * @param $id
-     * @param AkunEditForm $request
-     * @param AkunRepository $akun
+     * @param                $id
+     * @param AkunEditForm   $request
+     *
      * @return mixed
      */
-    public function update($id, AkunEditForm $request, AkunRepository $akun)
+    public function update($id, AkunEditForm $request)
     {
-        return $akun->update($id, $request->all());
+        return $this->akun->update($id, $request->all());
     }
 
     /**
-     * Delete akun
-     * URL = url/api/v1/backoffice/akun/1 DELETE
+     * Delete the record
      *
-     * @param $id
-     * @param AkunRepository $akun
+     * @param  $id
+     *
      * @return mixed
      */
-    public function destroy($id, AkunRepository $akun)
+    public function destroy($id)
     {
-        return $akun->destroy($id);
+        return $this->akun->destroy($id);
     }
 }

@@ -1,0 +1,55 @@
+<?php namespace {{namespace}};
+
+use SimdesApp\Http\Requests\Request;
+use Illuminate\Validation\Validator;
+
+class {{class}} extends Request
+{
+
+    /**
+     * Custom attribute
+     *
+     * @var array
+     */
+    protected $customAttributes = [
+        '' => '',
+        '' => ''
+    ];
+
+    /**
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            '' => 'required',
+            '' => 'required'
+        ];
+    }
+
+    /**
+     * @param $validator
+     * @return mixed
+     */
+    public function validator($validator)
+    {
+        return $validator->make($this->all(), $this->container->call([$this, 'rules']), $this->messages(), $this->customAttributes);
+    }
+
+    /**
+     * @param Validator $validator
+     * @return array
+     */
+    protected function formatErrors(Validator $validator)
+    {
+        $message = $validator->errors();
+
+        return [
+            'success'    => false,
+            'validation' => [
+                '' => $message->first(''),
+                '' => $message->first(''),
+            ]
+        ];
+    }
+}
