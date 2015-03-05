@@ -13,13 +13,10 @@
 App::bind('SimdesApp\Services\LaraCacheInterface', 'SimdesApp\Services\LaraCache');
 Route::get('/', 'WelcomeController@index');
 // routing khusus backoffice
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', 'IndexController@index');
 // login
-Route::get('/login', function () {
-    return view('login');
-});
+Route::get('/login', 'LoginController@index');
+
 Route::group(['namespace' => 'Auth', 'prefix' => 'api/v1/auth'], function () {
     // Post login
     Route::post('post-login', 'AuthController@postLogin');
@@ -257,5 +254,5 @@ Route::group(['namespace' => 'Api\V1\Ajax', 'prefix' => 'api/v1/backoffice/dashb
 
     Route::get('get-jumlah-dokumen-frontoffice', 'AjaxDashboardController@getJumlahFrontOffice');
 });
-
+// get token
 Route::get('get-token', 'TokenController@index');
