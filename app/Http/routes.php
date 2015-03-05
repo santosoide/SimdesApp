@@ -14,6 +14,9 @@ App::bind('SimdesApp\Services\LaraCacheInterface', 'SimdesApp\Services\LaraCache
 Route::get('/', 'WelcomeController@index');
 // routing khusus backoffice
 Route::get('/', 'IndexController@index');
+
+// routing khusus frontoffice
+Route::get('/front', 'IndexController@front');
 // login
 Route::get('/login', 'LoginController@index');
 
@@ -21,7 +24,7 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'api/v1/auth'], function () {
     // Post login
     Route::post('post-login', 'AuthController@postLogin');
     // Destroy the session login
-    Route::get('get-logout', 'AuthController@getLogout');
+    Route::get('logout', 'AuthController@getLogout');
 });
 #Diakses oleh Backoffice
 Route::group(['namespace' => 'Api\V1\Organisasi', 'prefix' => 'api/v1/backoffice'], function () {
