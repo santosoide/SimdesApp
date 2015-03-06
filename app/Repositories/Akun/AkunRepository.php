@@ -90,18 +90,6 @@ class AkunRepository extends AbstractRepository implements AkunInterface
     }
 
     /**
-     * Show the Record
-     *
-     * @param $id
-     *
-     * @return \Illuminate\Support\Collection|null|static
-     */
-    public function findById($id)
-    {
-        return $this->model->find($id);
-    }
-
-    /**
      * Update the record
      *
      * @param       $id
@@ -138,17 +126,14 @@ class AkunRepository extends AbstractRepository implements AkunInterface
     {
         try {
             $akun = $this->findById($id);
-            if ($akun) {
-                $result = $this->cekForDelete($akun->_id);
-                if (count($result) > 0) {
-                    return $this->relationDeleteResponse();
-                }
-                $akun->delete();
 
-                return $this->successDeleteResponse();
+            $result = $this->cekForDelete($akun->_id);
+            if (count($result) > 0) {
+                return $this->relationDeleteResponse();
             }
+            $akun->delete();
 
-            return $this->emptyDeleteResponse();
+            return $this->successDeleteResponse();
         } catch (\Exception $ex) {
             \Log::error('AkunRepository destroy action something wrong -' . $ex);
 
