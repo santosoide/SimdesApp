@@ -88,18 +88,6 @@ class KelompokRepository extends AbstractRepository implements KelompokInterface
     }
 
     /**
-     * Show the Record
-     *
-     * @param $id
-     *
-     * @return \Illuminate\Support\Collection|null|static
-     */
-    public function findById($id)
-    {
-        return $this->model->find($id);
-    }
-
-    /**
      * Update the record
      *
      * @param       $id
@@ -136,17 +124,14 @@ class KelompokRepository extends AbstractRepository implements KelompokInterface
     {
         try {
             $kelompok = $this->findById($id);
-            if ($kelompok) {
-                $result = $this->cekForDelete($kelompok->_id);
-                if (count($result) > 0) {
-                    return $this->relationDeleteResponse();
-                }
-                $kelompok->delete();
 
-                return $this->successDeleteResponse();
+            $result = $this->cekForDelete($kelompok->_id);
+            if (count($result) > 0) {
+                return $this->relationDeleteResponse();
             }
 
-            return $this->emptyDeleteResponse();
+            $kelompok->delete();
+            return $this->successDeleteResponse();
         } catch (\Exception $ex) {
             \Log::error('KelompokRepository destroy action something wrong -' . $ex);
 
