@@ -3,69 +3,81 @@
 use SimdesApp\Http\Requests;
 use SimdesApp\Http\Controllers\Controller;
 use SimdesApp\Http\Controllers\Api\V1\Kegiatan;
-use SimdesApp\Repositories\Kegiatan\KegiatanRepository;
+use SimdesApp\Repositories\Contracts\KegiatanInterface;
 use SimdesApp\Http\Requests\Kegiatan\KegiatanCreateForm;
 use SimdesApp\Http\Requests\Kegiatan\KegiatanEditForm;
-
-class KegiatanController extends Controller {
+class KegiatanController extends Controller
+{
 
     /**
-     * Show data
-     *
-     * @param KegiatanRepository $obyek
-     * @return mixed
+     * @var KegiatanInterface
      */
-    public function index(KegiatanRepository $obyek)
+    protected $kegiatan;
+
+    /**
+     * @param KegiatanInterface $kegiatan
+     */
+    public function __construct(KegiatanInterface $kegiatan)
     {
-        return $obyek->find($this->input('page'), $limit = 10, $this->input('term'));
+        $this->kegiatan = $kegiatan;
     }
 
     /**
-     * Create data Kegiatan
+     * Find data using search adn custom pagination
+     *
+     * @return mixed
+     */
+    public function index()
+    {
+        return $this->kegiatan->find($this->input('page'), $limit = 10, $this->input('term'));
+    }
+
+    /**
+     * Store a new record
      *
      * @param KegiatanCreateForm $request
-     * @param KegiatanRepository $obyek
+     *
      * @return mixed
      */
-    public function store(KegiatanCreateForm $request, KegiatanRepository $obyek)
+    public function store(KegiatanCreateForm $request)
     {
-        return $obyek->create($request->all());
+        return $this->kegiatan->create($request->all());
     }
 
     /**
-     * Show detail Kegiatan
+     * Get a data
      *
-     * @param KegiatanRepository $obyek
      * @param $id
-     * @return \Illuminate\Support\Collection|null|static
+     *
+     * @return mixed
      */
-    public function show(KegiatanRepository $obyek, $id)
+    public function show($id)
     {
-        return $obyek->findById($id);
+        return $this->kegiatan->findById($id);
     }
 
     /**
-     * Update data Kegiatan
+     * Update therecord
      *
-     * @param $id
+     * @param                  $id
      * @param KegiatanEditForm $request
-     * @param KegiatanRepository $obyek
+     *
      * @return mixed
      */
-    public function update($id, KegiatanEditForm $request, KegiatanRepository $obyek)
+    public function update($id, KegiatanEditForm $request)
     {
-        return $obyek->update($id, $request->all());
+        return $this->kegiatan->update($id, $request->all());
     }
 
     /**
-     * Delete data Kegiatan
+     * Destroy the record
      *
      * @param $id
-     * @param KegiatanRepository $obyek
+     *
      * @return mixed
      */
-    public function destroy($id, KegiatanRepository $obyek)
+    public function destroy($id)
     {
-        return $obyek->destroy($id);
+        return $this->kegiatan->destroy($id);
     }
 }

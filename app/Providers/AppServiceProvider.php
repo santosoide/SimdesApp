@@ -40,5 +40,10 @@ class AppServiceProvider extends ServiceProvider
             'SimdesApp\Repositories\Contracts\KelompokInterface',
             'SimdesApp\Repositories\Kelompok\KelompokRepository'
         );
+        // bind Kegiatan
+        $this->app->bind(
+            'SimdesApp\Repositories\Contracts\KegiatanInterface',
+            'SimdesApp\Repositories\Kegiatan\KegiatanRepository'
+        );
     }
 }

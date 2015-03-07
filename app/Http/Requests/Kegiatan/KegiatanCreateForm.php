@@ -27,7 +27,7 @@ class KegiatanCreateForm extends Request
             'kode_rekening' => 'required|max:255',
             'program_id'    => 'required|integer',
             'kegiatan'      => 'required|max:255',
-            'organisasi_id' => 'required|max:255'
+            'organisasi_id' => 'max:255'
         ];
     }
 

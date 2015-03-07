@@ -145,22 +145,6 @@ abstract class AbstractRepository
 
     /**
      * @param $id
-     *
-     * @return \Illuminate\Support\Collection|null|static
-     * @throws RepositoryNotFoundException
-     */
-    public function findById($id)
-    {
-        $model = $this->model->find($id);
-        if (!$model) {
-            throw new RepositoryNotFoundException();
-        }
-
-        return $model;
-    }
-
-    /**
-     * @param $id
      * @param $organisasi_id
      *
      * @return mixed
@@ -191,7 +175,7 @@ abstract class AbstractRepository
         if ($organisasi_id) {
             return $organisasi_id;
         } else {
-            return 'anda sudah logout, silahkan login kembali';
+            return '';
         }
     }
 
@@ -207,7 +191,7 @@ abstract class AbstractRepository
         if ($user_id) {
             return $user_id;
         } else {
-            return 'anda sudah logout, silahkan login kembali';
+            return '';
         }
     }
 }

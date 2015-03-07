@@ -2,9 +2,10 @@
 
 use SimdesApp\Models\Kegiatan;
 use SimdesApp\Repositories\AbstractRepository;
+use SimdesApp\Repositories\Contracts\KegiatanInterface;
 use SimdesApp\Services\LaraCacheInterface;
 
-class KegiatanRepository extends AbstractRepository
+class KegiatanRepository extends AbstractRepository implements KegiatanInterface
 {
 
     /**
@@ -57,6 +58,17 @@ class KegiatanRepository extends AbstractRepository
     }
 
     /**
+     * Show the Record
+     *
+     * @param $id
+     * @return \Illuminate\Support\Collection|null|static
+     */
+    public function findById($id)
+    {
+        return $this->model->find($id);
+    }
+
+    /**
      * Create data
      *
      * @param array $data
@@ -67,13 +79,10 @@ class KegiatanRepository extends AbstractRepository
         try {
             $kegiatan = $this->getNew();
 
-            // jika organisasi_id null Kewenangan Kegiatan diinput oleh Kabupaten
-            $organisasi_id = (empty($data['organisasi_id'])) ? '' : $data['organisasi_id'];
-
             $kegiatan->kode_rekening = e($data['kode_rekening']);
             $kegiatan->program_id = e($data['program_id']);
             $kegiatan->kegiatan = e($data['kegiatan']);
-            $kegiatan->organisasi_id = $organisasi_id;
+            $kegiatan->organisasi_id = $this->getOrganisasiId();
 
             $kegiatan->save();
 
@@ -84,17 +93,6 @@ class KegiatanRepository extends AbstractRepository
             \Log::error('KegiatanRepository create action something wrong -' . $ex);
             return $this->errorInsertResponse();
         }
-    }
-
-    /**
-     * Show the Record
-     *
-     * @param $id
-     * @return \Illuminate\Support\Collection|null|static
-     */
-    public function findById($id)
-    {
-        return $this->model->find($id);
     }
 
     /**
@@ -109,15 +107,18 @@ class KegiatanRepository extends AbstractRepository
         try {
             $kegiatan = $this->findById($id);
 
-            $kegiatan->kode_rekening = e($data['kode_rekening']);
-            $kegiatan->program_id = e($data['program_id']);
-            $kegiatan->kegiatan = e($data['kegiatan']);
+            if ($kegiatan) {
+                $kegiatan->kode_rekening = e($data['kode_rekening']);
+                $kegiatan->program_id = e($data['program_id']);
+                $kegiatan->kegiatan = e($data['kegiatan']);
 
-            $kegiatan->save();
+                $kegiatan->save();
 
-            // Return result success
-            return $this->successUpdateResponse();
+                // Return result success
+                return $this->successUpdateResponse();
+            }
 
+            return $this->emptyDeleteResponse();
         } catch (\Exception $ex) {
             \Log::error('KegiatanRepository update action something wrong -' . $ex);
             return $this->errorUpdateResponse();

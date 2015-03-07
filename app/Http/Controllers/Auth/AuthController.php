@@ -52,20 +52,20 @@ class AuthController extends Controller
         $remember = $this->input('remember', true);
         if (\Auth::attempt($credentials, $remember)) {
             $user_id = \Auth::user()->_id;
-            $user = $this->user->findById($user_id);
+            $organisasi_id = \Auth::user()->organisasi_id;
 
-            if ($user->organisasi_id == '') {
+            if ($organisasi_id == '') {
                 \Session::put('desa', 'BPMD');
             } else {
-                $organisasi = $this->organisasi->findById($user->organisasi_id);
+                $organisasi = $this->organisasi->findById($organisasi_id);
 
                 \Session::put('desa', $organisasi->desa);
             }
 
-            \Session::put('nama', $user->nama);
-            \Session::put('level', $user->level);
-            \Session::put('avatar', $user->avatar);
-            \Session::put('organisasi_id', $user->organisasi_id);
+            \Session::put('nama', \Auth::user()->nama);
+            \Session::put('level', \Auth::user()->level);
+            \Session::put('avatar', \Auth::user()->avatar);
+            \Session::put('organisasi_id', \Auth::user()->organisasi_id);
             \Session::put('user_id', $user_id);
 
             $level = $this->getLevel();
