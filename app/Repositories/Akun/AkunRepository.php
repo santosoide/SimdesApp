@@ -6,7 +6,6 @@ use SimdesApp\Repositories\Contracts\AkunInterface;
 use SimdesApp\Repositories\Contracts\KelompokInterface;
 use SimdesApp\Repositories\Kelompok\KelompokRepository;
 use SimdesApp\Services\LaraCacheInterface;
-
 class AkunRepository extends AbstractRepository implements AkunInterface
 {
 
@@ -66,6 +65,18 @@ class AkunRepository extends AbstractRepository implements AkunInterface
     }
 
     /**
+     * Show the Record
+     *
+     * @param $id
+     *
+     * @return \Illuminate\Support\Collection|null|static
+     */
+    public function findById($id)
+    {
+        return $this->model->find($id);
+    }
+
+    /**
      * Create data
      *
      * @param array $data
@@ -101,13 +112,17 @@ class AkunRepository extends AbstractRepository implements AkunInterface
     {
         try {
             $akun = $this->findById($id);
-            $akun->kode_rekening = e($data['kode_rekening']);
-            $akun->akun = e($data['akun']);
-            $akun->save();
+            if ($akun) {
+                $akun->kode_rekening = e($data['kode_rekening']);
+                $akun->akun = e($data['akun']);
+                $akun->save();
 
-            /*Return result success*/
+                /*Return result success*/
 
-            return $this->successUpdateResponse();
+                return $this->successUpdateResponse();
+            }
+
+            return $this->emptyDeleteResponse();
         } catch (\Exception $ex) {
             \Log::error('AkunRepository update action something wrong -' . $ex);
 
@@ -126,14 +141,17 @@ class AkunRepository extends AbstractRepository implements AkunInterface
     {
         try {
             $akun = $this->findById($id);
+            if ($akun) {
+                $result = $this->cekForDelete($akun->_id);
+                if (count($result) > 0) {
+                    return $this->relationDeleteResponse();
+                }
+                $akun->delete();
 
-            $result = $this->cekForDelete($akun->_id);
-            if (count($result) > 0) {
-                return $this->relationDeleteResponse();
+                return $this->successDeleteResponse();
             }
-            $akun->delete();
 
-            return $this->successDeleteResponse();
+            return $this->emptyDeleteResponse();
         } catch (\Exception $ex) {
             \Log::error('AkunRepository destroy action something wrong -' . $ex);
 

@@ -3,74 +3,82 @@
 use SimdesApp\Http\Requests;
 use SimdesApp\Http\Controllers\Controller;
 use SimdesApp\Http\Controllers\Api\V1\Kelompok;
+use SimdesApp\Repositories\Contracts\KelompokInterface;
 use SimdesApp\Repositories\Kelompok\KelompokRepository;
 use SimdesApp\Http\Requests\Kelompok\KelompokCreateForm;
 use SimdesApp\Http\Requests\Kelompok\KelompokEditForm;
-
-class KelompokController extends Controller {
+class KelompokController extends Controller
+{
 
     /**
-     * Show data
-     * URL = url/api/v1/backoffice/kelompok GET
-     *
-     * @param KelompokRepository $organisasi
-     * @return mixed
+     * @var KelompokInterface
      */
-    public function index(KelompokRepository $organisasi)
+    protected $kelompok;
+
+    /**
+     * @param KelompokInterface $kelompok
+     */
+    public function __construct(KelompokInterface $kelompok)
     {
-        return $organisasi->find($this->input('page'), $limit = 10, $this->input('term'));
+        $this->kelompok = $kelompok;
     }
 
     /**
-     * Create data Kelompok
-     * URL = url/api/v1/backoffice/kelompok POST
+     * Find with pagging
+     *
+     * @return mixed
+     */
+    public function index()
+    {
+        return $this->kelompok->find($this->input('page'), $limit = 10, $this->input('term'));
+    }
+
+    /**
+     * Insert
      *
      * @param KelompokCreateForm $request
-     * @param KelompokRepository $organisasi
+     *
      * @return mixed
      */
-    public function store(KelompokCreateForm $request, KelompokRepository $organisasi)
+    public function store(KelompokCreateForm $request)
     {
-        return $organisasi->create($request->all());
+        return $this->kelompok->create($request->all());
     }
 
     /**
-     * Show detail Kelompok
-     * URL = url/api/v1/backoffice/kelompok/1 GET
+     * Get
      *
-     * @param KelompokRepository $organisasi
      * @param $id
-     * @return \Illuminate\Support\Collection|null|static
+     *
+     * @return mixed
      */
-    public function show(KelompokRepository $organisasi, $id)
+    public function show($id)
     {
-        return $organisasi->findById($id);
+        return $this->kelompok->findById($id);
     }
 
     /**
-     * Update Kelompok
-     * URL = url/api/v1/backoffice/kelompok/1 PUT
+     * Update
      *
-     * @param $id
+     * @param                  $id
      * @param KelompokEditForm $request
-     * @param KelompokRepository $organisasi
+     *
      * @return mixed
      */
-    public function update($id, KelompokEditForm $request, KelompokRepository $organisasi)
+    public function update($id, KelompokEditForm $request)
     {
-        return $organisasi->update($id, $request->all());
+        return $this->kelompok->update($id, $request->all());
     }
 
     /**
-     * Delete Kelompok
-     * URL = url/api/v1/backoffice/kelompok/1 DELETE
+     * Delete
      *
      * @param $id
-     * @param KelompokRepository $organisasi
+     *
      * @return mixed
      */
-    public function destroy($id, KelompokRepository $organisasi)
+    public function destroy($id)
     {
-        return $organisasi->destroy($id);
+        return $this->kelompok->destroy($id);
     }
 }

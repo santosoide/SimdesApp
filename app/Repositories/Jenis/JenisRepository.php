@@ -3,14 +3,15 @@ namespace SimdesApp\Repositories\Jenis;
 
 use SimdesApp\Models\Jenis;
 use SimdesApp\Repositories\AbstractRepository;
-use SimdesApp\Repositories\Obyek\ObyekRepository;
+use SimdesApp\Repositories\Contracts\JenisInterface;
+use SimdesApp\Repositories\Contracts\ObyekInterface;
 use SimdesApp\Services\LaraCacheInterface;
 
-class JenisRepository extends AbstractRepository
+class JenisRepository extends AbstractRepository implements JenisInterface
 {
 
     /**
-     * @var ObyekRepository
+     * @var ObyekInterface
      */
     protected $obyek;
 
@@ -23,10 +24,10 @@ class JenisRepository extends AbstractRepository
      * instance interface
      *
      * @param Jenis $jenis
-     * @param ObyekRepository $obyek
+     * @param ObyekInterface $obyek
      * @param LaraCacheInterface $cache
      */
-    public function __construct(Jenis $jenis, ObyekRepository $obyek, LaraCacheInterface $cache)
+    public function __construct(Jenis $jenis, ObyekInterface $obyek, LaraCacheInterface $cache)
     {
         $this->model = $jenis;
         $this->obyek = $obyek;
