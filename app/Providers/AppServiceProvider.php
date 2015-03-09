@@ -75,5 +75,10 @@ class AppServiceProvider extends ServiceProvider
             'SimdesApp\Repositories\Contracts\DanaDesaInterface',
             'SimdesApp\Repositories\DanaDesa\DanaDesaRepository'
         );
+        // bind Dana Desa By Desa
+        $this->app->bind(
+            'SimdesApp\Repositories\Contracts\DanaDesaByDesaInterface',
+            'SimdesApp\Repositories\DanaDesa\DanaDesaByDesaRepository'
+        );
     }
 }
