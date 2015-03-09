@@ -68,4 +68,51 @@ class TransaksiPendapatanController extends Controller
         return $transaksiPendapatan->destroy($id);
     }
 
+    /**
+     * get pendapatan by organisasi id
+     *
+     * @param TransaksiPendapatanRepository
+     * @param $pendapatan
+     * @param $organisasi_id
+     * @return mixed
+     */
+    public function getTransaksiPendapatanByDesa(TransaksiPendapatanRepository $pendapatan, $organisasi_id)
+    {
+        $term = $this->input('term');
+        $page = $this->input('page');
+
+        return $pendapatan->getTransaksiPendapatanByDesa($page, $per_page = 5, $term, $organisasi_id);
+    }
+
+    /**
+     * find tanggal and jumlah with between tanggal
+     *
+     * @param TransaksiPendapatanRepository
+     * @param $pendapatan
+     * @return mixed
+     */
+    public function getChartByOrganisasiId(TransaksiPendapatanRepository $pendapatan)
+    {
+        $tanggal_awal = $this->input('tanggal_awal');
+        $tanggal_akhir = $this->input('tanggal_akhir');
+        $dana_desa_id = $this->input('dana_desa_id');
+
+        return $pendapatan->getChartByOrganisasiId($this->getOrganisasiId(), $tanggal_awal, $tanggal_akhir, $dana_desa_id);
+    }
+
+    /**
+     * find tanggal and jumlah with between tanggal
+     *
+     * @param TransaksiPendapatanRepository
+     * @param $pendapatan
+     * @return mixed
+     */
+    public function getChart(TransaksiPendapatanRepository $pendapatan)
+    {
+        $tanggal_awal = $this->input('tanggal_awal');
+        $tanggal_akhir = $this->input('tanggal_akhir');
+        $dana_desa_id = $this->input('dana_desa_id');
+
+        return $pendapatan->getChart($tanggal_awal, $tanggal_akhir, $dana_desa_id);
+    }
 }

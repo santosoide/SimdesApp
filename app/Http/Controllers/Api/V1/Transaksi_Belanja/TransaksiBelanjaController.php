@@ -68,4 +68,51 @@ class TransaksiBelanjaController extends Controller
         return $transaksiBelanja->destroy($id);
     }
 
+    /**
+     * get belanja by organisasi id
+     *
+     * @param TransaksiBelanjaRepository
+     * @param $belanja
+     * @param $organisasi_id
+     * @return mixed
+     */
+    public function getTransaksiBelanjaByDesa(TransaksiBelanjaRepository $belanja, $organisasi_id)
+    {
+        $term = $this->input('term');
+        $page = $this->input('page');
+
+        return $belanja->getTransaksiBelanjaByDesa($page, $per_page = 5, $term, $organisasi_id);
+    }
+
+    /**
+     * find tanggal and jumlah with between tanggal
+     *
+     * @param TransaksiBelanjaRepository
+     * @param $belanja
+     * @return mixed
+     */
+    public function getChartByOrganisasiId(TransaksiBelanjaRepository $belanja)
+    {
+        $tanggal_awal = $this->input('tanggal_awal');
+        $tanggal_akhir = $this->input('tanggal_akhir');
+        $dana_desa_id = $this->input('dana_desa_id');
+
+        return $belanja->getChartByOrganisasiId($this->getOrganisasiId(), $tanggal_awal, $tanggal_akhir, $dana_desa_id);
+    }
+
+    /**
+     * find tanggal and jumlah with between tanggal
+     *
+     * @param TransaksiBelanjaRepository
+     * @param $belanja
+     * @return mixed
+     */
+    public function getChart(TransaksiBelanjaRepository $belanja)
+    {
+        $tanggal_awal = $this->input('tanggal_awal');
+        $tanggal_akhir = $this->input('tanggal_akhir');
+        $dana_desa_id = $this->input('dana_desa_id');
+
+        return $belanja->getChart($tanggal_awal, $tanggal_akhir, $dana_desa_id);
+    }
 }
