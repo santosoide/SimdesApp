@@ -4,68 +4,80 @@ use SimdesApp\Http\Requests;
 use SimdesApp\Http\Controllers\Controller;
 use SimdesApp\Http\Requests\Belanja\BelanjaCreateForm;
 use SimdesApp\Http\Requests\Belanja\BelanjaEditForm;
-use SimdesApp\Repositories\Belanja\BelanjaRepository;
-
+use SimdesApp\Repositories\Contracts\BelanjaInterface;
 class BelanjaController extends Controller
 {
+    /**
+     * @var BelanjaInterface
+     */
+    protected $belanja;
+
+    /**
+     * Create new BelanjaController Instance
+     *
+     * @param BelanjaInterface $belanja
+     */
+    public function __construct(BelanjaInterface $belanja)
+    {
+        $this->belanja = $belanja;
+    }
 
     /**
      * Show belanja
      *
-     * @param BelanjaRepository $belanja
      * @return mixed
      */
-    public function index(BelanjaRepository $belanja)
+    public function index()
     {
-        return $belanja->find($this->input('page'), $limit = 10, $this->input('term'), $this->input('organisasi_id'));
+        return $this->belanja->find($this->input('page'), $limit = 10, $this->input('term'), $this->input('organisasi_id'));
     }
 
     /**
      * Insert belanja
      *
      * @param BelanjaCreateForm $request
-     * @param BelanjaRepository $belanja
+     *
      * @return mixed
      */
-    public function store(BelanjaCreateForm $request, BelanjaRepository $belanja)
+    public function store(BelanjaCreateForm $request)
     {
-        return $belanja->create($request->all());
+        return $this->belanja->create($request->all());
     }
 
     /**
      * Get belanja
      *
-     * @param BelanjaRepository $belanja
      * @param $id
+     *
      * @return \Illuminate\Support\Collection|null|static
      */
-    public function show(BelanjaRepository $belanja, $id)
+    public function show($id)
     {
-        return $belanja->findById($id);
+        return $this->belanja->findById($id);
     }
 
     /**
      * Update belanja
      *
-     * @param $id
+     * @param                 $id
      * @param BelanjaEditForm $request
-     * @param BelanjaRepository $belanja
+     *
      * @return mixed
      */
-    public function update($id, BelanjaEditForm $request, BelanjaRepository $belanja)
+    public function update($id, BelanjaEditForm $request)
     {
-        return $belanja->update($id, $request->all());
+        return $this->belanja->update($id, $request->all());
     }
 
     /**
      * Delete belanja
      *
      * @param $id
-     * @param BelanjaRepository $belanja
+     *
      * @return mixed
      */
-    public function destroy($id, BelanjaRepository $belanja)
+    public function destroy($id)
     {
-        return $belanja->destroy($id);
+        return $this->belanja->destroy($id);
     }
 }

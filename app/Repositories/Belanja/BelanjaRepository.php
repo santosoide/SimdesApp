@@ -2,12 +2,12 @@
 
 use SimdesApp\Models\Belanja;
 use SimdesApp\Repositories\AbstractRepository;
-use SimdesApp\Repositories\Jenis\JenisRepository;
-use SimdesApp\Repositories\Kelompok\KelompokRepository;
-use SimdesApp\Repositories\Obyek\ObyekRepository;
+use SimdesApp\Repositories\Contracts\BelanjaInterface;
+use SimdesApp\Repositories\Contracts\JenisInterface;
+use SimdesApp\Repositories\Contracts\KelompokInterface;
+use SimdesApp\Repositories\Contracts\ObyekInterface;
 use SimdesApp\Services\LaraCacheInterface;
-
-class BelanjaRepository extends AbstractRepository
+class BelanjaRepository extends AbstractRepository implements BelanjaInterface
 {
     /**
      * @var LaraCacheInterface
@@ -15,25 +15,21 @@ class BelanjaRepository extends AbstractRepository
     protected $cache;
 
     /**
-     * @var ObyekRepository
+     * @var ObyekInterface
      */
     protected $obyek;
 
     /**
-     * @var KelompokRepository
+     * @var KelompokInterface
      */
     protected $kelompok;
 
     /**
-     * @var JenisRepository
+     * @var JenisInterface
      */
     protected $jenis;
 
-    /**
-     * @param Belanja $belanja
-     * @param LaraCacheInterface $cache
-     */
-    public function __construct(Belanja $belanja, LaraCacheInterface $cache, ObyekRepository $obyek, JenisRepository $jenis, KelompokRepository $kelompok)
+    public function __construct(Belanja $belanja, LaraCacheInterface $cache, ObyekInterface $obyek, JenisInterface $jenis, KelompokInterface $kelompok)
     {
         $this->model = $belanja;
         $this->cache = $cache;
@@ -45,31 +41,29 @@ class BelanjaRepository extends AbstractRepository
     /**
      * Instant find or search with paging, limit, and query
      *
-     * @param int $page
-     * @param int $limit
+     * @param int  $page
+     * @param int  $limit
      * @param null $term
+     * @param null $organisasi_id
+     *
      * @return mixed
      */
     public function find($page = 1, $limit = 10, $term = null, $organisasi_id)
     {
         // set key
         $key = 'belanja-find-' . $page . $limit . $term . $organisasi_id;
-
         // set section
         $section = 'belanja';
-
         // has section and key
         if ($this->cache->has($section, $key)) {
             return $this->cache->get($section, $key);
         }
-
         // query to database
         $belanja = $this->model
             ->where('belanja', 'like', '%' . $term . '%')
             ->where('organisasi_id', '=', $organisasi_id)
             ->paginate($limit)
             ->toArray();
-
         // store to cache
         $this->cache->put($section, $key, $belanja, 10);
 
@@ -80,17 +74,16 @@ class BelanjaRepository extends AbstractRepository
      * Create data
      *
      * @param array $data
+     *
      * @return mixed
      */
     public function create(array $data)
     {
         try {
             $belanja = $this->getNew();
-
             $kelompok_id = (empty($data['kelompok_id'])) ? '0' : $data['kelompok_id'];
             $jenis_id = (empty($data['jenis_id'])) ? '0' : $data['jenis_id'];
             $obyek_id = (empty($data['obyek_id'])) ? '0' : $data['obyek_id'];
-
             $satuan1 = (empty($data['satuan1'])) ? '' : $data['satuan1'];
             $satuan2 = (empty($data['satuan2'])) ? '' : $data['satuan2'];
             $satuan3 = (empty($data['satuan3'])) ? '' : $data['satuan3'];
@@ -99,7 +92,6 @@ class BelanjaRepository extends AbstractRepository
             $volume3 = (empty($data['volume3'])) ? '1' : $data['volume3'];
             $satuan_harga = (empty($data['satuan_harga'])) ? '1' : $data['satuan_harga'];
             $jumlah = $volume1 * $volume2 * $volume3 * $satuan_harga;
-
             $belanja->belanja = $this->getNamaBelanja($kelompok_id, $jenis_id, $obyek_id);
             $belanja->kode_rekening = $this->getKodeRekening($kelompok_id, $jenis_id, $obyek_id);
             $belanja->tahun = e($data['tahun']);
@@ -116,14 +108,14 @@ class BelanjaRepository extends AbstractRepository
             $belanja->jumlah = $jumlah;
             $belanja->rkpdes_id = e($data['rkpdes_id']);
             $belanja->kegiatan = e($data['kegiatan']);
-
             $belanja->save();
 
             /*Return result success*/
-            return $this->successInsertResponse();
 
+            return $this->successInsertResponse();
         } catch (\Exception $ex) {
             \Log::error('BelanjaRepository create action something wrong -' . $ex);
+
             return $this->errorInsertResponse();
         }
     }
@@ -132,6 +124,7 @@ class BelanjaRepository extends AbstractRepository
      * Show the Record
      *
      * @param $id
+     *
      * @return \Illuminate\Support\Collection|null|static
      */
     public function findById($id)
@@ -142,52 +135,54 @@ class BelanjaRepository extends AbstractRepository
     /**
      * Update the record
      *
-     * @param $id
+     * @param       $id
      * @param array $data
+     *
      * @return mixed
      */
     public function update($id, array $data)
     {
         try {
             $belanja = $this->findById($id);
+            if ($belanja) {
+                $kelompok_id = (empty($data['kelompok_id'])) ? '0' : $data['kelompok_id'];
+                $jenis_id = (empty($data['jenis_id'])) ? '0' : $data['jenis_id'];
+                $obyek_id = (empty($data['obyek_id'])) ? '0' : $data['obyek_id'];
+                $satuan1 = (empty($data['satuan1'])) ? '' : $data['satuan1'];
+                $satuan2 = (empty($data['satuan2'])) ? '' : $data['satuan2'];
+                $satuan3 = (empty($data['satuan3'])) ? '' : $data['satuan3'];
+                $volume1 = (empty($data['volume1'])) ? '1' : $data['volume1'];
+                $volume2 = (empty($data['volume2'])) ? '1' : $data['volume2'];
+                $volume3 = (empty($data['volume3'])) ? '1' : $data['volume3'];
+                $satuan_harga = (empty($data['satuan_harga'])) ? '1' : $data['satuan_harga'];
+                $jumlah = $volume1 * $volume2 * $volume3 * $satuan_harga;
+                $belanja->belanja = $this->getNamaBelanja($kelompok_id, $jenis_id, $obyek_id);
+                $belanja->kode_rekening = $this->getKodeRekening($kelompok_id, $jenis_id, $obyek_id);
+                $belanja->tahun = e($data['tahun']);
+                $belanja->kelompok_id = $kelompok_id;
+                $belanja->jenis_id = $jenis_id;
+                $belanja->obyek_id = $obyek_id;
+                $belanja->satuan1 = $satuan1;
+                $belanja->satuan2 = $satuan2;
+                $belanja->satuan3 = $satuan3;
+                $belanja->volume1 = (empty($data['volume1'])) ? '' : $data['volume1'];
+                $belanja->volume2 = (empty($data['volume2'])) ? '' : $data['volume2'];
+                $belanja->volume3 = (empty($data['volume3'])) ? '' : $data['volume3'];
+                $belanja->satuan_harga = e($data['satuan_harga']);
+                $belanja->jumlah = $jumlah;
+                $belanja->rkpdes_id = e($data['rkpdes_id']);
+                $belanja->kegiatan = e($data['kegiatan']);
+                $belanja->save();
 
-            $kelompok_id = (empty($data['kelompok_id'])) ? '0' : $data['kelompok_id'];
-            $jenis_id = (empty($data['jenis_id'])) ? '0' : $data['jenis_id'];
-            $obyek_id = (empty($data['obyek_id'])) ? '0' : $data['obyek_id'];
+                /*Return result success*/
 
-            $satuan1 = (empty($data['satuan1'])) ? '' : $data['satuan1'];
-            $satuan2 = (empty($data['satuan2'])) ? '' : $data['satuan2'];
-            $satuan3 = (empty($data['satuan3'])) ? '' : $data['satuan3'];
-            $volume1 = (empty($data['volume1'])) ? '1' : $data['volume1'];
-            $volume2 = (empty($data['volume2'])) ? '1' : $data['volume2'];
-            $volume3 = (empty($data['volume3'])) ? '1' : $data['volume3'];
-            $satuan_harga = (empty($data['satuan_harga'])) ? '1' : $data['satuan_harga'];
-            $jumlah = $volume1 * $volume2 * $volume3 * $satuan_harga;
+                return $this->successUpdateResponse();
+            }
 
-            $belanja->belanja = $this->getNamaBelanja($kelompok_id, $jenis_id, $obyek_id);
-            $belanja->kode_rekening = $this->getKodeRekening($kelompok_id, $jenis_id, $obyek_id);
-            $belanja->tahun = e($data['tahun']);
-            $belanja->kelompok_id = $kelompok_id;
-            $belanja->jenis_id = $jenis_id;
-            $belanja->obyek_id = $obyek_id;
-            $belanja->satuan1 = $satuan1;
-            $belanja->satuan2 = $satuan2;
-            $belanja->satuan3 = $satuan3;
-            $belanja->volume1 = (empty($data['volume1'])) ? '' : $data['volume1'];
-            $belanja->volume2 = (empty($data['volume2'])) ? '' : $data['volume2'];
-            $belanja->volume3 = (empty($data['volume3'])) ? '' : $data['volume3'];
-            $belanja->satuan_harga = e($data['satuan_harga']);
-            $belanja->jumlah = $jumlah;
-            $belanja->rkpdes_id = e($data['rkpdes_id']);
-            $belanja->kegiatan = e($data['kegiatan']);
-
-            $belanja->save();
-
-            /*Return result success*/
-            return $this->successUpdateResponse();
-
+            return $this->emptyDeleteResponse();
         } catch (\Exception $ex) {
             \Log::error('BelanjaRepository update action something wrong -' . $ex);
+
             return $this->errorUpdateResponse();
         }
     }
@@ -196,13 +191,13 @@ class BelanjaRepository extends AbstractRepository
      * Destroy the record
      *
      * @param $id
+     *
      * @return mixed
      */
     public function destroy($id)
     {
         try {
             $belanja = $this->findById($id);
-
             if ($belanja) {
                 $belanja->delete();
 
@@ -211,9 +206,9 @@ class BelanjaRepository extends AbstractRepository
             }
 
             return $this->emptyDeleteResponse();
-
         } catch (\Exception $ex) {
             \Log::error('BelanjaRepository destroy action something wrong -' . $ex);
+
             return $this->errorDeleteResponse();
         }
     }
@@ -224,6 +219,7 @@ class BelanjaRepository extends AbstractRepository
      * @param $kelompok_id
      * @param $jenis_id
      * @param $obyek_id
+     *
      * @return mixed
      */
     public function getNamaBelanja($kelompok_id, $jenis_id, $obyek_id)
@@ -243,6 +239,7 @@ class BelanjaRepository extends AbstractRepository
      * @param $kelompok_id
      * @param $jenis_id
      * @param $obyek_id
+     *
      * @return mixed
      */
     public function getKodeRekening($kelompok_id, $jenis_id, $obyek_id)
@@ -265,21 +262,17 @@ class BelanjaRepository extends AbstractRepository
     {
         // set key
         $key = 'belanja-count-dpa';
-
         // set section
         $section = 'belanja';
-
         // has section and key
         if ($this->cache->has($section, $key)) {
             return $this->cache->get($section, $key);
         }
-
         // query to database
         $belanja = $this->model
             ->where('is_dpa', '=', 1)
             ->where('is_finish', '=', 0)
             ->count();
-
         // store to cache
         $this->cache->put($section, $key, $belanja, 10);
 
@@ -297,20 +290,16 @@ class BelanjaRepository extends AbstractRepository
     {
         // set key
         $key = 'belanja-get-count-by-desa' . $organisasi_id;
-
         // set section
         $section = 'belanja';
-
         // has section and key
         if ($this->cache->has($section, $key)) {
             return $this->cache->get($section, $key);
         }
-
         // query to database
         $belanja = $this->model
             ->where('organisasi_id', '=', $organisasi_id)
             ->count();
-
         // store to cache
         $this->cache->put($section, $key, $belanja, 10);
 
@@ -328,21 +317,17 @@ class BelanjaRepository extends AbstractRepository
     {
         // set key
         $key = 'belanja-get-count-rka-by-desa' . $organisasi_id;
-
         // set section
         $section = 'belanja';
-
         // has section and key
         if ($this->cache->has($section, $key)) {
             return $this->cache->get($section, $key);
         }
-
         // query to database
         $belanja = $this->model
             ->where('organisasi_id', '=', $organisasi_id)
             ->where('is_rka', '=', 1)
             ->count();
-
         // store to cache
         $this->cache->put($section, $key, $belanja, 10);
 
@@ -360,25 +345,20 @@ class BelanjaRepository extends AbstractRepository
     {
         // set key
         $key = 'belanja-get-count-dpa-by-desa' . $organisasi_id;
-
         // set section
         $section = 'belanja';
-
         // has section and key
         if ($this->cache->has($section, $key)) {
             return $this->cache->get($section, $key);
         }
-
         // query to database
         $belanja = $this->model
             ->where('organisasi_id', '=', $organisasi_id)
             ->where('is_dpa', '=', 1)
             ->count();
-
         // store to cache
         $this->cache->put($section, $key, $belanja, 10);
 
         return $belanja;
     }
-
 }

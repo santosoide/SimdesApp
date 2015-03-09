@@ -27,8 +27,10 @@ class UuidModel extends Model
             // created_at
             $model->created_at = $model->dateNow();
 
-            // user creator
-//            $model->user_creator = \Auth::user()->_id;
+            //user creator
+            //$model->user_updater = \Auth::user()->_id;
+            //$model->organisasi_id = \Auth::user()->organisasi_id;
+            //$model->user_id = \Auth::user()->_id;
         });
 
         static::updating(function ($model) {
@@ -36,7 +38,8 @@ class UuidModel extends Model
             $model->updated_at = $model->dateNow();
 
             // user updater
-//            $model->user_updater = \Auth::user()->_id;
+            //$model->user_updater = \Auth::user()->_id;
+            //$model->organisasi_id = \Auth::user()->_id;
         });
     }
 
@@ -66,9 +69,9 @@ class UuidModel extends Model
      *
      * @return mixed
      */
-    public function userId()
+    public function getUserId()
     {
-//        return Auth::user()->_id;
+
     }
 
     /**
@@ -76,9 +79,9 @@ class UuidModel extends Model
      *
      * @return mixed
      */
-    public function organisasiId()
+    public function getOrganisasiId()
     {
-//        return Auth::user()->organisasi_id;
+
     }
 
 }

@@ -1,6 +1,5 @@
 <?php namespace SimdesApp\Repositories\Contracts;
-
-interface KelompokInterface
+interface BelanjaInterface
 {
     /**
      * Find data using search adn custom pagination
@@ -8,10 +7,11 @@ interface KelompokInterface
      * @param $page
      * @param $term
      * @param $limit
+     * @param $organisasi_id
      *
      * @return mixed
      */
-    public function find($page, $term, $limit);
+    public function find($page, $term, $limit, $organisasi_id);
 
     /**
      * Get a data
@@ -51,32 +51,28 @@ interface KelompokInterface
     public function destroy($id);
 
     /**
-     * Cek if Exists in relation
-     *
-     * @param $akun_id
-     *
      * @return mixed
      */
-    public function findIsExists($akun_id);
+    public function getCountDpa();
 
     /**
-     * @param $id
+     * @param $organisasi_id
      *
      * @return mixed
      */
-    public function getNamaKelompok($id);
+    public function getCountByDesa($organisasi_id);
 
     /**
-     * @param $id
+     * @param $organisasi_id
      *
      * @return mixed
      */
-    public function getKodeRekening($id);
+    public function getCountRkaByDesa($organisasi_id);
 
     /**
-     * @param $akun_id
+     * @param $organisasi_id
      *
      * @return mixed
      */
-    public function getListKelompok($akun_id);
+    public function getCountDpaByDesa($organisasi_id);
 }
