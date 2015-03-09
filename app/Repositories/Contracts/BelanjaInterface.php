@@ -11,7 +11,7 @@ interface BelanjaInterface
      *
      * @return mixed
      */
-    public function find($page, $term, $limit, $organisasi_id);
+    public function find($page, $limit, $term, $organisasi_id);
 
     /**
      * Get a data

@@ -11,7 +11,7 @@ interface KegiatanInterface
      *
      * @return mixed
      */
-    public function find($page, $term, $limit);
+    public function find($page, $limit, $term);
 
     /**
      * Get a data
