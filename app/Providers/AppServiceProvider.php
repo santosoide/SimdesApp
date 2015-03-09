@@ -55,10 +55,15 @@ class AppServiceProvider extends ServiceProvider
             'SimdesApp\Repositories\Contracts\ObyekInterface',
             'SimdesApp\Repositories\Obyek\ObyekRepository'
         );
-        // bind Belanjas
+        // bind Belanja
         $this->app->bind(
             'SimdesApp\Repositories\Contracts\BelanjaInterface',
             'SimdesApp\Repositories\Belanja\BelanjaRepository'
+        );
+        // bind Program
+        $this->app->bind(
+            'SimdesApp\Repositories\Contracts\ProgramInterface',
+            'SimdesApp\Repositories\Program\ProgramRepository'
         );
     }
 }

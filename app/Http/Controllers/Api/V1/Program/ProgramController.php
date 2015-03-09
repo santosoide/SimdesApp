@@ -3,69 +3,83 @@
 use SimdesApp\Http\Requests;
 use SimdesApp\Http\Controllers\Controller;
 use SimdesApp\Http\Controllers\Api\V1\Program;
+use SimdesApp\Repositories\Contracts\ProgramInterface;
 use SimdesApp\Repositories\Program\ProgramRepository;
 use SimdesApp\Http\Requests\Program\ProgramCreateForm;
 use SimdesApp\Http\Requests\Program\ProgramEditForm;
+class ProgramController extends Controller
+{
+    /**
+     * @var ProgramInterface
+     */
+    protected $program;
 
-class ProgramController extends Controller {
+    /**
+     * Create new AkunController Instance
+     *
+     * @param ProgramInterface $program
+     */
+    public function __construct(ProgramInterface $program)
+    {
+        $this->program = $program;
+    }
 
     /**
      * Show data
      *
-     * @param ProgramRepository $organisasi
      * @return mixed
      */
-    public function index(ProgramRepository $organisasi)
+    public function index()
     {
-        return $organisasi->find($this->input('page'), $limit = 10, $this->input('term'));
+        return $this->program->find($this->input('page'), $limit = 10, $this->input('term'));
     }
 
     /**
      * Create data Program
      *
      * @param ProgramCreateForm $request
-     * @param ProgramRepository $organisasi
+     *
      * @return mixed
      */
-    public function store(ProgramCreateForm $request, ProgramRepository $organisasi)
+    public function store(ProgramCreateForm $request)
     {
-        return $organisasi->create($request->all());
+        return $this->program->create($request->all());
     }
 
     /**
      * Show detail Program
      *
-     * @param ProgramRepository $organisasi
-     * @param $id
+     * @param                   $id
+     *
      * @return \Illuminate\Support\Collection|null|static
      */
-    public function show(ProgramRepository $organisasi, $id)
+    public function show($id)
     {
-        return $organisasi->findById($id);
+        return $this->program->findById($id);
     }
 
     /**
      * Update data Program
      *
-     * @param $id
-     * @param ProgramEditForm $request
-     * @param ProgramRepository $organisasi
+     * @param                   $id
+     * @param ProgramEditForm   $request
+     *
      * @return mixed
      */
-    public function update($id, ProgramEditForm $request, ProgramRepository $organisasi)
+    public function update($id, ProgramEditForm $request)
     {
-        return $organisasi->update($id, $request->all());
+        return $this->program->update($id, $request->all());
     }
 
     /**
      * Delete data Program
      *
-     * @param $id
-     * @param ProgramRepository $organisasi
+     * @param                   $id
+     *
      * @return mixed
      */
-    public function destroy($id, ProgramRepository $organisasi)
+    public function destroy($id)
     {
-        return $organisasi->destroy($id);
+        return $this->program->destroy($id);
     }
 }
