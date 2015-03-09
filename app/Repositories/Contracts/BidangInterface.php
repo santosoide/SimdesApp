@@ -1,5 +1,5 @@
 <?php namespace SimdesApp\Repositories\Contracts;
-interface ProgramInterface
+interface BidangInterface
 {
     /**
      * Find data using search adn custom pagination
@@ -50,29 +50,21 @@ interface ProgramInterface
     public function destroy($id);
 
     /**
-     * @param $bidang_id
+     * @param $kewenangan_id
      *
      * @return mixed
      */
-    public function findIsExists($bidang_id);
+    public function findIsExists($kewenangan_id);
 
     /**
-     * @param $bidang_id
+     * @param $kewenangan_id
      *
      * @return mixed
      */
-    public function getListByBidang($bidang_id);
-
-    /**
-     * @param $bidang_id
-     * @param $organisasi_id
-     *
-     * @return mixed
-     */
-    public function getListByBidangOrganisasi($bidang_id, $organisasi_id);
+    public function getListByKewenangan($kewenangan_id);
 
     /**
      * @return mixed
      */
-    public function getJumlahProgram();
+    public function getList();
 }

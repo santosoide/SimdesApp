@@ -2,13 +2,14 @@
 
 use SimdesApp\Models\Bidang;
 use SimdesApp\Repositories\AbstractRepository;
-use SimdesApp\Repositories\Program\ProgramRepository;
+use SimdesApp\Repositories\Contracts\BidangInterface;
+use SimdesApp\Repositories\Contracts\ProgramInterface;
 use SimdesApp\Services\LaraCacheInterface;
 
-class BidangRepository extends AbstractRepository
+class BidangRepository extends AbstractRepository implements BidangInterface
 {
     /**
-     * @var ProgramRepository
+     * @var ProgramInterface
      */
     protected $program;
 
@@ -19,10 +20,10 @@ class BidangRepository extends AbstractRepository
 
     /**
      * @param Bidang $bidang
-     * @param ProgramRepository $program
+     * @param ProgramInterface $program
      * @param LaraCacheInterface $cache
      */
-    public function __construct(Bidang $bidang, ProgramRepository $program, LaraCacheInterface $cache)
+    public function __construct(Bidang $bidang, ProgramInterface $program, LaraCacheInterface $cache)
     {
         $this->model = $bidang;
         $this->program = $program;
@@ -111,16 +112,18 @@ class BidangRepository extends AbstractRepository
     {
         try {
             $bidang = $this->findById($id);
+            if ($bidang) {
+                $bidang->kode_rekening = e($data['kode_rekening']);
+                $bidang->kewenangan_id = e($data['kewenangan_id']);
+                $bidang->bidang = e($data['bidang']);
 
-            $bidang->kode_rekening = e($data['kode_rekening']);
-            $bidang->kewenangan_id = e($data['kewenangan_id']);
-            $bidang->bidang = e($data['bidang']);
+                $bidang->save();
 
-            $bidang->save();
+                // Return result success
+                return $this->successUpdateResponse();
+            }
 
-            // Return result success
-            return $this->successUpdateResponse();
-
+            return $this->emptyDeleteResponse();
         } catch (\Exception $ex) {
             \Log::error('BidangRepository update action something wrong -' . $ex);
             return $this->errorUpdateResponse();

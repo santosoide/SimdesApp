@@ -3,69 +3,82 @@
 use SimdesApp\Http\Requests;
 use SimdesApp\Http\Controllers\Controller;
 use SimdesApp\Http\Controllers\Api\V1\Bidang;
-use SimdesApp\Repositories\Bidang\BidangRepository;
 use SimdesApp\Http\Requests\Bidang\BidangCreateForm;
 use SimdesApp\Http\Requests\Bidang\BidangEditForm;
+use SimdesApp\Repositories\Contracts\BidangInterface;
+class BidangController extends Controller
+{
+    /**
+     * @var BidangInterface
+     */
+    protected $bidang;
 
-class BidangController extends Controller {
+    /**
+     * Create new AkunController Instance
+     *
+     * @param BidangInterface $bidang
+     */
+    public function __construct(BidangInterface $bidang)
+    {
+        $this->bidang = $bidang;
+    }
 
     /**
      * Show data
      *
-     * @param BidangRepository $obyek
      * @return mixed
      */
-    public function index(BidangRepository $obyek)
+    public function index()
     {
-        return $obyek->find($this->input('page'), $limit = 10, $this->input('term'));
+        return $this->bidang->find($this->input('page'), $limit = 10, $this->input('term'));
     }
 
     /**
      * Create data Bidang
      *
      * @param BidangCreateForm $request
-     * @param BidangRepository $obyek
+     *
      * @return mixed
      */
-    public function store(BidangCreateForm $request, BidangRepository $obyek)
+    public function store(BidangCreateForm $request)
     {
-        return $obyek->create($request->all());
+        return $this->bidang->create($request->all());
     }
 
     /**
      * Show data Bidang
      *
-     * @param BidangRepository $obyek
-     * @param $id
+     * @param                  $id
+     *
      * @return \Illuminate\Support\Collection|null|static
      */
-    public function show(BidangRepository $obyek, $id)
+    public function show($id)
     {
-        return $obyek->findById($id);
+        return $this->bidang->findById($id);
     }
 
     /**
      * Update data Bidang
      *
-     * @param $id
-     * @param BidangEditForm $request
-     * @param BidangRepository $obyek
+     * @param                  $id
+     * @param BidangEditForm   $request
+     *
      * @return mixed
      */
-    public function update($id, BidangEditForm $request, BidangRepository $obyek)
+    public function update($id, BidangEditForm $request)
     {
-        return $obyek->update($id, $request->all());
+        return $this->bidang->update($id, $request->all());
     }
 
     /**
      * Delete data Bidang
      *
-     * @param $id
-     * @param BidangRepository $obyek
+     * @param                  $id
+     *
      * @return mixed
      */
-    public function destroy($id, BidangRepository $obyek)
+    public function destroy($id)
     {
-        return $obyek->destroy($id);
+        return $this->bidang->destroy($id);
     }
 }
