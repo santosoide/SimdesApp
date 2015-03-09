@@ -5,6 +5,7 @@ use SimdesApp\Repositories\AbstractRepository;
 use SimdesApp\Repositories\Contracts\JenisInterface;
 use SimdesApp\Repositories\Contracts\KelompokInterface;
 use SimdesApp\Services\LaraCacheInterface;
+
 class KelompokRepository extends AbstractRepository implements KelompokInterface
 {
 

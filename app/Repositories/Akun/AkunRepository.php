@@ -4,14 +4,11 @@ use SimdesApp\Models\Akun;
 use SimdesApp\Repositories\AbstractRepository;
 use SimdesApp\Repositories\Contracts\AkunInterface;
 use SimdesApp\Repositories\Contracts\KelompokInterface;
-use SimdesApp\Repositories\Kelompok\KelompokRepository;
 use SimdesApp\Services\LaraCacheInterface;
+
 class AkunRepository extends AbstractRepository implements AkunInterface
 {
 
-    /**
-     * @var KelompokRepository
-     */
     protected $kelompok;
 
     /**
@@ -23,14 +20,13 @@ class AkunRepository extends AbstractRepository implements AkunInterface
      * create instance interface
      *
      * @param Akun               $akun
-     * @param KelompokInterface  $kelompok
      * @param LaraCacheInterface $cache
      */
-    public function __construct(Akun $akun, KelompokInterface $kelompok, LaraCacheInterface $cache)
+    public function __construct(Akun $akun, LaraCacheInterface $cache, KelompokInterface $kelompok)
     {
         $this->model = $akun;
-        $this->kelompok = $kelompok;
         $this->cache = $cache;
+        $this->kelompok = $kelompok;
     }
 
     /**
@@ -160,9 +156,9 @@ class AkunRepository extends AbstractRepository implements AkunInterface
     }
 
     /**
-     * check kelompok before delete
+     * Cek if Exists in relation
      *
-     * @param $akun_id
+     * @param                    $akun_id
      *
      * @return mixed
      */
