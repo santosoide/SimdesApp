@@ -225,4 +225,76 @@ class TransaksiPendapatanRepository extends AbstractRepository
 
         return $pendapatan;
     }
+
+    /**
+     * get pendapatan by organisasi id
+     *
+     * @param int $page
+     * @param int $limit
+     * @param null $term
+     * @param      $organisasi_id
+     * @return mixed
+     */
+    public function getTransaksiPendapatanByDesa($page = 1, $limit = 10, $term = null, $organisasi_id)
+    {
+        // set key
+        $key = 'transaksi-pendapatan-get-desa' . $page . $limit . $term . $organisasi_id;
+
+        // set section
+        $section = 'transaksi-pendapatan';
+
+        // has section and key
+        if ($this->cache->has($section, $key)) {
+            return $this->cache->get($section, $key);
+        }
+
+        // query to database
+        $pendapatan = $this->model
+            ->orderBy('created_at', 'desc')
+            ->where('organisasi_id', '=', $organisasi_id)
+            ->where('pendapatan', 'like', '%' . $term . '%')
+            ->paginate($limit)
+            ->toArray();
+
+        // store to cache
+        $this->cache->put($section, $key, $pendapatan, 10);
+
+        return $pendapatan;
+    }
+
+    /**
+     * find tanggal and jumlah with between tanggal
+     *
+     * @param $organisasi_id
+     * @param $tanggal_awal
+     * @param $tanggal_akhir
+     * @param $dana_desa_id
+     * @return mixed
+     */
+    public function getChartByOrganisasiId($organisasi_id, $tanggal_awal, $tanggal_akhir, $dana_desa_id)
+    {
+        return $pendapatan = $this->model
+            ->where('organisasi_id', '=', $organisasi_id)
+            ->whereBetween('tanggal', [$tanggal_awal, $tanggal_akhir])
+            ->where('dana_desa_id', '=', $dana_desa_id)
+            ->get('tanggal', 'jumlah')
+            ->toArray();
+    }
+
+    /**
+     * find tanggal and jumlah with between tanggal
+     *
+     * @param $tanggal_awal
+     * @param $tanggal_akhir
+     * @param $dana_desa_id
+     * @return mixed
+     */
+    public function getChart($tanggal_awal, $tanggal_akhir, $dana_desa_id)
+    {
+        return $pendapatan = $this->model
+            ->whereBetween('tanggal', [$tanggal_awal, $tanggal_akhir])
+            ->where('dana_desa_id', '=', $dana_desa_id)
+            ->get('tanggal', 'jumlah')
+            ->toArray();
+    }
 }

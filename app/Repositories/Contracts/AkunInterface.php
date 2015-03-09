@@ -1,5 +1,7 @@
 <?php namespace SimdesApp\Repositories\Contracts;
 
+use SimdesApp\Repositories\Kelompok\KelompokRepository;
+
 interface AkunInterface
 {
     /**
@@ -53,7 +55,7 @@ interface AkunInterface
     /**
      * Cek if Exists in relation
      *
-     * @param $akun_id
+     * @param                    $akun_id
      *
      * @return mixed
      */

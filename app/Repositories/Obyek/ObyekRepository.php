@@ -2,16 +2,11 @@
 
 use SimdesApp\Models\Obyek;
 use SimdesApp\Repositories\AbstractRepository;
-use SimdesApp\Repositories\Contracts\JenisInterface;
 use SimdesApp\Repositories\Contracts\ObyekInterface;
 use SimdesApp\Services\LaraCacheInterface;
+
 class ObyekRepository extends AbstractRepository implements ObyekInterface
 {
-
-    /**
-     * @var JenisInterface
-     */
-    protected $jenis;
 
     /**
      * @var LaraCacheInterface
@@ -20,13 +15,11 @@ class ObyekRepository extends AbstractRepository implements ObyekInterface
 
     /**
      * @param Obyek              $obyek
-     * @param JenisInterface     $jenis
      * @param LaraCacheInterface $cache
      */
-    public function __construct(Obyek $obyek, JenisInterface $jenis, LaraCacheInterface $cache)
+    public function __construct(Obyek $obyek, LaraCacheInterface $cache)
     {
         $this->model = $obyek;
-        $this->jenis = $jenis;
         $this->cache = $cache;
     }
 

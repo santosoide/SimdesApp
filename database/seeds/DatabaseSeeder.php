@@ -11,50 +11,35 @@ class DatabaseSeeder extends \Illuminate\Database\Seeder
     public function run()
     {
         //user
-        $this->call('UsersTableSeeder');
-
+//        $this->call('UsersTableSeeder');
 //        // user desa
-//        $this->call('UsersDesaTableSeeder');
-
+        $this->call('UsersDesaTableSeeder');
         // organisasi
         $this->call('OrganisasiTableSeeder');
-
         // akun
         $this->call('AkunTableSeeder');
-
         // kelompok
         $this->call('KelompokTableSeeder');
-
         // jenis
         $this->call('JenisTableSeeder');
-
         // Obyek
         $this->call('ObyekTableSeeder');
-
         // Kewenangan
         $this->call('KewenanganTableSeeder');
-
         // Bidang
         $this->call('BidangTableSeeder');
-
         // Program
         $this->call('ProgramTableSeeder');
-
         // Kegiatan
         $this->call('KegiatanTableSeeder');
-
         // SumberDana
         $this->call('SumberDanaTableSeeder');
-
         // Stanadar Satuan harga
         $this->call('StandarSatuanHargaTableSeeder');
-
         // RPJMDES
         $this->call('RPJMDESTableSeeder');
-
         // RPJMDES Misi
         $this->call('MisiTableSeeder');
-
         // Dana Desa
         $this->call('DanaDesaTableSeeder');
         // Kecamatan
