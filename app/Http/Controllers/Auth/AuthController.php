@@ -51,12 +51,29 @@ class AuthController extends Controller
         $credentials = $this->inputOnly(['password', 'email']);
         $remember = $this->input('remember', true);
         if (\Auth::attempt($credentials, $remember)) {
-            $level = $this->getLevel();
-            if ($level >= 200) {
-                return new RedirectResponse(url('/'));
+            $user_id = \Auth::user()->_id;
+            $organisasi_id = \Auth::user()->organisasi_id;
+
+            if ($organisasi_id == '') {
+                \Session::put('desa', 'BPMD');
+            } else {
+                $organisasi = $this->organisasi->findById($organisasi_id);
+
+                \Session::put('desa', $organisasi->desa);
             }
 
-            return new RedirectResponse(url('/front'));
+            \Session::put('nama', \Auth::user()->nama);
+            \Session::put('level', \Auth::user()->level);
+            \Session::put('avatar', \Auth::user()->avatar);
+            \Session::put('organisasi_id', \Auth::user()->organisasi_id);
+            \Session::put('user_id', $user_id);
+
+            $level = $this->getLevel();
+            if ($level >= 200) {
+                return redirect('/');
+            }
+
+            return redirect('/front');
         }
 
         // set response with flash message

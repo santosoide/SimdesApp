@@ -14,6 +14,15 @@ interface KelompokInterface
     public function find($page, $term, $limit);
 
     /**
+     * Get a data
+     *
+     * @param $id
+     *
+     * @return mixed
+     */
+    public function findById($id);
+
+    /**
      * Store a new record
      *
      * @param array $data

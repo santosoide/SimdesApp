@@ -2,16 +2,11 @@
 
 use SimdesApp\Models\Obyek;
 use SimdesApp\Repositories\AbstractRepository;
-use SimdesApp\Repositories\Jenis\JenisRepository;
+use SimdesApp\Repositories\Contracts\ObyekInterface;
 use SimdesApp\Services\LaraCacheInterface;
 
-class ObyekRepository extends AbstractRepository
+class ObyekRepository extends AbstractRepository implements ObyekInterface
 {
-
-    /**
-     * @var ObyekRepository
-     */
-    protected $jenis;
 
     /**
      * @var LaraCacheInterface
@@ -19,45 +14,40 @@ class ObyekRepository extends AbstractRepository
     protected $cache;
 
     /**
-     * @param Obyek $obyek
-     * @param JenisRepository $jenis
+     * @param Obyek              $obyek
      * @param LaraCacheInterface $cache
      */
-    public function __construct(Obyek $obyek, JenisRepository $jenis, LaraCacheInterface $cache)
+    public function __construct(Obyek $obyek, LaraCacheInterface $cache)
     {
         $this->model = $obyek;
-        $this->jenis = $jenis;
         $this->cache = $cache;
     }
 
     /**
      * Instant find or search with paging, limit, and query
      *
-     * @param int $page
-     * @param int $limit
+     * @param int  $page
+     * @param int  $limit
      * @param null $term
+     *
      * @return mixed
      */
     public function find($page = 1, $limit = 10, $term = null)
     {
         // Create Key for cache
         $key = 'obyek-find-' . $page . $limit . $term;
-
         // Create Section
         $section = 'obyek';
-
         // If cache is exist get data from cache
         if ($this->cache->has($section, $key)) {
             return $this->cache->get($section, $key);
         }
-
         // Search data
         $obyek = $this->model
             ->orderBy('kode_rekening', 'asc')
             ->where('kode_rekening', 'like', '%' . $term . '%')
             ->paginate($limit)
             ->toArray();
-
         // Create cache
         $this->cache->put($section, $key, $obyek, 10);
 
@@ -68,28 +58,25 @@ class ObyekRepository extends AbstractRepository
      * Create data
      *
      * @param array $data
+     *
      * @return mixed
      */
     public function create(array $data)
     {
         try {
             $obyek = $this->getNew();
-
-            // jika organisasi_id null APBDes obyek diinput oleh Kabupaten
-            $organisasi_id = (empty($data['organisasi_id'])) ? '' : $data['organisasi_id'];
-
             $obyek->kode_rekening = e($data['kode_rekening']);
             $obyek->jenis_id = $data['jenis_id'];
             $obyek->obyek = e($data['obyek']);
-            $obyek->organisasi_id = $organisasi_id;
-
+            $obyek->organisasi_id = $this->getOrganisasiId();
             $obyek->save();
 
             /*Return result success*/
-            return $this->successInsertResponse();
 
+            return $this->successInsertResponse();
         } catch (\Exception $ex) {
             \Log::error('ObyekRepository create action something wrong -' . $ex);
+
             return $this->errorInsertResponse();
         }
     }
@@ -98,6 +85,7 @@ class ObyekRepository extends AbstractRepository
      * Show the Record
      *
      * @param $id
+     *
      * @return \Illuminate\Support\Collection|null|static
      */
     public function findById($id)
@@ -108,26 +96,29 @@ class ObyekRepository extends AbstractRepository
     /**
      * Update the Record
      *
-     * @param $id
+     * @param       $id
      * @param array $data
+     *
      * @return mixed
      */
     public function update($id, array $data)
     {
         try {
             $obyek = $this->findById($id);
+            if ($obyek) {
+                $obyek->kode_rekening = e($data['kode_rekening']);
+                $obyek->jenis_id = $data['jenis_id'];
+                $obyek->obyek = e($data['obyek']);
+                $obyek->save();
 
-            $obyek->kode_rekening = e($data['kode_rekening']);
-            $obyek->jenis_id = $data['jenis_id'];
-            $obyek->obyek = e($data['obyek']);
+                // Return result success
+                return $this->successUpdateResponse();
+            }
 
-            $obyek->save();
-
-            // Return result success
-            return $this->successUpdateResponse();
-
+            return $this->emptyDeleteResponse();
         } catch (\Exception $ex) {
             \Log::error('ObyekRepository update action something wrong -' . $ex);
+
             return $this->errorUpdateResponse();
         }
     }
@@ -136,28 +127,27 @@ class ObyekRepository extends AbstractRepository
      * Destroy the Record
      *
      * @param $id
+     *
      * @return mixed
      */
     public function destroy($id)
     {
         try {
             $obyek = $this->findById($id);
-
             if ($obyek) {
                 $result = $this->cekForDelete($obyek->_id);
                 if (count($result) > 0) {
                     return $this->relationDeleteResponse();
                 }
-
                 $obyek->delete();
 
                 return $this->successDeleteResponse();
             }
 
             return $this->emptyDeleteResponse();
-
         } catch (\Exception $ex) {
             \Log::error('ObyekRepository destroy action something wrong -' . $ex);
+
             return $this->errorDeleteResponse();
         }
     }
@@ -166,11 +156,13 @@ class ObyekRepository extends AbstractRepository
      * Get obyek filter by id
      *
      * @param $id
+     *
      * @return mixed
      */
     public function getNamaObyek($id)
     {
         $data = $this->findById($id);
+
         return $data->obyek;
     }
 
@@ -178,11 +170,13 @@ class ObyekRepository extends AbstractRepository
      * Get kode rekening
      *
      * @param $id
+     *
      * @return mixed
      */
     public function getKodeRekening($id)
     {
         $data = $this->findById($id);
+
         return $data->kode_rekening;
     }
 
@@ -202,6 +196,7 @@ class ObyekRepository extends AbstractRepository
      * check jenis before delete
      *
      * @param $kelompok_id
+     *
      * @return mixed
      */
     public function cekForDelete($kelompok_id)
@@ -220,21 +215,17 @@ class ObyekRepository extends AbstractRepository
     {
         // set key
         $key = 'obyek-list' . $jenis_id;
-
         // set section
         $section = 'obyek';
-
         // has section and key
         if ($this->cache->has($section, $key)) {
             return $this->cache->get($section, $key);
         }
-
         // query to database
         $obyek = $this->model
             ->where('jenis_id', '=', $jenis_id)
             ->get(['_id', 'kode_rekening', 'jenis_id', 'obyek'])
             ->toArray();
-
         // store to cache
         $this->cache->put($section, $key, $obyek, 3600);
 
@@ -253,15 +244,12 @@ class ObyekRepository extends AbstractRepository
     {
         // set key
         $key = 'obyek-list-desa' . $jenis_id . $organisasi_id;
-
         // set section
         $section = 'obyek';
-
         // has section and key
         if ($this->cache->has($section, $key)) {
             return $this->cache->get($section, $key);
         }
-
         // query to database
         $obyek = $this->model
             ->where('jenis_id', '=', $jenis_id)
@@ -269,11 +257,9 @@ class ObyekRepository extends AbstractRepository
             ->orWhere('organisasi_id', null)
             ->get(['_id', 'kode_rekening', 'jenis_id', 'obyek'])
             ->toArray();
-
         // store to cache
         $this->cache->put($section, $key, $obyek, 3600);
 
         return $obyek;
     }
-
 }

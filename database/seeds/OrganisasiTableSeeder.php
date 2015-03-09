@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Created by PhpStorm.
+ * User: Edi Santoso
+ * Date: 29/10/2014
+ * Time: 8:08
+ */
 class OrganisasiTableSeeder extends \Illuminate\Database\Seeder
 {
     public function run()

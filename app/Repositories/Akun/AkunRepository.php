@@ -4,15 +4,11 @@ use SimdesApp\Models\Akun;
 use SimdesApp\Repositories\AbstractRepository;
 use SimdesApp\Repositories\Contracts\AkunInterface;
 use SimdesApp\Repositories\Contracts\KelompokInterface;
-use SimdesApp\Repositories\Kelompok\KelompokRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
 class AkunRepository extends AbstractRepository implements AkunInterface
 {
 
-    /**
-     * @var KelompokRepository
-     */
     protected $kelompok;
 
     /**
@@ -24,14 +20,13 @@ class AkunRepository extends AbstractRepository implements AkunInterface
      * create instance interface
      *
      * @param Akun               $akun
-     * @param KelompokInterface  $kelompok
      * @param LaraCacheInterface $cache
      */
-    public function __construct(Akun $akun, KelompokInterface $kelompok, LaraCacheInterface $cache)
+    public function __construct(Akun $akun, LaraCacheInterface $cache, KelompokInterface $kelompok)
     {
         $this->model = $akun;
-        $this->kelompok = $kelompok;
         $this->cache = $cache;
+        $this->kelompok = $kelompok;
     }
 
     /**
@@ -66,6 +61,18 @@ class AkunRepository extends AbstractRepository implements AkunInterface
     }
 
     /**
+     * Show the Record
+     *
+     * @param $id
+     *
+     * @return \Illuminate\Support\Collection|null|static
+     */
+    public function findById($id)
+    {
+        return $this->model->find($id);
+    }
+
+    /**
      * Create data
      *
      * @param array $data
@@ -90,18 +97,6 @@ class AkunRepository extends AbstractRepository implements AkunInterface
     }
 
     /**
-     * Show the Record
-     *
-     * @param $id
-     *
-     * @return \Illuminate\Support\Collection|null|static
-     */
-    public function findById($id)
-    {
-        return $this->model->find($id);
-    }
-
-    /**
      * Update the record
      *
      * @param       $id
@@ -113,13 +108,17 @@ class AkunRepository extends AbstractRepository implements AkunInterface
     {
         try {
             $akun = $this->findById($id);
-            $akun->kode_rekening = e($data['kode_rekening']);
-            $akun->akun = e($data['akun']);
-            $akun->save();
+            if ($akun) {
+                $akun->kode_rekening = e($data['kode_rekening']);
+                $akun->akun = e($data['akun']);
+                $akun->save();
 
-            /*Return result success*/
+                /*Return result success*/
 
-            return $this->successUpdateResponse();
+                return $this->successUpdateResponse();
+            }
+
+            return $this->emptyDeleteResponse();
         } catch (\Exception $ex) {
             \Log::error('AkunRepository update action something wrong -' . $ex);
 
@@ -157,9 +156,9 @@ class AkunRepository extends AbstractRepository implements AkunInterface
     }
 
     /**
-     * check kelompok before delete
+     * Cek if Exists in relation
      *
-     * @param $akun_id
+     * @param                    $akun_id
      *
      * @return mixed
      */

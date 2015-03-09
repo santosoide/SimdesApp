@@ -1,8 +1,6 @@
 <?php namespace SimdesApp\Repositories\Contracts;
 
-use SimdesApp\Repositories\Kelompok\KelompokRepository;
-
-interface AkunInterface
+interface JenisInterface
 {
     /**
      * Find data using search adn custom pagination
@@ -53,18 +51,30 @@ interface AkunInterface
     public function destroy($id);
 
     /**
-     * Cek if Exists in relation
-     *
-     * @param                    $akun_id
+     * @param $id
      *
      * @return mixed
      */
-    public function cekForDelete($akun_id);
+    public function getNamaJenis($id);
 
     /**
-     * Get list Akun Using by Ajax Dropdown
+     * @param $id
      *
      * @return mixed
      */
-    public function getListAkun();
+    public function getKodeRekening($id);
+
+    /**
+     * @param $kelompok_id
+     *
+     * @return mixed
+     */
+    public function findIsExists($kelompok_id);
+
+    /**
+     * @param $kelompok_id
+     *
+     * @return mixed
+     */
+    public function getListJenis($kelompok_id);
 }

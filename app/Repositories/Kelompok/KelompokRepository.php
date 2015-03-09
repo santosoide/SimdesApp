@@ -2,15 +2,15 @@
 
 use SimdesApp\Models\Kelompok;
 use SimdesApp\Repositories\AbstractRepository;
+use SimdesApp\Repositories\Contracts\JenisInterface;
 use SimdesApp\Repositories\Contracts\KelompokInterface;
-use SimdesApp\Repositories\Jenis\JenisRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
 class KelompokRepository extends AbstractRepository implements KelompokInterface
 {
 
     /**
-     * @var JenisRepository
+     * @var JenisInterface
      */
     protected $jenis;
 
@@ -22,20 +22,26 @@ class KelompokRepository extends AbstractRepository implements KelompokInterface
     /**
      * instance interface
      *
-     * @param Kelompok $kelompok
+     * @param Kelompok           $kelompok
      * @param LaraCacheInterface $cache
+     * @param JenisInterface     $jenis
      */
-    public function __construct(Kelompok $kelompok, LaraCacheInterface $cache)
+    public function __construct(
+        Kelompok $kelompok,
+        LaraCacheInterface $cache,
+        JenisInterface $jenis
+    )
     {
         $this->model = $kelompok;
         $this->cache = $cache;
+        $this->jenis = $jenis;
     }
 
     /**
      * Instant find or search with paging, limit, and query
      *
-     * @param int $page
-     * @param int $limit
+     * @param int  $page
+     * @param int  $limit
      * @param null $term
      *
      * @return mixed
@@ -60,6 +66,18 @@ class KelompokRepository extends AbstractRepository implements KelompokInterface
         $this->cache->put($section, $key, $organisasi, 10);
 
         return $organisasi;
+    }
+
+    /**
+     * Show the Record
+     *
+     * @param $id
+     *
+     * @return \Illuminate\Support\Collection|null|static
+     */
+    public function findById($id)
+    {
+        return $this->model->find($id);
     }
 
     /**
@@ -88,18 +106,6 @@ class KelompokRepository extends AbstractRepository implements KelompokInterface
     }
 
     /**
-     * Show the Record
-     *
-     * @param $id
-     *
-     * @return \Illuminate\Support\Collection|null|static
-     */
-    public function findById($id)
-    {
-        return $this->model->find($id);
-    }
-
-    /**
      * Update the record
      *
      * @param       $id
@@ -111,13 +117,17 @@ class KelompokRepository extends AbstractRepository implements KelompokInterface
     {
         try {
             $kelompok = $this->findById($id);
-            $kelompok->kode_rekening = e($data['kode_rekening']);
-            $kelompok->akun_id = $data['akun_id'];
-            $kelompok->kelompok = e($data['kelompok']);
-            $kelompok->save();
+            if ($kelompok) {
+                $kelompok->kode_rekening = e($data['kode_rekening']);
+                $kelompok->akun_id = $data['akun_id'];
+                $kelompok->kelompok = e($data['kelompok']);
+                $kelompok->save();
 
-            // Return result success
-            return $this->successUpdateResponse();
+                // Return result success
+                return $this->successUpdateResponse();
+            }
+
+            return $this->emptyDeleteResponse();
         } catch (\Exception $ex) {
             \Log::error('KelompokRepository update action something wrong -' . $ex);
 

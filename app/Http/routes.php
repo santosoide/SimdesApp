@@ -208,7 +208,7 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'api/v1/auth'], function () {
 
 Route::group(['namespace' => 'Api\V1\Ajax', 'prefix' => 'api/v1'], function () {
     // Akun
-    Route::get('get-list-akun', 'AjaxAkunController@getList');
+    Route::get('get-list-akun', 'AjaxAkunController@getListAkun');
 
     // Dana desa
     Route::get('get-list-dana-desa-tersedia', 'AjaxDanaDesaController@getListDanaDesa');
