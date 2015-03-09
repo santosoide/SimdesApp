@@ -4,44 +4,55 @@ use SimdesApp\Http\Requests;
 use SimdesApp\Http\Controllers\Controller;
 use SimdesApp\Http\Requests\DanaDesa\DanaDesaCreateForm;
 use SimdesApp\Http\Requests\DanaDesa\DanaDesaEditForm;
-use SimdesApp\Repositories\DanaDesa\DanaDesaRepository;
+use SimdesApp\Repositories\Contracts\DanaDesaInterface;
 
 class DanaDesaController extends Controller
 {
+    /**
+     * @var DanaDesaInterface
+     */
+    protected $danaDesa;
+
+    /**
+     * Create new AkunController Instance
+     *
+     * @param DanaDesaInterface $danaDesa
+     */
+    public function __construct(DanaDesaInterface $danaDesa)
+    {
+        $this->danaDesa = $danaDesa;
+    }
 
     /**
      * Find dana desa
      *
-     * @param DanaDesaRepository $danaDesa
      * @return mixed
      */
-    public function index(DanaDesaRepository $danaDesa)
+    public function index()
     {
-        return $danaDesa->find($this->input('page'), $limit = 10, $this->input('term'));
+        return $this->danaDesa->find($this->input('page'), $limit = 10, $this->input('term'));
     }
 
     /**
      * Insert dana desa
      *
      * @param DanaDesaCreateForm $request
-     * @param DanaDesaRepository $danaDesa
      * @return mixed
      */
-    public function store(DanaDesaCreateForm $request, DanaDesaRepository $danaDesa)
+    public function store(DanaDesaCreateForm $request)
     {
-        return $danaDesa->create($request->all());
+        return $this->danaDesa->create($request->all());
     }
 
     /**
      * Get dana desa
      *
-     * @param DanaDesaRepository $danaDesa
      * @param $id
      * @return \Illuminate\Support\Collection|null|static
      */
-    public function show(DanaDesaRepository $danaDesa, $id)
+    public function show($id)
     {
-        return $danaDesa->findById($id);
+        return $this->danaDesa->findById($id);
     }
 
     /**
@@ -49,47 +60,43 @@ class DanaDesaController extends Controller
      *
      * @param $id
      * @param DanaDesaEditForm $request
-     * @param DanaDesaRepository $danaDesa
      * @return mixed
      */
-    public function update($id, DanaDesaEditForm $request, DanaDesaRepository $danaDesa)
+    public function update($id, DanaDesaEditForm $request)
     {
-        return $danaDesa->update($id, $request->all());
+        return $this->danaDesa->update($id, $request->all());
     }
 
     /**
      * Delete dana desa
      *
      * @param $id
-     * @param DanaDesaRepository $danaDesa
      * @return mixed
      */
-    public function destroy($id, DanaDesaRepository $danaDesa)
+    public function destroy($id)
     {
-        return $danaDesa->destroy($id);
+        return $this->danaDesa->destroy($id);
     }
 
     /**
      * Get list dana desa using in detil organisasi
      *
-     * @param DanaDesaRepository $danaDesa
      * @param $organisasi_id
      *
      * @return mixed
      */
-    public function getDanaDesa(DanaDesaRepository $danaDesa, $organisasi_id)
+    public function getDanaDesa($organisasi_id)
     {
-        return $danaDesa->listByOrganisasiId($organisasi_id);
+        return $this->danaDesa->listByOrganisasiId($organisasi_id);
     }
 
     /**
      * Get list dana desa using by frontoffice
      *
-     * @param DanaDesaRepository $danaDesa
      * @return mixed
      */
-    public function getDanaDesaTersedia(DanaDesaRepository $danaDesa)
+    public function getDanaDesaTersedia()
     {
-        return $danaDesa->listByOrganisasiId($this->getOrganisasiId());
+        return $this->danaDesa->listByOrganisasiId($this->getOrganisasiId());
     }
 }

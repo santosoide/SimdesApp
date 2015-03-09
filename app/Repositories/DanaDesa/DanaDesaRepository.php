@@ -2,9 +2,10 @@
 
 use SimdesApp\Models\DanaDesa;
 use SimdesApp\Repositories\AbstractRepository;
+use SimdesApp\Repositories\Contracts\DanaDesaInterface;
 use SimdesApp\Services\LaraCacheInterface;
 
-class DanaDesaRepository extends AbstractRepository
+class DanaDesaRepository extends AbstractRepository implements DanaDesaInterface
 {
 
     /**
@@ -67,7 +68,7 @@ class DanaDesaRepository extends AbstractRepository
 
             $danaDesa->sumber_dana_id = e($data['sumber_dana_id']);
             $danaDesa->jumlah = e($data['jumlah']);
-            $danaDesa->sisa_anggaran = e($data['jumlah']);
+            $danaDesa->sisa_anggaran = e($data['sisa_anggaran']);
 
             $danaDesa->save();
 
@@ -102,24 +103,26 @@ class DanaDesaRepository extends AbstractRepository
     {
         try {
             $danaDesa = $this->findById($id);
+            if ($danaDesa) {
+                if ($danaDesa->whois_posting == 1) {
+                    return $this->successResponseOk([
+                        'success' => false,
+                        'message' => [
+                            'msg' => 'Data yang diinput oleh Administrator Desa tidak boleh diedit.',
+                        ],
+                    ]);
+                }
 
-            if ($danaDesa->whois_posting == 1) {
-                return $this->successResponseOk([
-                    'success' => false,
-                    'message' => [
-                        'msg' => 'Data yang diinput oleh Administrator Desa tidak boleh diedit.',
-                    ],
-                ]);
+                $danaDesa->sumber_dana_id = e($data['sumber_dana_id']);
+                $danaDesa->jumlah = e($data['jumlah']);
+
+                $danaDesa->save();
+
+                /*Return result success*/
+                return $this->successUpdateResponse();
             }
 
-            $danaDesa->sumber_dana_id = e($data['sumber_dana_id']);
-            $danaDesa->jumlah = e($data['jumlah']);
-
-            $danaDesa->save();
-
-            /*Return result success*/
-            return $this->successUpdateResponse();
-
+            return $this->emptyDeleteResponse();
         } catch (\Exception $ex) {
             \Log::error('DanaDesaRepository update action something wrong -' . $ex);
             return $this->errorUpdateResponse();
@@ -151,12 +154,7 @@ class DanaDesaRepository extends AbstractRepository
                 return $this->successDeleteResponse();
             }
 
-            return $this->successResponseOk([
-                'success' => false,
-                'message' => [
-                    'msg' => 'Record sudah tidak ada atau sudah dihapus.',
-                ],
-            ]);
+            return $this->emptyDeleteResponse();
         } catch (\Exception $ex) {
             \Log::error('DanaDesaRepository destroy action something wrong -' . $ex);
             return $this->errorDeleteResponse();
