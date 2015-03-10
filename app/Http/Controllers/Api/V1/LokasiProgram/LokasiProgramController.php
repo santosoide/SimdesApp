@@ -20,7 +20,8 @@ class LokasiProgramController extends Controller
      *
      * @param LokasiProgramInterface $lokasiProgram
      */
-    public function __construct(LokasiProgramInterface $lokasiProgram){
+    public function __construct(LokasiProgramInterface $lokasiProgram)
+    {
         $this->lokasiProgram = $lokasiProgram;
     }
 

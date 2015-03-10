@@ -4,10 +4,26 @@ use SimdesApp\Http\Requests;
 use SimdesApp\Http\Controllers\Controller;
 use SimdesApp\Http\Requests\Pembiayaan\PembiayaanCreateForm;
 use SimdesApp\Http\Requests\Pembiayaan\PembiayaanEditForm;
+use SimdesApp\Repositories\Contracts\PembiayaanInterface;
 use SimdesApp\Repositories\Pembiayaan\PembiayaanRepository;
 
 class PembiayaanController extends Controller
 {
+    /**
+     * @var PembiayaanInterface
+     */
+    protected $pembiayaan;
+
+    /**
+     * Create new PembiayaanController Instance
+     *
+     * @param PembiayaanInterface $pembiayaan
+     */
+    public function __construct(PembiayaanInterface $pembiayaan)
+    {
+        $this->pembiayaan = $pembiayaan;
+    }
+
     /**
      * Show pembiayaan
      *

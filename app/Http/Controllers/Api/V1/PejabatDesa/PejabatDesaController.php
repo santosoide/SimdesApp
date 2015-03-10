@@ -8,7 +8,8 @@ use SimdesApp\Repositories\PejabatDesa\PejabatDesaRepository;
 use SimdesApp\Http\Requests\PejabatDesa\PejabatDesaCreateForm;
 use SimdesApp\Http\Requests\PejabatDesa\PejabatDesaEditForm;
 
-class PejabatDesaController extends Controller {
+class PejabatDesaController extends Controller
+{
 
     /**
      * @var PejabatDesaInterface
@@ -20,7 +21,8 @@ class PejabatDesaController extends Controller {
      *
      * @param PejabatDesaInterface $pejabatDesa
      */
-    public function __construct(PejabatDesaInterface $pejabatDesa){
+    public function __construct(PejabatDesaInterface $pejabatDesa)
+    {
         $this->pejabatDesa = $pejabatDesa;
     }
 

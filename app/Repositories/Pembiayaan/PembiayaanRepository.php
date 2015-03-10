@@ -2,12 +2,13 @@
 
 use SimdesApp\Models\Pembiayaan;
 use SimdesApp\Repositories\AbstractRepository;
+use SimdesApp\Repositories\Contracts\PembiayaanInterface;
 use SimdesApp\Repositories\Jenis\JenisRepository;
 use SimdesApp\Repositories\Kelompok\KelompokRepository;
 use SimdesApp\Repositories\Obyek\ObyekRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
-class PembiayaanRepository extends AbstractRepository
+class PembiayaanRepository extends AbstractRepository implements PembiayaanInterface
 {
 
     /**

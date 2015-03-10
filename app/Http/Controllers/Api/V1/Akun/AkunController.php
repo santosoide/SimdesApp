@@ -63,7 +63,7 @@ class AkunController extends Controller
      * Update the record
      *
      * @param                $id
-     * @param AkunEditForm   $request
+     * @param AkunEditForm $request
      *
      * @return mixed
      */
