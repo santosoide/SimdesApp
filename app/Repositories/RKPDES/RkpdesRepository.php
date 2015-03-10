@@ -2,9 +2,11 @@
 
 use SimdesApp\Models\Rkpdes;
 use SimdesApp\Repositories\AbstractRepository;
+use SimdesApp\Repositories\Contracts\RkpdesInterface;
 use SimdesApp\Services\LaraCacheInterface;
 
-class RkpdesRepository extends AbstractRepository {
+class RkpdesRepository extends AbstractRepository implements RkpdesInterface
+{
 
     /**
      * @var LaraCacheInterface
@@ -139,7 +141,7 @@ class RkpdesRepository extends AbstractRepository {
         try {
             $rkpdes = $this->findById($id);
 
-            if ($rkpdes){
+            if ($rkpdes) {
                 $rkpdes->delete();
 
                 // Return result success
@@ -190,8 +192,8 @@ class RkpdesRepository extends AbstractRepository {
      *
      * @param      $organisasi_id
      * @param      $program_rpjmdes_id
-     * @param int  $page
-     * @param int  $limit
+     * @param int $page
+     * @param int $limit
      * @param null $term
      *
      * @return mixed
@@ -260,8 +262,8 @@ class RkpdesRepository extends AbstractRepository {
     /**
      * get rkpdes by organisasi id
      *
-     * @param int  $page
-     * @param int  $limit
+     * @param int $page
+     * @param int $limit
      * @param null $term
      * @param      $organisasi_id
      *
@@ -297,8 +299,8 @@ class RkpdesRepository extends AbstractRepository {
     /**
      * find by rpjmdes program
      *
-     * @param int  $page
-     * @param int  $limit
+     * @param int $page
+     * @param int $limit
      * @param null $term
      * @param      $rpjmdes_program_id
      *

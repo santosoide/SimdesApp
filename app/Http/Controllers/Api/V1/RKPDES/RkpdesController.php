@@ -3,11 +3,28 @@
 use SimdesApp\Http\Requests;
 use SimdesApp\Http\Controllers\Controller;
 use SimdesApp\Http\Controllers\Api\V1\RKPDES;
+use SimdesApp\Repositories\Contracts\RkpdesInterface;
 use SimdesApp\Repositories\RKPDES\RkpdesRepository;
 use SimdesApp\Http\Requests\RKPDES\RkpdesCreateForm;
 use SimdesApp\Http\Requests\RKPDES\RkpdesEditForm;
 
-class RkpdesController extends Controller {
+class RkpdesController extends Controller
+{
+
+    /**
+     * @var
+     */
+    protected $rkpdes;
+
+    /**
+     * Create new RkpdesController Instance
+     *
+     * @param RkpdesInterface $rkpdes
+     */
+    public function  __construct(RkpdesInterface $rkpdes)
+    {
+        $this->rkpdes = $rkpdes;
+    }
 
     /**
      * Show data RKPDES
