@@ -2,9 +2,10 @@
 
 use SimdesApp\Models\StandarSatuanHarga;
 use SimdesApp\Repositories\AbstractRepository;
+use SimdesApp\Repositories\Contracts\StandarSatuanHargaInterface;
 use SimdesApp\Services\LaraCacheInterface;
 
-class StandarSatuanHargaRepository extends AbstractRepository
+class StandarSatuanHargaRepository extends AbstractRepository implements StandarSatuanHargaInterface
 {
 
     /**

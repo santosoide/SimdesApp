@@ -3,11 +3,28 @@
 use SimdesApp\Http\Requests;
 use SimdesApp\Http\Controllers\Controller;
 use SimdesApp\Http\Controllers\Api\V1\StandarSatuanHarga;
+use SimdesApp\Repositories\Contracts\StandarSatuanHargaInterface;
 use SimdesApp\Repositories\StandarSatuanHarga\StandarSatuanHargaRepository;
 use SimdesApp\Http\Requests\StandarSatuanHarga\StandarSatuanHargaCreateForm;
 use SimdesApp\Http\Requests\StandarSatuanHarga\StandarSatuanHargaEditForm;
 
-class StandarSatuanHargaController extends Controller {
+class StandarSatuanHargaController extends Controller
+{
+
+    /**
+     * @var
+     */
+    protected $standarSatuanHarga;
+
+    /**
+     * Create new StandarSatuanHargaController Instance
+     *
+     * @param StandarSatuanHargaInterface $standarSatuanHarga
+     */
+    public function __construct(StandarSatuanHargaInterface $standarSatuanHarga)
+    {
+        $this->standarSatuanHarga = $standarSatuanHarga;
+    }
 
     /**
      * Show data
