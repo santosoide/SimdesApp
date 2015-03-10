@@ -1,4 +1,4 @@
-<?php namespace SimdesApp\Http\Requests\RPJMDES_Misi;
+<?php namespace SimdesApp\Http\Requests\RPJMDES;
 
 use SimdesApp\Http\Requests\Request;
 use Illuminate\Validation\Validator;

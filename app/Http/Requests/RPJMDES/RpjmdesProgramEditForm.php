@@ -1,9 +1,9 @@
-<?php namespace SimdesApp\Http\Requests\RPJMDES_Program;
+<?php namespace SimdesApp\Http\Requests\RPJMDES;
 
 use SimdesApp\Http\Requests\Request;
 use Illuminate\Validation\Validator;
 
-class RpjmdesProgramCreateForm extends Request
+class RpjmdesProgramEditForm extends Request
 {
 
     /**

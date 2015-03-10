@@ -1,10 +1,11 @@
-<?php namespace SimdesApp\Repositories\RPJMDES_Program;
+<?php namespace SimdesApp\Repositories\RPJMDES;
 
-use SimdesApp\Models\RpjmdesProgram;
+use SimdesApp\Models\RpjmdesMisi;
 use SimdesApp\Repositories\AbstractRepository;
+use SimdesApp\Repositories\Contracts\RpjmdesMisiInterface;
 use SimdesApp\Services\LaraCacheInterface;
 
-class RpjmdesProgramRepository extends AbstractRepository
+class RpjmdesMisiRepository extends AbstractRepository implements RpjmdesMisiInterface
 {
 
     /**
@@ -13,12 +14,12 @@ class RpjmdesProgramRepository extends AbstractRepository
     protected $cache;
 
     /**
-     * @param RpjmdesProgram $rpjmdesProgram
+     * @param RpjmdesMisi $rpjmdesMisi
      * @param LaraCacheInterface $cache
      */
-    public function __construct(RpjmdesProgram $rpjmdesProgram, LaraCacheInterface $cache)
+    public function __construct(RpjmdesMisi $rpjmdesMisi, LaraCacheInterface $cache)
     {
-        $this->model = $rpjmdesProgram;
+        $this->model = $rpjmdesMisi;
         $this->cache = $cache;
     }
 
@@ -34,10 +35,10 @@ class RpjmdesProgramRepository extends AbstractRepository
     public function find($page = 1, $limit = 10, $term = null, $organisasi_id)
     {
         // Create Key for cache
-        $key = 'rpjmdes-program-find-' . $page . $limit . $term;
+        $key = 'rpjmdes-misi-find-' . $page . $limit . $term . $organisasi_id;
 
         // Create Section
-        $section = 'rpjmdes-program';
+        $section = 'rpjmdes-misi';
 
         // If cache is exist get data from cache
         if ($this->cache->has($section, $key)) {
@@ -45,16 +46,17 @@ class RpjmdesProgramRepository extends AbstractRepository
         }
 
         // Search data
-        $rpjmdesProgram = $this->model
+        $rpjmdesMisi = $this->model
             ->orderBy('created_at', 'asc')
             ->where('organisasi_id', '=', $organisasi_id)
+            ->where('misi', 'like', '%' . $term . '%')
             ->paginate($limit)
             ->toArray();
 
         // Create cache
-        $this->cache->put($section, $key, $rpjmdesProgram, 10);
+        $this->cache->put($section, $key, $rpjmdesMisi, 10);
 
-        return $rpjmdesProgram;
+        return $rpjmdesMisi;
     }
 
     /**
@@ -66,19 +68,18 @@ class RpjmdesProgramRepository extends AbstractRepository
     public function create(array $data)
     {
         try {
-            $rpjmdesProgram = $this->getNew();
+            $rpjmdesMisi = $this->getNew();
 
-            $rpjmdesProgram->kegiatan_id = $data['kegiatan_id'];
-            $rpjmdesProgram->pelaksanaan = $data['pelaksanaan'];
-            $rpjmdesProgram->sumber_dana_id = $data['sumber_dana_id'];
+            $rpjmdesMisi->rpjmdes_id = e($data['rpjmdes_id']);
+            $rpjmdesMisi->misi = e($data['misi']);
 
-            $rpjmdesProgram->save();
+            $rpjmdesMisi->save();
 
             // Return result success
             return $this->successInsertResponse();
 
         } catch (\Exception $ex) {
-            \Log::error('RpjmdesProgramRepository create action something wrong -' . $ex);
+            \Log::error('RpjmdesMisiRepository create action something wrong -' . $ex);
             return $this->errorInsertResponse();
         }
     }
@@ -104,20 +105,18 @@ class RpjmdesProgramRepository extends AbstractRepository
     public function update($id, array $data)
     {
         try {
-            $rpjmdesProgram = $this->findById($id);
+            $rpjmdesMisi = $this->findById($id);
 
-            $rpjmdesProgram->kegiatan_id = $data['kegiatan_id'];
-            $rpjmdesProgram->pelaksanaan = $data['pelaksanaan'];
-            $rpjmdesProgram->sumber_dana_id = $data['sumber_dana_id'];
+            $rpjmdesMisi->rpjmdes_id = e($data['rpjmdes_id']);
+            $rpjmdesMisi->misi = e($data['misi']);
 
-            $rpjmdesProgram->save();
+            $rpjmdesMisi->save();
 
-
-            /*Return result success*/
+            // Return result success
             return $this->successUpdateResponse();
 
         } catch (\Exception $ex) {
-            \Log::error('RpjmdesProgramRepository update action something wrong -' . $ex);
+            \Log::error('RpjmdesMisiRepository update action something wrong -' . $ex);
             return $this->errorUpdateResponse();
         }
     }
@@ -131,10 +130,10 @@ class RpjmdesProgramRepository extends AbstractRepository
     public function destroy($id)
     {
         try {
-            $rpjmdesProgram = $this->findById($id);
+            $rpjmdesMisi = $this->findById($id);
 
-            if ($rpjmdesProgram) {
-                $rpjmdesProgram->delete();
+            if ($rpjmdesMisi) {
+                $rpjmdesMisi->delete();
 
                 // Return result success
                 return $this->successDeleteResponse();
@@ -143,40 +142,21 @@ class RpjmdesProgramRepository extends AbstractRepository
             return $this->emptyDeleteResponse();
 
         } catch (\Exception $ex) {
-            \Log::error('RpjmdesProgramRepository destroy action something wrong -' . $ex);
+            \Log::error('RpjmdesMisiRepository destroy action something wrong -' . $ex);
             return $this->errorDeleteResponse();
         }
     }
 
     /**
-     * get jumlah desa
-     *
-     * @param $organisasi_id
+     * @param $rpjmdes_id
      *
      * @return mixed
      */
-    public function getCountByDesa($organisasi_id)
+    public function findIsExists($rpjmdes_id)
     {
-        // set key
-        $key = 'rpjmdes-program-count-by-desa' . $organisasi_id;
-
-        // set section
-        $section = 'rpjmdes-program';
-
-        // has section and key
-        if ($this->cache->has($section, $key)) {
-            return $this->cache->get($section, $key);
-        }
-
-        // query to database
-        $rpjmdesProgram = $this->model
-            ->where('organisasi_id', '=', $organisasi_id)
-            ->count();
-
-        // store to cache
-        $this->cache->put($section, $key, $rpjmdesProgram, 10);
-
-        return $rpjmdesProgram;
+        return $this->model
+            ->where('rpjmdes_id', '=', $rpjmdes_id)
+            ->get();
     }
 
 }

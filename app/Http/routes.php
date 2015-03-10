@@ -80,16 +80,8 @@ Route::group(['namespace' => 'Api\V1\Program', 'prefix' => 'api/v1'], function (
 Route::group(['namespace' => 'Api\V1\RPJMDES', 'prefix' => 'api/v1'], function () {
     // RPJMDES resource
     Route::resource('rpjmdes', 'RpjmdesController');
-});
-
-Route::group(['namespace' => 'Api\V1\RPJMDES_Program', 'prefix' => 'api/v1'], function () {
-    // RPJMDES Misi resource
-    Route::resource('rpjmdes-program', 'RpjmdesProgramController');
-});
-
-Route::group(['namespace' => 'Api\V1\RPJMDES_Misi', 'prefix' => 'api/v1'], function () {
-    // RPJMDES Misi resource
     Route::resource('rpjmdes-misi', 'RpjmdesMisiController');
+    Route::resource('rpjmdes-program', 'RpjmdesProgramController');
 });
 
 #Handle Namespace Standar Satuan Harga

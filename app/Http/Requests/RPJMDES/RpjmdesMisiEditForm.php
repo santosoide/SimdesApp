@@ -1,9 +1,9 @@
-<?php namespace SimdesApp\Http\Requests\RPJMDES_Program;
+<?php namespace SimdesApp\Http\Requests\RPJMDES;
 
 use SimdesApp\Http\Requests\Request;
 use Illuminate\Validation\Validator;
 
-class RpjmdesProgramEditForm extends Request
+class RpjmdesMisiEditForm extends Request
 {
 
     /**
@@ -12,9 +12,8 @@ class RpjmdesProgramEditForm extends Request
      * @var array
      */
     protected $customAttributes = [
-        'kegiatan_id'    => 'Kegiatan Id',
-        'pelaksanaan'    => 'Pelaksanaan',
-        'sumber_dana_id' => 'Sumber Dana Id'
+        'rpjmdes_id'    => 'RPJMDES Id',
+        'misi'          => 'Misi'
     ];
 
     /**
@@ -23,9 +22,8 @@ class RpjmdesProgramEditForm extends Request
     public function rules()
     {
         return [
-            'kegiatan_id'    => 'required|integer',
-            'pelaksanaan'    => 'required|integer',
-            'sumber_dana_id' => 'required|integer'
+            'rpjmdes_id'    => 'required|max:255',
+            'misi'          => 'required|max:255'
         ];
     }
 
@@ -49,9 +47,8 @@ class RpjmdesProgramEditForm extends Request
         return [
             'success'    => false,
             'validation' => [
-                'kegiatan_id'    => $message->first('kegiatan_id'),
-                'pelaksanaan'    => $message->first('pelaksanaan'),
-                'sumber_dana_id' => $message->first('sumber_dana_id'),
+                'rpjmdes_id'    => $message->first('rpjmdes_id'),
+                'misi'          => $message->first('misi')
             ]
         ];
     }

@@ -3,11 +3,28 @@
 use SimdesApp\Http\Requests;
 use SimdesApp\Http\Controllers\Controller;
 use SimdesApp\Http\Controllers\Api\V1\RPJMDES;
+use SimdesApp\Repositories\Contracts\RpjmdesInterface;
 use SimdesApp\Repositories\RPJMDES\RpjmdesRepository;
 use SimdesApp\Http\Requests\RPJMDES\RpjmdesCreateForm;
 use SimdesApp\Http\Requests\RPJMDES\RpjmdesEditForm;
 
-class RpjmdesController extends Controller {
+class RpjmdesController extends Controller
+{
+
+    /**
+     * @var
+     */
+    protected $rpjmdes;
+
+    /**
+     * Create new RpjmdesController Instance
+     *
+     * @param RpjmdesInterface $rpjmdes
+     */
+    public function __construct(RpjmdesInterface $rpjmdes)
+    {
+        $this->rpjmdes = $rpjmdes;
+    }
 
     /**
      * Show data
