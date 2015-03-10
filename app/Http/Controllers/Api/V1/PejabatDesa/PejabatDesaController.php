@@ -3,11 +3,26 @@
 use SimdesApp\Http\Requests;
 use SimdesApp\Http\Controllers\Controller;
 use SimdesApp\Http\Controllers\Api\V1\PejabatDesa;
+use SimdesApp\Repositories\Contracts\PejabatDesaInterface;
 use SimdesApp\Repositories\PejabatDesa\PejabatDesaRepository;
 use SimdesApp\Http\Requests\PejabatDesa\PejabatDesaCreateForm;
 use SimdesApp\Http\Requests\PejabatDesa\PejabatDesaEditForm;
 
 class PejabatDesaController extends Controller {
+
+    /**
+     * @var PejabatDesaInterface
+     */
+    protected $pejabatDesa;
+
+    /**
+     * Create new PejabatDesaController Instance
+     *
+     * @param PejabatDesaInterface $pejabatDesa
+     */
+    public function __construct(PejabatDesaInterface $pejabatDesa){
+        $this->pejabatDesa = $pejabatDesa;
+    }
 
     /**
      * Show data Pejabat Desa

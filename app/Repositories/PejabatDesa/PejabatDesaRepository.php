@@ -2,9 +2,10 @@
 
 use SimdesApp\Models\PejabatDesa;
 use SimdesApp\Repositories\AbstractRepository;
+use SimdesApp\Repositories\Contracts\PejabatDesaInterface;
 use SimdesApp\Services\LaraCacheInterface;
 
-class PejabatDesaRepository extends AbstractRepository
+class PejabatDesaRepository extends AbstractRepository implements PejabatDesaInterface
 {
 
     /**
