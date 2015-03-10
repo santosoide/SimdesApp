@@ -2,9 +2,10 @@
 
 use SimdesApp\Models\SumberDana;
 use SimdesApp\Repositories\AbstractRepository;
+use SimdesApp\Repositories\Contracts\SumberDanaInterface;
 use SimdesApp\Services\LaraCacheInterface;
 
-class SumberDanaRepository extends AbstractRepository
+class SumberDanaRepository extends AbstractRepository implements SumberDanaInterface
 {
 
     /**

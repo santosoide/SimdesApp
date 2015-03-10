@@ -3,11 +3,28 @@
 use SimdesApp\Http\Requests;
 use SimdesApp\Http\Controllers\Controller;
 use SimdesApp\Http\Controllers\Api\V1\SumberDana;
+use SimdesApp\Repositories\Contracts\SumberDanaInterface;
 use SimdesApp\Repositories\SumberDana\SumberDanaRepository;
 use SimdesApp\Http\Requests\SumberDana\SumberDanaCreateForm;
 use SimdesApp\Http\Requests\SumberDana\SumberDanaEditForm;
 
-class SumberDanaController extends Controller {
+class SumberDanaController extends Controller
+{
+
+    /**
+     * @var
+     */
+    protected $sumberDana;
+
+    /**
+     * Create new SumberDanaController Instance
+     *
+     * @param SumberDanaInterface $sumberDana
+     */
+    public function  __construct(SumberDanaInterface $sumberDana)
+    {
+        $this->sumberDana = $sumberDana;
+    }
 
     /**
      * Show data
