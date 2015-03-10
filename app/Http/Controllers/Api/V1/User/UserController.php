@@ -3,11 +3,28 @@
 use SimdesApp\Http\Requests;
 use SimdesApp\Http\Controllers\Controller;
 use SimdesApp\Http\Controllers\Api\V1\User;
+use SimdesApp\Repositories\Contracts\UserInterface;
 use SimdesApp\Repositories\User\UserRepository;
 use SimdesApp\Http\Requests\User\UserCreateForm;
 use SimdesApp\Http\Requests\User\UserEditForm;
 
-class UserController extends Controller {
+class UserController extends Controller
+{
+
+    /**
+     * @var UserInterface
+     */
+    protected $user;
+
+    /**
+     * Create new UserController Instance
+     *
+     * @param UserInterface $user
+     */
+    public function __construct(UserInterface $user)
+    {
+        $this->user = $user;
+    }
 
     /**
      * Show data

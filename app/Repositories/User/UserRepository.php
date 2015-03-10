@@ -4,9 +4,10 @@ namespace SimdesApp\Repositories\User;
 
 use SimdesApp\Models\User;
 use SimdesApp\Repositories\AbstractRepository;
+use SimdesApp\Repositories\Contracts\UserInterface;
 use SimdesApp\Services\LaraCacheInterface;
 
-class UserRepository extends AbstractRepository
+class UserRepository extends AbstractRepository implements UserInterface
 {
 
     /**
