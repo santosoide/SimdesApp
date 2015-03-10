@@ -3,12 +3,27 @@
 use SimdesApp\Http\Requests;
 use SimdesApp\Http\Controllers\Controller;
 use SimdesApp\Http\Controllers\Api\V1\Pendapatan;
+use SimdesApp\Repositories\Contracts\PendapatanInterface;
 use SimdesApp\Repositories\Pendapatan\PendapatanRepository;
 use SimdesApp\Http\Requests\Pendapatan\PendapatanCreateForm;
 use SimdesApp\Http\Requests\Pendapatan\PendapatanEditForm;
 
 class PendapatanController extends Controller
 {
+    /**
+     * @var
+     */
+    protected $pendapatan;
+
+    /**
+     * Create new PendapatanController Instance
+     *
+     * @param PendapatanInterface $pendapatan
+     */
+    public function __construct(PendapatanInterface $pendapatan)
+    {
+        $this->pendapatan = $pendapatan;
+    }
 
     /**
      * Show pendapatan
