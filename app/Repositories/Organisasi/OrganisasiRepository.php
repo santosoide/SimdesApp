@@ -1,13 +1,13 @@
 <?php
 namespace SimdesApp\Repositories\Organisasi;
 
-
 use SimdesApp\Models\Organisasi;
 use SimdesApp\Repositories\AbstractRepository;
+use SimdesApp\Repositories\Contracts\OrganisasiInterface;
 use SimdesApp\Repositories\User\UserRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
-class OrganisasiRepository extends AbstractRepository
+class OrganisasiRepository extends AbstractRepository implements OrganisasiInterface
 {
 
     /**

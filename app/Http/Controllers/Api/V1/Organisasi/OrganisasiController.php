@@ -3,6 +3,7 @@
 use SimdesApp\Http\Requests;
 use SimdesApp\Http\Controllers\Controller;
 use SimdesApp\Http\Controllers\Api\V1\Organisasi;
+use SimdesApp\Repositories\Contracts\OrganisasiInterface;
 use SimdesApp\Repositories\Organisasi\OrganisasiRepository;
 use SimdesApp\Http\Requests\Organisasi\OrganisasiCreateForm;
 use SimdesApp\Http\Requests\Organisasi\OrganisasiEditForm;
@@ -10,6 +11,21 @@ use SimdesApp\Http\Requests\Organisasi\OrganisasiEditForm;
 
 class OrganisasiController extends Controller
 {
+
+    /**
+     * @var OrganisasiInterface
+     */
+    protected $organisasi;
+
+    /**
+     * Create new OrganisasiController Instance
+     *
+     * @param OrganisasiInterface $organisasi
+     */
+    public function __construct(OrganisasiInterface $organisasi)
+    {
+        $this->organisasi = $organisasi;
+    }
 
     /**
      * Show data
