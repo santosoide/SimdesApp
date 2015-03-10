@@ -295,8 +295,7 @@ class TransaksiBelanjaRepository extends AbstractRepository
             ->where('organisasi_id', '=', $organisasi_id)
             ->whereBetween('tanggal', [$tanggal_awal, $tanggal_akhir])
             ->where('dana_desa_id', '=', $dana_desa_id)
-            ->get('tanggal', 'jumlah')
-            ->toArray();
+            ->get('tanggal', 'jumlah');
     }
 
     /**
