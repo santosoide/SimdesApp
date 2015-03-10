@@ -1,7 +1,7 @@
 <?php namespace SimdesApp\Repositories\Contracts;
 
-interface AkunInterface
-{
+interface KecamatanInterface  {
+
     /**
      * Find data using search adn custom pagination
      *
@@ -51,18 +51,17 @@ interface AkunInterface
     public function destroy($id);
 
     /**
-     * Cek if Exists in relation
+     * Check organisasi before delete
      *
-     * @param                    $akun_id
-     *
+     * @param $kec_id
      * @return mixed
      */
-    public function cekForDelete($akun_id);
+    public function checkOrganisasiBeforeDelete($kec_id);
 
     /**
-     * Get list Akun Using by Ajax Dropdown
+     * Dropdown ajax
      *
      * @return mixed
      */
-    public function getListAkun();
+    public function getList();
 }

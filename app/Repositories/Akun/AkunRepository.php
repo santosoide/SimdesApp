@@ -19,7 +19,8 @@ class AkunRepository extends AbstractRepository implements AkunInterface
     /**
      * create instance interface
      *
-     * @param Akun               $akun
+     * @param Akun $akun
+     * @param KelompokInterface $kelompok
      * @param LaraCacheInterface $cache
      */
     public function __construct(Akun $akun, LaraCacheInterface $cache, KelompokInterface $kelompok)
@@ -32,8 +33,8 @@ class AkunRepository extends AbstractRepository implements AkunInterface
     /**
      * Instant find or search with paging, limit, and query
      *
-     * @param int  $page
-     * @param int  $limit
+     * @param int $page
+     * @param int $limit
      * @param null $term
      *
      * @return mixed

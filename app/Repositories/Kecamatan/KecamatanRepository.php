@@ -2,10 +2,11 @@
 
 use SimdesApp\Models\Kecamatan;
 use SimdesApp\Repositories\AbstractRepository;
+use SimdesApp\Repositories\Contracts\KecamatanInterface;
 use SimdesApp\Repositories\Organisasi\OrganisasiRepository;
 use SimdesApp\Services\LaraCacheInterface;
 
-class KecamatanRepository extends AbstractRepository
+class KecamatanRepository extends AbstractRepository implements KecamatanInterface
 {
 
     /**

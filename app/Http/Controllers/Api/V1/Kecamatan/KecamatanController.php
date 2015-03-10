@@ -4,10 +4,27 @@ use SimdesApp\Http\Requests;
 use SimdesApp\Http\Controllers\Controller;
 use SimdesApp\Http\Requests\Kecamatan\KecamatanCreateForm;
 use SimdesApp\Http\Requests\Kecamatan\KecamatanEditForm;
+use SimdesApp\Repositories\Contracts\KecamatanInterface;
 use SimdesApp\Repositories\Kecamatan\KecamatanRepository;
 
 class KecamatanController extends Controller
 {
+
+    /**
+     * @var KecamatanInterface
+     */
+    protected $kecamatan;
+
+    /**
+     * Create new KecamatanController Instance
+     *
+     * @param KecamatanInterface $kecamatan
+     */
+    public function __construct(KecamatanInterface $kecamatan)
+    {
+        $this->kecamatan = $kecamatan;
+    }
+
     /**
      * Find kecamatan
      *

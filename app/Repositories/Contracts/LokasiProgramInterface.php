@@ -1,17 +1,18 @@
 <?php namespace SimdesApp\Repositories\Contracts;
 
-interface AkunInterface
-{
+interface LokasiProgramInterface {
+
     /**
      * Find data using search adn custom pagination
      *
      * @param $page
-     * @param $term
      * @param $limit
-     *
+     * @param $term
+     * @param $organisasi_id
+     * @param $rpjmdes_program_id
      * @return mixed
      */
-    public function find($page, $limit, $term);
+    public function find($page, $limit, $term, $organisasi_id, $rpjmdes_program_id);
 
     /**
      * Get a data
@@ -50,19 +51,4 @@ interface AkunInterface
      */
     public function destroy($id);
 
-    /**
-     * Cek if Exists in relation
-     *
-     * @param                    $akun_id
-     *
-     * @return mixed
-     */
-    public function cekForDelete($akun_id);
-
-    /**
-     * Get list Akun Using by Ajax Dropdown
-     *
-     * @return mixed
-     */
-    public function getListAkun();
 }

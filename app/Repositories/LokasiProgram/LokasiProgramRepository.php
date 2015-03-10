@@ -2,9 +2,10 @@
 
 use SimdesApp\Models\LokasiProgram;
 use SimdesApp\Repositories\AbstractRepository;
+use SimdesApp\Repositories\Contracts\LokasiProgramInterface;
 use SimdesApp\Services\LaraCacheInterface;
 
-class LokasiProgramRepository extends AbstractRepository
+class LokasiProgramRepository extends AbstractRepository implements LokasiProgramInterface
 {
 
     /**

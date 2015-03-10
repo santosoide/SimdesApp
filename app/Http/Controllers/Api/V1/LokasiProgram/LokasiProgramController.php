@@ -4,10 +4,26 @@ use SimdesApp\Http\Requests;
 use SimdesApp\Http\Controllers\Controller;
 use SimdesApp\Http\Requests\LokasiProgram\LokasiProgramCreateForm;
 use SimdesApp\Http\Requests\LokasiProgram\LokasiProgramEditForm;
+use SimdesApp\Repositories\Contracts\LokasiProgramInterface;
 use SimdesApp\Repositories\LokasiProgram\LokasiProgramRepository;
 
 class LokasiProgramController extends Controller
 {
+
+    /**
+     * @var LokasiProgramInterface
+     */
+    protected $lokasiProgram;
+
+    /**
+     * Create new LokasiProgramController Instance
+     *
+     * @param LokasiProgramInterface $lokasiProgram
+     */
+    public function __construct(LokasiProgramInterface $lokasiProgram){
+        $this->lokasiProgram = $lokasiProgram;
+    }
+
     /**
      * Find lokasi program
      *
