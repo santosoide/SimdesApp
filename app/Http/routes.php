@@ -42,6 +42,14 @@ Route::group(['namespace' => 'Api\V1\Organisasi', 'prefix' => 'api/v1/backoffice
 Route::group(['namespace' => 'Api\V1\User', 'prefix' => 'api/v1/backoffice'], function () {
     // User resource
     Route::resource('user', 'UserController');
+
+    Route::get('user-trashed', 'UserController@trashed');
+    Route::get('user-restore', 'UserController@restore');
+    Route::get('user-from-backoffice', 'UserController@findUserBackOffice'); // find user backoffice filter
+    Route::get('user-from-frontoffice', 'UserController@findUserFrontOffice'); // find user desa filter session organisasi_id
+    Route::post('user-set-unactive', 'UserController@setUnactive'); // set unactive user
+    Route::get('user-desa', 'UserController@getUserDesa'); // find user desa filter by organsiasi_id
+    Route::get('list-user-desa/{organisasi_id}', 'UserController@listUserDesa'); // find user list by organsiasi_id
 });
 
 Route::group(['namespace' => 'Api\V1\Akun', 'prefix' => 'api/v1'], function () {

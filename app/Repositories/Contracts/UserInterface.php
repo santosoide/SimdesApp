@@ -70,4 +70,51 @@ interface UserInterface {
      * @return mixed
      */
     public function resetPassword($email);
+
+    /**
+     * @return mixed
+     */
+    public function getTrashed();
+
+    /**
+     * @return mixed
+     */
+    public function getRestore();
+
+    /**
+     * @param $term
+     *
+     * @return mixed
+     */
+    public function findByBackOffice($term);
+
+    /**
+     * @param $term
+     * @param $organisasi_id
+     *
+     * @return mixed
+     */
+    public function findByFrontOffice($term, $organisasi_id);
+
+    /**
+     * @param $id
+     *
+     * @return mixed
+     */
+    public function unActiveUser($id);
+
+    /**
+     * @param $id
+     * @param $organisasi_id
+     *
+     * @return mixed
+     */
+    public function findByOrganisasiId($id, $organisasi_id);
+
+    /**
+     * @param $organisasi_id
+     *
+     * @return mixed
+     */
+    public function listByOrganisasiId($organisasi_id);
 }

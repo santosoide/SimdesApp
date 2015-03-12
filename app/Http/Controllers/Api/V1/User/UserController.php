@@ -91,4 +91,74 @@ class UserController extends Controller
         return $user->destroy($id);
     }
 
+    /**
+     * Get list data from sotfdelete
+     *
+     * @return mixed
+     */
+    public function trashed()
+    {
+        return $this->user->getTrashed();
+    }
+
+    /**
+     * Restore data from sotfdelete
+     *
+     * @return mixed
+     */
+    public function restore()
+    {
+        return $this->user->getRestore();
+    }
+
+    /**
+     * Get a list User by Full Text Search Backoffice Filter
+     *
+     * @return mixed
+     */
+    public function findUserBackOffice()
+    {
+        return $this->user->findByBackOffice($this->input('term'));
+    }
+
+    /**
+     * Get a list User by Full Text Search Frontoffice Filter
+     *
+     * @return mixed
+     */
+    public function findUserFrontOffice()
+    {
+        return $this->user->findByFrontOffice($this->input('term'), $this->getOrganisasiId());
+    }
+
+    /**
+     * Set unActive User
+     *
+     * @return mixed
+     */
+    public function setUnactive()
+    {
+        return $this->user->unActiveUser($this->input('_id'));
+    }
+
+    /**
+     * Get a list User by Full Text Search Filter by Organsiasi_id
+     *
+     * @return mixed
+     */
+    public function getUserDesa()
+    {
+        return $this->user->findByOrganisasiId($this->input('term'), $this->input('organisasi_id'));
+    }
+
+    /**
+     * Get the list user desa by organisasi_id is using in detil page
+     *
+     * @param $organisasi_id
+     * @return mixed
+     */
+    public function listUserDesa($organisasi_id)
+    {
+        return $this->user->listByOrganisasiId($organisasi_id);
+    }
 }
