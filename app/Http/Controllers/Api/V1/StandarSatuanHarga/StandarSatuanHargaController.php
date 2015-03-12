@@ -4,7 +4,6 @@ use SimdesApp\Http\Requests;
 use SimdesApp\Http\Controllers\Controller;
 use SimdesApp\Http\Controllers\Api\V1\StandarSatuanHarga;
 use SimdesApp\Repositories\Contracts\StandarSatuanHargaInterface;
-use SimdesApp\Repositories\StandarSatuanHarga\StandarSatuanHargaRepository;
 use SimdesApp\Http\Requests\StandarSatuanHarga\StandarSatuanHargaCreateForm;
 use SimdesApp\Http\Requests\StandarSatuanHarga\StandarSatuanHargaEditForm;
 
@@ -29,36 +28,33 @@ class StandarSatuanHargaController extends Controller
     /**
      * Show data
      *
-     * @param StandarSatuanHargaRepository $program
      * @return mixed
      */
-    public function index(StandarSatuanHargaRepository $program)
+    public function index()
     {
-        return $program->find($this->input('page'), $limit = 10, $this->input('term'));
+        return $this->standarSatuanHarga->find($this->input('page'), $limit = 10, $this->input('term'));
     }
 
     /**
      * Show data Standar Satuan Harga
      *
      * @param StandarSatuanHargaCreateForm $request
-     * @param StandarSatuanHargaRepository $program
      * @return mixed
      */
-    public function store(StandarSatuanHargaCreateForm $request, StandarSatuanHargaRepository $program)
+    public function store(StandarSatuanHargaCreateForm $request)
     {
-        return $program->create($request->all());
+        return $this->standarSatuanHarga->create($request->all());
     }
 
     /**
      * Show detail Standar Satuan Harga
      *
-     * @param StandarSatuanHargaRepository $program
      * @param $id
      * @return \Illuminate\Support\Collection|null|static
      */
-    public function show(StandarSatuanHargaRepository $program, $id)
+    public function show($id)
     {
-        return $program->findById($id);
+        return $this->standarSatuanHarga->findById($id);
     }
 
     /**
@@ -66,39 +62,35 @@ class StandarSatuanHargaController extends Controller
      *
      * @param $id
      * @param StandarSatuanHargaEditForm $request
-     * @param StandarSatuanHargaRepository $program
      * @return mixed
      */
-    public function update($id, StandarSatuanHargaEditForm $request, StandarSatuanHargaRepository $program)
+    public function update($id, StandarSatuanHargaEditForm $request)
     {
-        return $program->update($id, $request->all());
+        return $this->standarSatuanHarga->update($id, $request->all());
     }
 
     /**
      * Delete data Standar Satuan Harga
      *
      * @param $id
-     * @param StandarSatuanHargaRepository $program
      * @return mixed
      */
-    public function destroy($id, StandarSatuanHargaRepository $program)
+    public function destroy($id)
     {
-        return $program->destroy($id);
+        return $this->standarSatuanHarga->destroy($id);
     }
 
     /**
      * Get list Satuan Harga Accessing by frontoffice
      *
      * @param StandarSatuanHargaRepository
-     * @param $standarSatuanHarga
      * @return mixed
      */
-    public function getListSatuanHarga(StandarSatuanHargaRepository $standarSatuanHarga)
+    public function getListSatuanHarga()
     {
         $term = $this->input('term');
         $page = $this->input('page');
-        //$per_page = $this->input('per_page');
 
-        return $standarSatuanHarga->getListSatuanHarga($page, $per_page = 5, $term);
+        return $this->standarSatuanHarga->getListSatuanHarga($page, $per_page = 5, $term);
     }
 }

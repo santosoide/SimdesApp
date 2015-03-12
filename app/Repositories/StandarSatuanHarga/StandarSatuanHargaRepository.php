@@ -106,18 +106,20 @@ class StandarSatuanHargaRepository extends AbstractRepository implements Standar
     {
         try {
             $standarSatuanHarga = $this->findById($id);
+            if ($standarSatuanHarga) {
+                $standarSatuanHarga->kode_rekening = e($data['kode_rekening']);
+                $standarSatuanHarga->barang = e($data['barang']);
+                $standarSatuanHarga->spesifikasi = e($data['spesifikasi']);
+                $standarSatuanHarga->satuan = e($data['satuan']);
+                $standarSatuanHarga->harga = $data['harga'];
 
-            $standarSatuanHarga->kode_rekening = e($data['kode_rekening']);
-            $standarSatuanHarga->barang = e($data['barang']);
-            $standarSatuanHarga->spesifikasi = e($data['spesifikasi']);
-            $standarSatuanHarga->satuan = e($data['satuan']);
-            $standarSatuanHarga->harga = $data['harga'];
+                $standarSatuanHarga->save();
 
-            $standarSatuanHarga->save();
+                // Return result success
+                return $this->successUpdateResponse();
+            }
 
-            // Return result success
-            return $this->successUpdateResponse();
-
+            return $this->emptyDeleteResponse();
         } catch (\Exception $ex) {
             \Log::error('StandarSatuanHargaRepository update action something wrong -' . $ex);
             return $this->errorUpdateResponse();
