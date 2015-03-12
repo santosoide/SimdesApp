@@ -108,17 +108,19 @@ class PejabatDesaRepository extends AbstractRepository implements PejabatDesaInt
     {
         try {
             $pejabatDesa = $this->findById($id);
+            if($pejabatDesa) {
+                $pejabatDesa->nama = e($data['nama']);
+                $pejabatDesa->jabatan = e($data['jabatan']);
+                $pejabatDesa->fungsi = e($data['fungsi']);
+                $pejabatDesa->level = $data['level'];
 
-            $pejabatDesa->nama = e($data['nama']);
-            $pejabatDesa->jabatan = e($data['jabatan']);
-            $pejabatDesa->fungsi = e($data['fungsi']);
-            $pejabatDesa->level = $data['level'];
+                $pejabatDesa->save();
 
-            $pejabatDesa->save();
+                // Return result success
+                return $this->successUpdateResponse();
+            }
 
-            // Return result success
-            return $this->successUpdateResponse();
-
+            return $this->emptyDeleteResponse();
         } catch (\Exception $ex) {
             \Log::error('PejabatDesaRepository update action something wrong -' . $ex);
             return $this->errorUpdateResponse();

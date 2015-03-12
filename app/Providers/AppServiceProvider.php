@@ -105,5 +105,10 @@ class AppServiceProvider extends ServiceProvider
             'SimdesApp\Repositories\Contracts\TransaksiBelanjaInterface',
             'SimdesApp\Repositories\Transaksi_Belanja\TransaksiBelanjaRepository'
         );
+        // bind Standar Pejabat Desa
+        $this->app->bind(
+            'SimdesApp\Repositories\Contracts\PejabatDesaInterface',
+            'SimdesApp\Repositories\PejabatDesa\PejabatDesaRepository'
+        );
     }
 }

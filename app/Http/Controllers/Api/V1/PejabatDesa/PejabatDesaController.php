@@ -4,7 +4,6 @@ use SimdesApp\Http\Requests;
 use SimdesApp\Http\Controllers\Controller;
 use SimdesApp\Http\Controllers\Api\V1\PejabatDesa;
 use SimdesApp\Repositories\Contracts\PejabatDesaInterface;
-use SimdesApp\Repositories\PejabatDesa\PejabatDesaRepository;
 use SimdesApp\Http\Requests\PejabatDesa\PejabatDesaCreateForm;
 use SimdesApp\Http\Requests\PejabatDesa\PejabatDesaEditForm;
 
@@ -29,36 +28,33 @@ class PejabatDesaController extends Controller
     /**
      * Show data Pejabat Desa
      *
-     * @param PejabatDesaRepository $program
      * @return mixed
      */
-    public function index(PejabatDesaRepository $program)
+    public function index()
     {
-        return $program->find($this->input('page'), $limit = 10, $this->input('term'), $this->input('organisasi_id'));
+        return $this->pejabatDesa->find($this->input('page'), $limit = 10, $this->input('term'), $this->input('organisasi_id'));
     }
 
     /**
      * Create data Pejabat Desa
      *
      * @param PejabatDesaCreateForm $request
-     * @param PejabatDesaRepository $program
      * @return mixed
      */
-    public function store(PejabatDesaCreateForm $request, PejabatDesaRepository $program)
+    public function store(PejabatDesaCreateForm $request)
     {
-        return $program->create($request->all());
+        return $this->pejabatDesa->create($request->all());
     }
 
     /**
      * Show detail Pejabat Desa
      *
-     * @param PejabatDesaRepository $program
      * @param $id
      * @return \Illuminate\Support\Collection|null|static
      */
-    public function show(PejabatDesaRepository $program, $id)
+    public function show($id)
     {
-        return $program->findById($id);
+        return $this->pejabatDesa->findById($id);
     }
 
     /**
@@ -66,46 +62,42 @@ class PejabatDesaController extends Controller
      *
      * @param $id
      * @param PejabatDesaEditForm $request
-     * @param PejabatDesaRepository $program
      * @return mixed
      */
-    public function update($id, PejabatDesaEditForm $request, PejabatDesaRepository $program)
+    public function update($id, PejabatDesaEditForm $request)
     {
-        return $program->update($id, $request->all());
+        return $this->pejabatDesa->update($id, $request->all());
     }
 
     /**
      * Delete data Pejabat Desa
      *
      * @param $id
-     * @param PejabatDesaRepository $program
      * @return mixed
      */
-    public function destroy($id, PejabatDesaRepository $program)
+    public function destroy($id)
     {
-        return $program->destroy($id);
+        return $this->pejabatDesa->destroy($id);
     }
 
     /**
      * Get the list pejabat desa by organisasi_id using on detil organisasi
      *
-     * @param PejabatDesaRepository $pejabatDesa
      * @param $organisasi_id
      * @return mixed
      */
-    public function listPejabatDesa(PejabatDesaRepository $pejabatDesa, $organisasi_id)
+    public function listPejabatDesa($organisasi_id)
     {
-        return $pejabatDesa->listByOrganisasiId($organisasi_id);
+        return $this->pejabatDesa->listByOrganisasiId($organisasi_id);
     }
 
     /**
      * Get the list pejabat desa by organisasi_id using on rpjmdes_program
      *
-     * @param PejabatDesaRepository $pejabatDesa
      * @return mixed
      */
-    public function getListPejabatDesa(PejabatDesaRepository $pejabatDesa)
+    public function getListPejabatDesa()
     {
-        return $pejabatDesa->getListByOrganisasiId($this->getOrganisasiId());
+        return $this->pejabatDesa->getListByOrganisasiId($this->getOrganisasiId());
     }
 }
