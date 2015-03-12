@@ -4,43 +4,56 @@ use SimdesApp\Http\Requests;
 use SimdesApp\Http\Controllers\Controller;
 use SimdesApp\Http\Requests\Transaksi_Pendapatan\TransaksiPendapatanCreateForm;
 use SimdesApp\Http\Requests\Transaksi_Pendapatan\TransaksiPendapatanEditForm;
+use SimdesApp\Repositories\Contracts\TransaksiPendapatanInterface;
 use SimdesApp\Repositories\Transaksi_Pendapatan\TransaksiPendapatanRepository;
 
 class TransaksiPendapatanController extends Controller
 {
     /**
+     * @var TransaksiPendapatanInterface
+     */
+    protected $transaksiPendapatan;
+
+    /**
+     * Create new AkunController Instance
+     *
+     * @param TransaksiPendapatanInterface $transaksiPendapatan
+     */
+    public function __construct(TransaksiPendapatanInterface $transaksiPendapatan)
+    {
+        $this->transaksiPendapatan = $transaksiPendapatan;
+    }
+
+    /**
      * Find transaksi pendapatan
      *
-     * @param TransaksiPendapatanRepository $transaksiPendapatan
      * @return mixed
      */
-    public function index(TransaksiPendapatanRepository $transaksiPendapatan)
+    public function index()
     {
-        return $transaksiPendapatan->find($this->input('page'), $limit = 10, $this->input('term'));
+        return $this->transaksiPendapatan->find($this->input('page'), $limit = 10, $this->input('term'));
     }
 
     /**
      * Insert transaksi pendapatan
      *
      * @param TransaksiPendapatanCreateForm $request
-     * @param TransaksiPendapatanRepository $transaksiPendapatan
      * @return mixed
      */
-    public function store(TransaksiPendapatanCreateForm $request, TransaksiPendapatanRepository $transaksiPendapatan)
+    public function store(TransaksiPendapatanCreateForm $request)
     {
-        return $transaksiPendapatan->create($request->all());
+        return $this->transaksiPendapatan->create($request->all());
     }
 
     /**
      * Get transaksi pendapatan
      *
-     * @param TransaksiPendapatanRepository $transaksiPendapatan
      * @param $id
      * @return \Illuminate\Support\Collection|null|static
      */
-    public function show(TransaksiPendapatanRepository $transaksiPendapatan, $id)
+    public function show($id)
     {
-        return $transaksiPendapatan->findById($id);
+        return $this->transaksiPendapatan->findById($id);
     }
 
     /**
@@ -48,71 +61,66 @@ class TransaksiPendapatanController extends Controller
      *
      * @param $id
      * @param TransaksiPendapatanEditForm $request
-     * @param TransaksiPendapatanRepository $transaksiPendapatan
      * @return mixed
      */
-    public function update($id, TransaksiPendapatanEditForm $request, TransaksiPendapatanRepository $transaksiPendapatan)
+    public function update($id, TransaksiPendapatanEditForm $request)
     {
-        return $transaksiPendapatan->update($id, $request->all());
+        return $this->transaksiPendapatan->update($id, $request->all());
     }
 
     /**
      * Delete transaksi pendapatan
      *
      * @param $id
-     * @param TransaksiPendapatanRepository $transaksiPendapatan
      * @return mixed
      */
-    public function destroy($id, TransaksiPendapatanRepository $transaksiPendapatan)
+    public function destroy($id)
     {
-        return $transaksiPendapatan->destroy($id);
+        return $this->transaksiPendapatan->destroy($id);
     }
 
     /**
      * get pendapatan by organisasi id
      *
      * @param TransaksiPendapatanRepository
-     * @param $pendapatan
      * @param $organisasi_id
      * @return mixed
      */
-    public function getTransaksiPendapatanByDesa(TransaksiPendapatanRepository $pendapatan, $organisasi_id)
+    public function getTransaksiPendapatanByDesa($organisasi_id)
     {
         $term = $this->input('term');
         $page = $this->input('page');
 
-        return $pendapatan->getTransaksiPendapatanByDesa($page, $per_page = 5, $term, $organisasi_id);
+        return $this->transaksiPendapatan->getTransaksiPendapatanByDesa($page, $per_page = 5, $term, $organisasi_id);
     }
 
     /**
      * find tanggal and jumlah with between tanggal
      *
      * @param TransaksiPendapatanRepository
-     * @param $pendapatan
      * @return mixed
      */
-    public function getChartByOrganisasiId(TransaksiPendapatanRepository $pendapatan)
+    public function getChartByOrganisasiId()
     {
         $tanggal_awal = $this->input('tanggal_awal');
         $tanggal_akhir = $this->input('tanggal_akhir');
         $dana_desa_id = $this->input('dana_desa_id');
 
-        return $pendapatan->getChartByOrganisasiId($this->getOrganisasiId(), $tanggal_awal, $tanggal_akhir, $dana_desa_id);
+        return $this->transaksiPendapatan->getChartByOrganisasiId($this->getOrganisasiId(), $tanggal_awal, $tanggal_akhir, $dana_desa_id);
     }
 
     /**
      * find tanggal and jumlah with between tanggal
      *
      * @param TransaksiPendapatanRepository
-     * @param $pendapatan
      * @return mixed
      */
-    public function getChart(TransaksiPendapatanRepository $pendapatan)
+    public function getChart()
     {
         $tanggal_awal = $this->input('tanggal_awal');
         $tanggal_akhir = $this->input('tanggal_akhir');
         $dana_desa_id = $this->input('dana_desa_id');
 
-        return $pendapatan->getChart($tanggal_awal, $tanggal_akhir, $dana_desa_id);
+        return $this->transaksiPendapatan->getChart($tanggal_awal, $tanggal_akhir, $dana_desa_id);
     }
 }
