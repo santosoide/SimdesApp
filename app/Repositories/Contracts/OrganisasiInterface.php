@@ -82,4 +82,14 @@ interface OrganisasiInterface {
      */
     public function getList();
 
+    /**
+     * @return mixed
+     */
+    public function getTrashed();
+
+    /**
+     * @return mixed
+     */
+    public function getRestore();
+
 }

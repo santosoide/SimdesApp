@@ -253,4 +253,29 @@ class OrganisasiRepository extends AbstractRepository implements OrganisasiInter
 
         return $organisasi;
     }
+
+    /**
+     * Get list Organisasi on Trash
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getTrashed()
+    {
+        return $this->model->onlyTrashed()->get();
+    }
+
+    /**
+     * Restore Organisasi Trashed
+     *
+     * @return mixed
+     */
+    public function getRestore()
+    {
+        $this->model->withTrashed()->restore();
+
+        return $this->successResponseOk([
+            'success' => true,
+            'message' => 'Sukses : Data berhasil direstore'
+        ]);
+    }
 }

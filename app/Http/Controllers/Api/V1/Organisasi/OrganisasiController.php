@@ -91,4 +91,41 @@ class OrganisasiController extends Controller
     {
         return $organisasi->destroy($id);
     }
+
+    /**
+     * @return mixed
+     */
+    public function getModalOrganisasi()
+    {
+        $term = $this->input('term');
+        $page = $this->input('page');
+
+        return $this->organisasi->find($page, $per_page = 5, $term);
+    }
+
+    /**
+     *
+     * @return mixed
+     */
+    public function trashed()
+    {
+        return $this->organisasi->getTrashed();
+    }
+
+    /**
+     *
+     * @return mixed
+     */
+    public function restore()
+    {
+        return $this->organisasi->getRestore();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDesa()
+    {
+        return $this->organisasi->findById($this->getOrganisasiId());
+    }
 }

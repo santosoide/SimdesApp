@@ -32,6 +32,11 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'api/v1/auth'], function () {
 Route::group(['namespace' => 'Api\V1\Organisasi', 'prefix' => 'api/v1/backoffice'], function () {
     // Organisasi resource
     Route::resource('organisasi', 'OrganisasiController');
+
+    Route::get('get-modal-organisasi', 'OrganisasiController@getModalOrganisasi');
+    Route::get('organisasi-trashed', 'OrganisasiController@trashed');
+    Route::get('organisasi-restore', 'OrganisasiController@restore');
+    Route::get('data-umum-desa', 'OrganisasiController@getDesa');
 });
 
 Route::group(['namespace' => 'Api\V1\User', 'prefix' => 'api/v1/backoffice'], function () {
