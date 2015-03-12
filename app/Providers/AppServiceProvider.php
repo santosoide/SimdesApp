@@ -95,10 +95,15 @@ class AppServiceProvider extends ServiceProvider
             'SimdesApp\Repositories\Contracts\StandarSatuanHargaInterface',
             'SimdesApp\Repositories\StandarSatuanHarga\StandarSatuanHargaRepository'
         );
-        // bind Standar Satuan Harga
+        // bind Standar Transaksi Pendapatan
         $this->app->bind(
             'SimdesApp\Repositories\Contracts\TransaksiPendapatanInterface',
             'SimdesApp\Repositories\Transaksi_Pendapatan\TransaksiPendapatanRepository'
+        );
+        // bind Standar Transaski Belanja
+        $this->app->bind(
+            'SimdesApp\Repositories\Contracts\TransaksiBelanjaInterface',
+            'SimdesApp\Repositories\Transaksi_Belanja\TransaksiBelanjaRepository'
         );
     }
 }

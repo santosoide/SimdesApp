@@ -2,28 +2,27 @@
 
 use SimdesApp\Models\TransaksiBelanja;
 use SimdesApp\Repositories\AbstractRepository;
-use SimdesApp\Repositories\Organisasi\OrganisasiRepository;
+use SimdesApp\Repositories\Contracts\OrganisasiInterface;
+use SimdesApp\Repositories\Contracts\TransaksiBelanjaInterface;
 use SimdesApp\Services\LaraCacheInterface;
-
-class TransaksiBelanjaRepository extends AbstractRepository
+class TransaksiBelanjaRepository extends AbstractRepository implements TransaksiBelanjaInterface
 {
-
     /**
      * @var LaraCacheInterface
      */
     protected $cache;
 
     /**
-     * @var OrganisasiRepository
+     * @var OrganisasiInterface
      */
     protected $organisasi;
 
     /**
-     * @param TransaksiBelanja $transaksiBelanja
-     * @param LaraCacheInterface $cache
-     * @param OrganisasiRepository $organisasi
+     * @param TransaksiBelanja    $transaksiBelanja
+     * @param LaraCacheInterface  $cache
+     * @param OrganisasiInterface $organisasi
      */
-    public function __construct(TransaksiBelanja $transaksiBelanja, LaraCacheInterface $cache, OrganisasiRepository $organisasi)
+    public function __construct(TransaksiBelanja $transaksiBelanja, LaraCacheInterface $cache, OrganisasiInterface $organisasi)
     {
         $this->model = $transaksiBelanja;
         $this->cache = $cache;
@@ -33,30 +32,27 @@ class TransaksiBelanjaRepository extends AbstractRepository
     /**
      * Instant find or search with paging, limit, and query
      *
-     * @param int $page
-     * @param int $limit
+     * @param int  $page
+     * @param int  $limit
      * @param null $term
+     *
      * @return mixed
      */
     public function find($page = 1, $limit = 10, $term = null)
     {
         // set key
         $key = 'transaksi-belanja-find-' . $page . $limit . $term;
-
         // set section
         $section = 'transaksi-belanja';
-
         // has section and key
         if ($this->cache->has($section, $key)) {
             return $this->cache->get($section, $key);
         }
-
         // query to database
         $belanja = $this->model
             ->where('belanja', 'like', '%' . $term . '%')
             ->paginate($limit)
             ->toArray();
-
         // store to cache
         $this->cache->put($section, $key, $belanja, 10);
 
@@ -67,24 +63,22 @@ class TransaksiBelanjaRepository extends AbstractRepository
      * Create data
      *
      * @param array $data
+     *
      * @return mixed
      */
     public function create(array $data)
     {
         try {
             $belanja = $this->getNew();
-
             $kode_desa = $this->organisasi->getKodeDesa($data['organisasi_id']);
             $kode_rekening = e($data['kode_rekening']);
             $no_bukti = e($data['nomor_bukti']);
             $nomor_bukti = $no_bukti . '/STS-' . $kode_rekening . '/' . $kode_desa . '/' . date('Y');
             $nomor_bku_sts = $no_bukti . '/BKT.STS-' . $kode_rekening . '/' . $kode_desa . '/' . date('Y');
-
             $belanja->kode_rekening = $kode_rekening;
             $belanja->nomor_bukti = $no_bukti;
             $belanja->nomor_bku = $nomor_bukti;
             $belanja->nomor_bku_sts = $nomor_bku_sts;
-
             $belanja->belanja = e($data['belanja']);
             $belanja->belanja_id = e($data['belanja_id']);
             $belanja->tanggal = e($data['tanggal']);
@@ -99,10 +93,11 @@ class TransaksiBelanjaRepository extends AbstractRepository
             $belanja->save();
 
             /*Return result success*/
-            return $this->successInsertResponse();
 
+            return $this->successInsertResponse();
         } catch (\Exception $ex) {
             \Log::error('TransaksiBelanjaRepository create action something wrong -' . $ex);
+
             return $this->errorInsertResponse();
         }
     }
@@ -111,6 +106,7 @@ class TransaksiBelanjaRepository extends AbstractRepository
      * Show the Record
      *
      * @param $id
+     *
      * @return \Illuminate\Support\Collection|null|static
      */
     public function findById($id)
@@ -121,46 +117,48 @@ class TransaksiBelanjaRepository extends AbstractRepository
     /**
      * Update the record
      *
-     * @param $id
+     * @param       $id
      * @param array $data
+     *
      * @return mixed
      */
     public function update($id, array $data)
     {
         try {
             $belanja = $this->findById($id);
+            if ($belanja) {
+                $kode_desa = $this->organisasi->getKodeDesa($data['organisasi_id']);
+                $kode_rekening = e($data['kode_rekening']);
+                $no_bukti = e($data['nomor_bukti']);
+                $nomor_bukti = $no_bukti . '/STS-' . $kode_rekening . '/' . $kode_desa . '/' . date('Y');
+                $nomor_bku_sts = $no_bukti . '/BKT.STS-' . $kode_rekening . '/' . $kode_desa . '/' . date('Y');
+                $belanja->kode_rekening = $kode_rekening;
+                $belanja->nomor_bukti = $no_bukti;
+                $belanja->nomor_bku = $nomor_bukti;
+                $belanja->nomor_bku_sts = $nomor_bku_sts;
+                $belanja->belanja = e($data['belanja']);
+                $belanja->belanja_id = e($data['belanja_id']);
+                $belanja->tanggal = e($data['tanggal']);
+                $belanja->jumlah = e($data['jumlah']);
+                $belanja->item = e($data['item']);
+                $belanja->harga = e($data['harga']);
+                $belanja->standar_satuan_harga_id = e($data['standar_satuan_harga_id']);
+                $belanja->kode_barang = e($data['kode_barang']);
+                $belanja->pejabat_desa_id = e($data['pejabat_desa_id']);
+                $belanja->penerima = e($data['penerima']);
+                $belanja->dana_desa_id = e($data['dana_desa_id']);
+                $belanja->save();
 
-            $kode_desa = $this->organisasi->getKodeDesa($data['organisasi_id']);
-            $kode_rekening = e($data['kode_rekening']);
-            $no_bukti = e($data['nomor_bukti']);
-            $nomor_bukti = $no_bukti . '/STS-' . $kode_rekening . '/' . $kode_desa . '/' . date('Y');
-            $nomor_bku_sts = $no_bukti . '/BKT.STS-' . $kode_rekening . '/' . $kode_desa . '/' . date('Y');
+                /*Return result success*/
 
-            $belanja->kode_rekening = $kode_rekening;
-            $belanja->nomor_bukti = $no_bukti;
-            $belanja->nomor_bku = $nomor_bukti;
-            $belanja->nomor_bku_sts = $nomor_bku_sts;
+                return $this->successUpdateResponse();
+            }
 
-            $belanja->belanja = e($data['belanja']);
-            $belanja->belanja_id = e($data['belanja_id']);
-            $belanja->tanggal = e($data['tanggal']);
-            $belanja->jumlah = e($data['jumlah']);
-            $belanja->item = e($data['item']);
-            $belanja->harga = e($data['harga']);
-            $belanja->standar_satuan_harga_id = e($data['standar_satuan_harga_id']);
-            $belanja->kode_barang = e($data['kode_barang']);
-            $belanja->pejabat_desa_id = e($data['pejabat_desa_id']);
-            $belanja->penerima = e($data['penerima']);
-            $belanja->dana_desa_id = e($data['dana_desa_id']);
-            $belanja->save();
-
-            /*Return result success*/
-            return $this->successUpdateResponse();
-
+            return $this->emptyDeleteResponse();
         } catch (\Exception $ex) {
             \Log::error('TransaksiBelanjaRepository update action something wrong -' . $ex);
-            //return $this->errorUpdateResponse();
-            return $ex;
+
+            return $this->errorUpdateResponse();
         }
     }
 
@@ -168,27 +166,23 @@ class TransaksiBelanjaRepository extends AbstractRepository
      * Destroy the record
      *
      * @param $id
+     *
      * @return mixed
      */
     public function destroy($id)
     {
         try {
             $belanja = $this->findById($id);
-
             if ($belanja) {
                 $belanja->delete();
 
                 return $this->successDeleteResponse();
             }
 
-            return $this->successResponseOk([
-                'success' => false,
-                'message' => [
-                    'msg' => 'Record sudah tidak ada atau sudah dihapus.',
-                ],
-            ]);
+            return $this->emptyDeleteResponse();
         } catch (\Exception $ex) {
             \Log::error('TransaksiBelanjaRepository destroy action something wrong -' . $ex);
+
             return $this->errorDeleteResponse();
         }
     }
@@ -217,26 +211,23 @@ class TransaksiBelanjaRepository extends AbstractRepository
 
     /**
      * @param $organisasi_id
+     *
      * @return mixed
      */
     public function getCountByDesa($organisasi_id)
     {
         // set key
         $key = 'transaksi-belanja-get-count-by-desa ' . $organisasi_id;
-
         // set section
         $section = 'transaksi-belanja';
-
         // has section and key
         if ($this->cache->has($section, $key)) {
             return $this->cache->get($section, $key);
         }
-
         // query to database
         $belanja = $this->model
             ->where('organisasi_id', '=', $organisasi_id)
             ->count();
-
         // store to cache
         $this->cache->put($section, $key, $belanja, 10);
 
@@ -246,8 +237,8 @@ class TransaksiBelanjaRepository extends AbstractRepository
     /**
      * get belanja by organisasi id
      *
-     * @param int $page
-     * @param int $limit
+     * @param int  $page
+     * @param int  $limit
      * @param null $term
      * @param      $organisasi_id
      *
@@ -257,15 +248,12 @@ class TransaksiBelanjaRepository extends AbstractRepository
     {
         // set key
         $key = 'transaksi-belanja-get-desa ' . $page . $limit . $term . $organisasi_id;
-
         // set section
         $section = 'transaksi-belanja';
-
         // has section and key
         if ($this->cache->has($section, $key)) {
             return $this->cache->get($section, $key);
         }
-
         // query to database
         $belanja = $this->model
             ->orderBy('created_at', 'desc')
@@ -273,7 +261,6 @@ class TransaksiBelanjaRepository extends AbstractRepository
             ->FullTextSearch($term)
             ->paginate($limit)
             ->toArray();
-
         // store to cache
         $this->cache->put($section, $key, $belanja, 10);
 
@@ -287,6 +274,7 @@ class TransaksiBelanjaRepository extends AbstractRepository
      * @param $tanggal_awal
      * @param $tanggal_akhir
      * @param $dana_desa_id
+     *
      * @return mixed
      */
     public function getChartByOrganisasiId($organisasi_id, $tanggal_awal, $tanggal_akhir, $dana_desa_id)
@@ -304,6 +292,7 @@ class TransaksiBelanjaRepository extends AbstractRepository
      * @param $tanggal_awal
      * @param $tanggal_akhir
      * @param $dana_desa_id
+     *
      * @return mixed
      */
     public function getChart($tanggal_awal, $tanggal_akhir, $dana_desa_id)
@@ -314,5 +303,4 @@ class TransaksiBelanjaRepository extends AbstractRepository
             ->get('tanggal', 'jumlah')
             ->toArray();
     }
-
 }
