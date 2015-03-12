@@ -80,5 +80,15 @@ class AppServiceProvider extends ServiceProvider
             'SimdesApp\Repositories\Contracts\DanaDesaByDesaInterface',
             'SimdesApp\Repositories\DanaDesa\DanaDesaByDesaRepository'
         );
+        // bind User
+        $this->app->bind(
+            'SimdesApp\Repositories\Contracts\UserInterface',
+            'SimdesApp\Repositories\User\UserRepository'
+        );
+        // bind Organisasi
+        $this->app->bind(
+            'SimdesApp\Repositories\Contracts\OrganisasiInterface',
+            'SimdesApp\Repositories\Organisasi\OrganisasiRepository'
+        );
     }
 }

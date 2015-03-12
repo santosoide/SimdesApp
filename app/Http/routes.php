@@ -25,6 +25,8 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'api/v1/auth'], function () {
     Route::post('post-login', 'AuthController@postLogin');
     // Destroy the session login
     Route::get('logout', 'AuthController@getLogout');
+    //Reset password
+    Route::get('post-reset-password/{email}', 'AuthController@resetPassword');
 });
 #Diakses oleh Backoffice
 Route::group(['namespace' => 'Api\V1\Organisasi', 'prefix' => 'api/v1/backoffice'], function () {

@@ -1,10 +1,9 @@
 <?php namespace SimdesApp\Http\Controllers\Auth;
 
-use Illuminate\Http\RedirectResponse;
 use SimdesApp\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Guard;
-use SimdesApp\Repositories\Organisasi\OrganisasiRepository;
-use SimdesApp\Repositories\User\UserRepository;
+use SimdesApp\Repositories\Contracts\OrganisasiInterface;
+use SimdesApp\Repositories\Contracts\UserInterface;
 class AuthController extends Controller
 {
 
@@ -19,21 +18,21 @@ class AuthController extends Controller
     |
     */
     /**
-     * @var UserRepository
+     * @var UserInterface
      */
     protected $user;
 
     /**
-     * @var OrganisasiRepository
+     * @var OrganisasiInterface
      */
     protected $organisasi;
 
     /**
      * @param Guard                $auth
-     * @param UserRepository       $user
-     * @param OrganisasiRepository $organisasi
+     * @param UserInterface       $user
+     * @param OrganisasiInterface $organisasi
      */
-    public function __construct(Guard $auth, UserRepository $user, OrganisasiRepository $organisasi)
+    public function __construct(Guard $auth, UserInterface $user, OrganisasiInterface $organisasi)
     {
         $this->auth = $auth;
         $this->user = $user;
@@ -90,5 +89,10 @@ class AuthController extends Controller
         \Auth::logout();
 
         return $this->redirectURLTo('login');
+    }
+
+    public function resetPassword($email)
+    {
+        return $this->user->resetPassword($email);
     }
 }

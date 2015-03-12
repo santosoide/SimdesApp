@@ -243,4 +243,38 @@ class UserRepository extends AbstractRepository implements UserInterface
             ->where('organisasi_id', '=', $organisasi_id)
             ->get();
     }
+
+    /**
+     * @param $email
+     *
+     * @return mixed
+     */
+    public function resetPassword($email)
+    {
+        try {
+            $user = $this->model->where('email', $email)->first();
+            if ($user) {
+                $rand = str_random(8);
+                $user->password = \Hash::make($rand);
+                $user->save();
+
+                return $this->successResponseOk([
+                    'success' => true,
+                    'message' => [
+                        'msg' => 'Password baru anda adalah ' . $rand,
+                    ],
+                ]);
+            }
+
+            return $this->successResponseOk([
+                'success' => false,
+                'message' => [
+                    'msg' => 'Email yang anda masukkan tidak terdaftar.',
+                ],
+            ]);
+        } catch (\Exception $ex) {
+            \Log::error('UserRepository resetPassword action something wrong -' . $ex);
+            return $this->errorUpdateResponse();
+        }
+    }
 } 

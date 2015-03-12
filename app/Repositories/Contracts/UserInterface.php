@@ -63,4 +63,11 @@ interface UserInterface {
      * @return mixed
      */
     public function findIsExists($organisasi_id);
+
+    /**
+     * @param $email
+     *
+     * @return mixed
+     */
+    public function resetPassword($email);
 }
